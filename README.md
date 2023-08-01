@@ -9,7 +9,7 @@ This repository contains all of the Docker, setup scripts, and documentation for
 
 ## Running the full prototype environment
 
-You can find complete end-to-end full-stack set up guides for DRLS REMS at the following links:
+You can find complete end-to-end full-stack set up guides for the REMS Proof of Concept prototype at the following links:
 
 [Simple Set Up](SimpleSetupGuide.md) - This guide will get you up and running quickly with a demo environment for using the prototype locally. If you want to make changes or contribute to the codebase, see the detailed developer guide below.
 
