@@ -175,7 +175,7 @@ Reference: https://github.com/rbenv/rbenv
     git clone https://github.com/mcode/rems-smart-on-fhir.git rems-smart-on-fhir
     git clone https://github.com/mcode/rems-setup.git rems-setup
 
-    cd rems-setup
+    cd REMS
     git submodule update --init
 
     cd .. 
