@@ -1,4 +1,4 @@
-# REMS-Docker-The Ultimate Guide to Running DRLS REMS for Local Development
+# REMS-Docker - The Ultimate Guide to Running DRLS REMS for Local Development
 
 ## Purpose of this guide
 

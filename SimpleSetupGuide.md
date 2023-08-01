@@ -1,4 +1,4 @@
-# DRLS REMS Local Demo Setup Guide
+# REMS Local Demo Setup Guide
 
 ## Guide Contents
 - [Purpose](#purpose-of-this-guide)
