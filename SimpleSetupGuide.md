@@ -10,7 +10,7 @@
 
 ## Purpose of this guide
 
-This document details instructions on how to quickly get up and running with a local demo deployment of the full-stack Documentation Requirements Lookup Service (DRLS) REMS prototype environment. This is primarily meant for non-technical users interested in exploring the prototype on their own machine.
+This document details instructions on how to quickly get up and running with a local demo deployment of the full-stack REMS Integration Prototype environment. This is primarily meant for non-technical users interested in exploring the prototype on their own machine.
 
 *Note:* If you are looking to contribute or make code changes, please see the full [Developer Environment Setup](DeveloperSetupGuide.md).
 
@@ -28,6 +28,7 @@ The following DRLS components will be deployed in Docker locally:
 6. [REMS](https://github.com/mcode/REMS)
 7. [Pharmacy Information System](https://github.com/mcode/pharmacy-information-system)
 8. [Keycloak](https://www.keycloak.org/)
+
 
 ## Quick Setup
 
@@ -54,7 +55,7 @@ Your computer must have these minimum requirements:
 ### 3. Run
 
 - [Git installed](https://www.atlassian.com/git/tutorials/install-git)
-- Use git to clone or download and extract the zip of the [REMS repository](https://github.com/mcode/REMS.git) - in your terminal navigate to the REMS repo folder.
+- Use git to clone or download and extract the zip of the [rems-setup repository](https://github.com/mcode/rems-setup.git) - in your terminal navigate to the rems-setup repo folder.
 - Before running, setup environment with VSAC credentials (see [setting environment variables section](#setting-environment-variables) for help)
 
     > At this point, you should have credentials to access VSAC. If not, please refer to [Prerequisites](#prerequisites) for how to create these credentials and return here after you have confirmed you can access VSAC.
@@ -63,7 +64,7 @@ Your computer must have these minimum requirements:
     > While this step is optional, we **highly recommend** that you do it so that DRLS will have the ability to dynamically load value sets from VSAC.
 
     You can see a list of your pre-existing environment variables on your machine by running `env` in your Terminal. To add to `env`:
-    1. Set "VSAC_API_KEY" in the .env file in the REMS Repository
+    1. Set "VSAC_API_KEY" in the .env file in the rems-setup Repository
 
         or
 
@@ -84,7 +85,7 @@ Your computer must have these minimum requirements:
 - Add Compose Project Name to environment
 
     You can see a list of your pre-existing environment variables on your machine by running `env` in your Terminal. To add to `env`:
-    1. Set "COMPOSE_PROJECT_NAME" as "rems_prod" in the .env file in the REMS Repository
+    1. Set "COMPOSE_PROJECT_NAME" as "rems_prod" in the .env file in the rems-setup Repository
 
         or
 
@@ -106,13 +107,13 @@ Your computer must have these minimum requirements:
 - Start docker compose application
 
     ```bash
-        cd REMS # Need to execute commands in directory with corresponding docker-compose.yml file located in the REMS repository
+        cd rems-setup # Need to execute commands in directory with corresponding docker-compose.yml file located in the REMS repository
         docker-compose up
     ```
 
     Note, if you are using an M1/M2 mac, you'll need to prepend `docker-compose` commands with `COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 DOCKER_DEFAULT_PLATFORM=linux/arm64`.
     ```bash
-        cd REMS # Need to execute commands in directory with corresponding docker-compose.yml file located in the REMS repository
+        cd rems-setup # Need to execute commands in directory with corresponding docker-compose.yml file located in the REMS repository
         COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 DOCKER_DEFAULT_PLATFORM=linux/arm64 docker-compose up
     ```
 
@@ -154,7 +155,7 @@ Your computer must have these minimum requirements:
 22. Go back to the SMART on FHIR App launched in step 17 and play the role of the prescriber using the **Check Pharmacy** button to see the status change of the prescription. 
 23. Lastly, repeat step 20 to open the **Patient Status Update Form**  in the returned cards to submit follow up/monitoring requests on an as need basis. These forms can be submitted as many times as need be in the prototype and will show up as separate ETASU elements each time. 
 
-Congratulations! the REMS prototype is fully installed and ready for you to use!
+Congratulations! The REMS Integration Prototype is fully installed and ready for you to use!
 
 
 ## Cleanup and Useful Options
