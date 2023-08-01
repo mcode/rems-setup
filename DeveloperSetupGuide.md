@@ -94,7 +94,7 @@ How you set environment and path variables may vary depending on your operating 
 3. Once the installation is complete, verify that **Docker Desktop is running.**
 4. Configure Docker to have access to enough resources. To do this, open Docker Desktop and select Settings > Resources.
 
-    **Note: The defaults for memory at 2GB and possibly CPU as well are too low to run the entire DRLS REMS workflow. If not enough resources are provided, you may notice containers unexpectedly crashing and stopping. Exact requirements for these resource values will depend on your machine. That said, as a baseline starting point, the system runs relatively smoothly at 15GB memory and 6 CPU Processors on MITRE issued Mac Devices.**
+    **Note: The defaults for memory at 2GB and possibly CPU as well are too low to run the entire REMS workflow. If not enough resources are provided, you may notice containers unexpectedly crashing and stopping. Exact requirements for these resource values will depend on your machine. That said, as a baseline starting point, the system runs relatively smoothly at 15GB memory and 6 CPU Processors on MITRE issued Mac Devices.**
 
 #### Install Visual Studio Code and Extensions		
 The recommended IDE for this set up is Visual Studio Code		
@@ -154,9 +154,9 @@ Reference: https://github.com/rbenv/rbenv
 
     Note: The versioning is important, system default ruby sometimes installs version 0.1.1 if -v tag is not set. The 0.1.1 release will not work for the rest of this guide.
 
-## Clone DRLS REMS
+## Clone REMS
 
-1. Create a root directory for the DRLS development work (we will call this `<drlsroot>` for the remainder of this setup guide). While this step is not required, having a common root for the DRLS components will make things a lot easier down the line.
+1. Create a root directory for the REMS development work (we will call this `<drlsroot>` for the remainder of this setup guide). While this step is not required, having a common root for the DRLS components will make things a lot easier down the line.
     ```bash
     mkdir <drlsroot>
     ```
@@ -170,10 +170,10 @@ Reference: https://github.com/rbenv/rbenv
     cd <drlsroot>
     git clone https://github.com/mcode/test-ehr.git test-ehr
     git clone https://github.com/mcode/crd-request-generator.git crd-request-generator
-    git clone https://github.com/mcode/dtr.git dtr
     git clone https://github.com/mcode/REMS.git REMS
     git clone https://github.com/mcode/pims.git pims
     git clone https://github.com/mcode/rems-smart-on-fhir.git rems-smart-on-fhir
+    git clone https://github.com/mcode/rems-setup.git rems-setup
 
     cd REMS
     git submodule update --init
@@ -185,9 +185,9 @@ Reference: https://github.com/rbenv/rbenv
 
     ```
 
-# Open DRLS REMS as VsCode workspace
+# Open REMS as VsCode workspace
 
-The REMS repository contains the **REMS.code-workspace** file, which can be used to open the above project structure as a multi-root VS Code workspace. To open this workspace, select *File* > *Open Workspace from File...* and navigate to <drls-root>/REMS/REMS.code-workspace. In this workspace configuration, the CDS-Library embedded within CRD is opened as a separate root for an easier development experience.
+The REMS repository contains the **REMS.code-workspace** file, which can be used to open the above project structure as a multi-root VS Code workspace. To open this workspace, select *File* > *Open Workspace from File...* and navigate to <drls-root>/rems-setup/REMS.code-workspace. In this workspace configuration, the CDS-Library embedded within CRD is opened as a separate root for an easier development experience.
 
 The Debugger Tab has various debugging configurations and can be used to easily debug any errors that come up during development. Simply start one of the debuggers and set a breakpoint anywhere in the code base. For more information on VsCode debugging see: https://code.visualstudio.com/docs/editor/debugging
 
