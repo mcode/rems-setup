@@ -21,6 +21,9 @@
 		{
 			"path": "../test-ehr"
 		},
+		{
+			"path": "../cql-to-fhir-library"
+		}
 	],
 	"launch": {
 		"version": "0.2.0",
