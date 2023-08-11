@@ -4,20 +4,20 @@ options:
 syncs: 
   rems_dev_test-ehr-sync:
     src: ../test-ehr
-    sync_excludes: ['.gradle', 'bin', 'build', 'target', 'logs']
+    sync_excludes: ['./.gradle', './bin', './build', './target']
 
   rems_dev_crd-request-generator-sync:
     src: '../crd-request-generator'
-    sync_excludes: ['node_modules', 'build', 'databaseData', 'logs']
+    sync_excludes: ['./node_modules', './build', './databaseData']
 
   rems_dev_rems-smart-on-fhir-sync:  
     src: '../rems-smart-on-fhir'
-    sync_excludes: ['node_modules', 'logs']
+    sync_excludes: ['./node_modules']
 
   rems_dev_rems-sync:
     src: '../REMS'
-    sync_excludes: ['node_modules', 'logs']
+    sync_excludes: ['./node_modules', ./coverage]
 
   rems_dev_pims-sync:  
     src: '../pims'
-    sync_excludes: ['node_modules', 'logs']
+    sync_excludes: ['./frontend/node_modules', './backend/node_modules', './backend/dist']
