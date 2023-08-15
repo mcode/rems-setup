@@ -104,7 +104,23 @@
 		  ]
 	},
 	"settings": {
-		"debug.onTaskErrors": "debugAnyway"
+		"debug.onTaskErrors": "debugAnyway",
+		"cSpell.words": [
+			"BUILDKIT",
+			"davinci",
+			"DRLS",
+			"drlsroot",
+			"ehrserver",
+			"ETASU",
+			"INITDB",
+			"Keycloak",
+			"mcode",
+			"NCPDP",
+			"PIMS",
+			"Turalio",
+			"UMLS",
+			"VLCS"
+		]
 	},
 	"extensions": {
 		"recommendations": [
