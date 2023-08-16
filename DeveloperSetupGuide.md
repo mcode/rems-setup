@@ -1,17 +1,18 @@
 # Updating the dev set up guide
 
-Overall: show directory before commands, it's easy to get lost with 6+ repos. Also (see edits) I reformatted
-most of the code blocks to be clearer.
+Overall: show directory before commands, it's easy to get lost with 6+ repos. Also (see edits) I reformatted most of the
+code blocks to be clearer.
 
 ## In VLCS
 
-* Indicate how long the manual step takes (0-3 days).
+- Indicate how long the manual step takes (0-3 days).
 
-* It is not clear where the UMLS API Key goes once you get it.
-  
+- It is not clear where the UMLS API Key goes once you get it.
+
   is the answer: `.env` the key/value pair `VSAC_API_KEY = ChangeMe` ?
 
-* The step for requested membership access to CMS-DRLS author group should be made...more durable? rather than emailing one individual on the team.
+- The step for requested membership access to CMS-DRLS author group should be made...more durable? rather than emailing
+  one individual on the team.
 
 ## In "installing VSCode"
 
@@ -78,22 +79,24 @@ Missing a few `npm install` commands in various places.
 
 1. Remove the significant number of large dependencies in the project:
 
-   * Ruby is only used for one utility (docker-sync), and that utility may not be necessary any more.
-   * Java appears to be used for one test server?
+   - Ruby is only used for one utility (docker-sync), and that utility may not be necessary any more.
+   - Java appears to be used for one test server?
 
 2. Fix some minor issues:
 
-   * In `package.json`, file extensions for linter/etc. should also include tsx
-   * Provide example pre-commit and pre-push hooks which enforce team best practices (e.g.: lint and Prettier must pass)
+   - In `package.json`, file extensions for linter/etc. should also include tsx
+   - Provide example pre-commit and pre-push hooks which enforce team best practices (e.g.: lint and Prettier must pass)
 
 3. There are stale references to e.g. create-react-app, which I would strongly recommend migrating away from.
 
-4. Recommend picking your own port to run things on, rather than standard dev ports like :3000 -- this helps devs who might have multiple projects running on their machine
+4. Recommend picking your own port to run things on, rather than standard dev ports like :3000 -- this helps devs who
+   might have multiple projects running on their machine
 
-----
-----
-----
+---
 
+---
+
+---
 
 # REMS-Docker - The Ultimate Guide to Running DRLS REMS for Local Development
 
@@ -150,7 +153,7 @@ This guide will take you through the development environment setup for each of t
     - [Pre-configured settings in the VS Code workspace](#pre-configured-settings-in-the-vs-code-workspace)
     - [Add VSAC credentials to your development environment](#add-vsac-credentials-to-your-development-environment)
   - [Run DRLS](#run-drls)
-    - [Start docker-sync application](#start-docker-sync-application)
+    - [Start application using docker-sync](#start-application-using-docker-sync)
     - [Debugging docker-sync application](#debugging-docker-sync-application)
     - [Stop docker-sync application and remove all containers/volumes/images](#stop-docker-sync-application-and-remove-all-containersvolumesimages)
     - [Rebuilding Images and Containers](#rebuilding-images-and-containers)
@@ -387,7 +390,10 @@ If this is not configured, you will get errors like this:
 
 ## Run DRLS
 
-### Start docker-sync application
+### Start application using docker-sync
+
+The project uses docker-sync to start up and connect all the various Docker containers and networks. The single command
+below should build all images and start up all containers.
 
 _Note:_ Initial set up will take several minutes and spin up fans with high resource use. Be patient, future boots will
 be much quicker, quieter, and less resource intensive.
@@ -395,6 +401,27 @@ be much quicker, quieter, and less resource intensive.
 ```bash
 > docker-sync-stack start # This is the equivalent of running docker-sync start followed by docker-compose up
 ```
+
+Watch the output until `rems_dev_test-ehr` has finished starting up, usually something like this:
+
+```log
+rems_dev_test-ehr               | > Task :loadData
+
+[...many things that succeed]
+
+rems_dev_test-ehr               | BUILD SUCCESSFUL
+```
+
+> **Note for Apple Mac developers:** Additional `docker-compose` environment variables need to be set. You can prefix
+> each command with these, or set them in your environment (as above):
+>
+> ```bashrc
+> COMPOSE_DOCKER_CLI_BUILD=1
+> DOCKER_BUILDKIT=1
+> DOCKER_DEFAULT_PLATFORM=linux/arm64
+> ```
+>
+> **NOTE 2**: On M1 macs, docker-sync (as of 16 Aug 2023) pulls the wrong unison image. You will need to edit the docker-sync gem file directly (grep for "AMD64" and replace it with "ARM64"). Hopefully this gets resolved soon.
 
 ### Debugging docker-sync application
 
@@ -438,16 +465,6 @@ or, if you need to rebuild first:
 > docker-compose -f docker-compose-dev.yml build --no-cache --pull [<service_name1> <service_name2> ...]
 > docker-compose -f docker-compose-dev.yml up --force-recreate  [<service_name1> <service_name2> ...]
 ```
-
-> **Note for Apple M1 Mac developers:** Additional `docker-compose` environment variables need to be set. You can prefix
-> each command with these, or set them in your environment (as above):
->
-> ```bash
-> COMPOSE_DOCKER_CLI_BUILD = 1
-> DOCKER_BUILDKIT = 1
-> DOCKER_DEFAULT_PLATFORM = linux/arm64
-> ```
->
 
 After rebuilding images and containers, start docker-sync normally.
 
