@@ -362,7 +362,7 @@ or, if you need to rebuild first:
 
 After rebuilding images and containers, start docker-sync normally.
 
-You may need to first type <kbd>Control-C</kbd> to stop running the `docker-compose up`` command (containers running
+You may need to first type <kbd>Control-C</kbd> to stop running the `docker-compose up` command (containers running
 without sync functionality).
 
 ```bash
