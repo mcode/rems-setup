@@ -1,4 +1,4 @@
-# REMS Local Demo Setup Guide
+# Simple Setup Guide - REMS Integration Prototype
 
 ## Guide Contents
 - [Purpose](#purpose-of-this-guide)
@@ -12,22 +12,19 @@
 
 This document details instructions on how to quickly get up and running with a local demo deployment of the full-stack REMS Integration Prototype environment. This is primarily meant for non-technical users interested in exploring the prototype on their own machine.
 
-*Note:* If you are looking to contribute or make code changes, please see the full [Developer Environment Setup](DeveloperSetupGuide.md).
-
-*Note:* If you are looking to just have more control or configuration options with Docker in your local environment, see [the configurable install](#docker-compose-without-porter).
+*Note:* If you are looking to contribute or make code changes, please see the full developer setup guides:
+- [Docker Developer Setup Guide](DockerDeveloperSetupGuide.md)
+- [Local Devloper Setup Guide (non-Docker)](LocalDeveloperSetupGuide.md)
 
 ## Components
 
-The following DRLS components will be deployed in Docker locally:
-
-1. [Coverage Requirements Discovery (CRD)](https://github.com/mcode/CRD)
-2. [(Test) EHR FHIR Service](https://github.com/HL7-DaVinci/test-ehr)
-3. [Documents, Templates, and Rules (DTR) SMART on FHIR app](https://github.com/mcode/dtr)
-4. [Clinical Decision Support (CDS) Library](https://github.com/mcode/CDS-Library)
-5. [CRD Request Generator](https://github.com/mcode/crd-request-generator)
-6. [REMS](https://github.com/mcode/REMS)
-7. [Pharmacy Information System](https://github.com/mcode/pharmacy-information-system)
-8. [Keycloak](https://www.keycloak.org/)
+The following REMS Integration Prototype components will be deployed in Docker locally:
+1. [crd-request-generator](https://github.com/mcode/crd-request-generator.git)
+2. [pims (Pharmacy Information Managment System)]( https://github.com/mcode/pims.git)
+3. [REMS](https://github.com/mcode/REMS.git)
+4. [rems-setup (current repo)](https://github.com/mcode/rems-setup.git)
+5. [rems-smart-on-fhir application](https://github.com/mcode/rems-smart-on-fhir.git)
+6. [test-ehr (mock Electronic Health Record)](https://github.com/mcode/test-ehr.git)
 
 
 ## Quick Setup

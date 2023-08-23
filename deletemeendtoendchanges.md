@@ -1,4 +1,4 @@
-# REMS-Docker - The Ultimate Guide to Running DRLS REMS for Local Development
+# Docker Developer Setup Guide - REMS Integration Prototype
 
 ## Purpose of this guide
 
@@ -7,20 +7,18 @@ This document details the installation process for the dockerized version of the
 
 This document **is designed to take you through the entire set up process for DRLS using docker containers**. It is a standalone guide that does not depend on any supplementary DRLS documentation.
 
-This guide will take you through the development environment setup for each of the following DRLS components:
-1. [Coverage Requirements Discovery (CRD)](https://github.com/mcode/CRD)
-2. [(Test) EHR FHIR Service](https://github.com/HL7-DaVinci/test-ehr)
-3. [Documents, Templates, and Rules (DTR) SMART on FHIR app](https://github.com/mcode/dtr)
-4. [Clinical Decision Support (CDS) Library](https://github.com/mcode/CDS-Library)
-5. [CRD Request Generator](https://github.com/mcode/crd-request-generator)
-6. [REMS](https://github.com/mcode/REMS.git)
-7. [Pharmacy Information System](https://github.com/mcode/pharmacy-information-system)
-8. [Keycloak](https://www.keycloak.org/)
+This guide will take you through the development environment setup for each of the following REMS Integration Prototype components:
+1. [crd-request-generator](https://github.com/mcode/crd-request-generator.git)
+2. [pims (Pharmacy Information Managment System)]( https://github.com/mcode/pims.git)
+3. [REMS](https://github.com/mcode/REMS.git)
+4. [rems-setup (current repo)](https://github.com/mcode/rems-setup.git)
+5. [rems-smart-on-fhir application](https://github.com/mcode/rems-smart-on-fhir.git)
+6. [test-ehr (mock Electronic Health Record)](https://github.com/mcode/test-ehr.git)
+
 
 ### Expected Functionality 		
 1. File Synchronization between local host system and docker container		
 2. Automatic Server Reloading whenever source file is changed		
-    - CRD also reloads on CDS_Library changes 		
 3. Automatic Dependency Installation whenever package.json, package-lock.json, or build.gradle are changed		
 4. Automatic Data Loader in test-ehr whenever the fhirResourcesToLoad directory is changed
 
@@ -43,7 +41,7 @@ This guide will take you through the development environment setup for each of t
     * [rems configs](#rems-configs)
     * [pharmacy-information-system configs](#pharmacy-information-system-configs)
     * [Add VSAC credentials to your development environment](#add-vsac-credentials-to-your-development-environment)
-- [Run DRLS REMS](#run-drls)
+- [Run REMS Integration Prototype](#run-drls)
     * [Start Docker Sync](#start-docker-sync-application)
     * [Debugging docker-sync application](#debugging-docker-sync-application)
     * [Stop Docker Sync](#stop-docker-sync-application-and-remove-all-containers/volumes)
@@ -156,18 +154,18 @@ Reference: https://github.com/rbenv/rbenv
 
 ## Clone REMS
 
-1. Create a root directory for the REMS development work (we will call this `<drlsroot>` for the remainder of this setup guide). While this step is not required, having a common root for the DRLS components will make things a lot easier down the line.
+1. Create a root directory for the REMS development work (we will call this `<remsroot>` for the remainder of this setup guide). While this step is not required, having a common root for the DRLS components will make things a lot easier down the line.
     ```bash
-    mkdir <drlsroot>
+    mkdir <remsroot>
     ```
 
-    `<drlsroot>` will be the base directory into which all the other components will be installed. For example, CRD will be cloned to `<drlsroot>/crd`.
+    `<remsroot>` will be the base directory into which all the other components will be installed. For example, `pims` will be cloned to `<remsroot>/pims`.
 
     Note: If you are using a different project structure from the above description, you will need to change the corresponding repo paths in docker-compose-dev.yml, docker-sync.yml, and docker-compose.yml
 
 2. Now clone the DRLS component repositories from Github:
     ```bash
-    cd <drlsroot>
+    cd <remsroot>
     git clone https://github.com/mcode/test-ehr.git test-ehr
     git clone https://github.com/mcode/crd-request-generator.git crd-request-generator
     git clone https://github.com/mcode/REMS.git REMS
