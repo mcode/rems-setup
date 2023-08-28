@@ -7,11 +7,13 @@ User: The test is acting as the Prescriber role.
 
  */
 
-import { test, expect } from "@playwright/test";
+import { test, expect, Locator, Page } from "@playwright/test";
 
 const patientName = "Jon Snow";
 const medication = "Turalio";
-test("Demo workflow (all 23 steps)", async ({ context, page }) => {
+
+/** Before each, add the medication request above to the patient and submit to PIMS. */
+test.beforeEach(async ({ context, page }, testInfo) => {
   // 1. Go to the EHR UI at <http://localhost:3000>
   await page.goto("localhost:3000");
 
@@ -54,8 +56,8 @@ test("Demo workflow (all 23 steps)", async ({ context, page }) => {
 
   // 8. After several seconds you should receive a response in the form of two **CDS cards**:
   // ??? what is the right timeout here?
-  // Can we make this slightly more specific in a way that's meaningful / visible to the user?
-  // e.g. `page.getByRole("warning", { name: "No Cards" })...`
+  // TODO: Can we make this slightly more specific in a way that's meaningful / visible to the user?
+  //       e.g. `page.getByRole("warning", { name: "No Cards" })...`
   await expect(page.getByText("No Cards")).not.toBeVisible({ timeout: 5000 });
 
   // TODO: These are fragile selectors--fix the GUI to be more testable / user friendly (e.g. by adding title to a card)
@@ -69,7 +71,9 @@ test("Demo workflow (all 23 steps)", async ({ context, page }) => {
 
   await expect(patientRequirementsCard).toBeInViewport();
   await expect(prescriberRequirementsCard).toBeVisible();
+});
 
+test("content appears in SMART on FHIR, fill out patient enroll form", async ({ context, page }) => {
   // BEFORE the click, set up promise to listen for new tab being opened. see <https://playwright.dev/docs/pages#handling-new-pages>
   const smartOnFHIRPagePromise = page.waitForEvent("popup");
 
@@ -102,30 +106,7 @@ test("Demo workflow (all 23 steps)", async ({ context, page }) => {
   // await smartPage.getByRole("button", { name: "OK" }).click();
 
   //////////// 12. Fill out the questionnaire and hit **Submit REMS Bundle**. ////////////////
-  const emptyNumericFields = await smartPage
-    .locator("input:visible")
-    .getByPlaceholder("Type a number")
-    .getByText("")
-    .all();
-  for (const emptyField of emptyNumericFields) {
-    await emptyField.fill("1");
-  }
-
-  const emptyTextFields = await smartPage
-    .locator("input:visible")
-    .getByPlaceholder("Type a number")
-    .getByText("")
-    .all();
-  for (const emptyField of emptyTextFields) {
-    await emptyField.fill("TEST");
-  }
-
-  const emptyDateFields = await smartPage.locator("input:visible").getByPlaceholder("MM/DD/YYYY").getByText("").all();
-  for (const emptyField of emptyDateFields) {
-    await emptyField.fill("12/31/2000");
-  }
-
-  await submitButton.click();
+  await testUtilFillOutForm({ page: smartPage, submitButton });
 
   /*
     - 12a. Alternatively fill out only some of the questionnaire for an asynchronous workflow and hit **Save to EHR**.
@@ -162,7 +143,7 @@ test("Demo workflow (all 23 steps)", async ({ context, page }) => {
 
   /* Find the specific medication's card. */
   // TODO: Update code to make more testable and user-friendly
-  const pharmacyMedCard = pharmacyPage.locator(".MUICard-root", { hasText: medication });
+  const pharmacyMedCard = pharmacyPage.locator(".MUIPaper-root", { hasText: medication });
 
   /* 16c2: Verify we are looking at New Orders */
   await expect(pharmacyMedCard).toBeVisible();
@@ -173,22 +154,65 @@ test("Demo workflow (all 23 steps)", async ({ context, page }) => {
   await expect(pharmacyMedCard.getByText("Pending")).toBeVisible();
 
   /* 17. Go Back to the EHR UI at <http://localhost:3000> and play the role of the prescriber again, select patient Jon Snow
-    from the patient select UI and click **Launch SMART on FHIR App**, which will open the SMART on FHIR App in its own
-    view and demonstrate the case where an EHR does not have CDS Hooks implemented natively. */
+    from the patient select UI.*/
 
   // Back to CRD App on :3000
   await page.goto("localhost:3000");
   await page.getByRole("button", { name: "Patient Select" }).click();
+  const patientBox = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
+  await patientBox.getByText("Gender:").click({ force: true }); // FIXME "click 'somewhere' in patient row" is fragile.
 
-  // We can reuse the patientBox declaration from above, as we're back on :3000.
-  // patientBox;
+  const smartOnFHIRPagePromise2 = page.waitForEvent("popup");
+
+  await page.getByRole("button", { name: "Launch SMART on FHIR App" }).click();
+
+  const page3 = await smartOnFHIRPagePromise2;
+  await page3.waitForLoadState("networkidle");
 
   /* 18. From the medications dropdown select **Turalio 200 MG Oral Capsule**, which should populate the screen with cards
     similar to those seen in step 7. */
-  /* 19. Use the **Check ETASU** and **Check Pharmacy** buttons to get status updates on the prescription and REMS request */
+  await page3.getByText("Select Medication", { exact: true }).selectOption("Turalio");
+
+  /* 19a. Use the **Check ETASU** button to get status updates on the REMS request */
+  await page3.getByRole("button", { name: /Check ETASU/i }).click();
+
+  // TODO: fragile use of class selector
+  const remsPopup = page3.locator(".MuiBox-root", { hasText: "REMS Status" });
+
+  await expect(remsPopup.getByRole("heading", { name: "REMS Status" })).toBeVisible();
+
+  /* 19.c1. Number of checks and x's should sum to four...not sure if I like this 'check'.
+   * But it also demonstrates how to do custom error strings and computation-based testing.
+   */
+  const checksCount = remsPopup.getByTestId("CheckCircleIcon").count();
+  const closeCount = remsPopup.getByTestId("CloseIcon").count();
+  expect(
+    (await checksCount) + (await closeCount),
+    `REMS Status panel showed wrong number of total icons (${checksCount} checks, ${closeCount} closes)`
+  ).toEqual(4);
+
+  /** Dismiss the modal */
+  await page3.locator(".MuiModal-backdrop").click(); // TODO fragile class selector
+  await expect(remsPopup.getByRole("heading", { name: "REMS Status" })).not.toBeVisible();
+
+  /* 19b. Use the **Check Pharmacy** buttons to get status updates on the prescription  */
+
+  await page3.getByRole("button", { name: /Check ETASU/i }).click();
+
+  // TODO: fragile use of class selector
+  const pharmacyPopup = page3.locator(".MuiBox-root", { hasText: "REMS Status" });
+
+  await expect(pharmacyPopup.getByRole("heading", { name: "Pharmacy Status" })).toBeVisible();
+  await expect(pharmacyPopup.getByText("Status: Pending")).toBeVisible();
+
+  /** Dismiss the modal */
+  await page3.locator(".MuiModal-backdrop").click(); // TODO fragile class selector
+  await expect(pharmacyPopup.getByRole("heading", { name: "Pharmacy Status" })).not.toBeVisible();
+
   /* 20. Use the links for the **Prescriber Enrollment Form** and **Prescriber Knowledge Assessment** Questionnaires and
     repeat steps 9-12 to submit those ETASU requirements and see how the ETASU status changes in both the Pharmacist UI
     and Prescriber UI. */
+
   /* 21. Once all the REMS ETASU are met, go back to <http://localhost:5050> and play the role of the Pharmacist, using the
     **Verify Order** button to move the prescription over to the **Verified Orders** Tab. Click on the **Verified
     Orders** Tab and from there use the **Mark as Picked Up** button to move the prescription over to the **Picked Up
@@ -199,3 +223,24 @@ test("Demo workflow (all 23 steps)", async ({ context, page }) => {
     up/monitoring requests on an as need basis. These forms can be submitted as many times as need be in the prototype
     and will show up as separate ETASU elements each time.*/
 });
+
+/** Fills out all blank text, numeric, and date fields found on the given page, then clicks the submit button. */
+async function testUtilFillOutForm(props: { page: Page; submitButton: Locator }) {
+  const { page, submitButton } = props;
+  const emptyNumericFields = await page.locator("input:visible").getByPlaceholder("Type a number").getByText("").all();
+  for (const emptyField of emptyNumericFields) {
+    await emptyField.fill("1");
+  }
+
+  const emptyTextFields = await page.locator("input:visible").getByPlaceholder("Type a number").getByText("").all();
+  for (const emptyField of emptyTextFields) {
+    await emptyField.fill("TEST");
+  }
+
+  const emptyDateFields = await page.locator("input:visible").getByPlaceholder("MM/DD/YYYY").getByText("").all();
+  for (const emptyField of emptyDateFields) {
+    await emptyField.fill("12/31/2000");
+  }
+
+  await submitButton.click();
+}
