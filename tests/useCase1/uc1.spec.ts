@@ -7,7 +7,8 @@ User: The test is acting as the Prescriber role.
 
  */
 
-import { test, expect, Locator, Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import { testUtilFillOutForm } from "../util/fillOutForm";
 
 const patientName = "Jon Snow";
 const medication = "Turalio";
@@ -21,6 +22,15 @@ test.beforeEach(async ({ context, page }, testInfo) => {
   await expect(page).toHaveTitle(/EHR/);
   await expect(page.getByText("No Cards")).toBeVisible();
   await expect(page.getByRole("button", { name: "Send RX to PIMS" })).toBeDisabled();
+
+  // Clear any lingering state in the database.
+  const settingsButton = page.locator(".settings"); // FIXME use of class-based selector
+  await settingsButton.click();
+  await page.getByRole("button", { name: /Reset REMS/ }).click();
+  await page.getByRole("button", { name: /Reset PIMS/ }).click();
+  await page.getByRole("button", { name: /Clear EHR/ }).click();
+  // Close Settings
+  await settingsButton.click();
 
   // 2. Click **Patient Select** button in upper left.
   await page.getByRole("button", { name: /Patient Select/ }).click();
@@ -86,7 +96,7 @@ test("content appears in SMART on FHIR, fill out patient enroll form", async ({ 
   await smartPage.waitForLoadState("networkidle");
 
   // 10. If you are asked for login credentials, use **alice** for username and **alice** for password
-  // TODO: You cannot have a conditional in a test, so we'll have to rework this to either always or never require login.
+  // NOTE: You cannot have a conditional in a test, so this is written to always require login.
   await smartPage.getByLabel("Username or email").fill("alice");
   await smartPage.getByLabel("Password").fill("alice");
   await smartPage.getByRole("button", { name: "Sign In" }).click();
@@ -95,17 +105,19 @@ test("content appears in SMART on FHIR, fill out patient enroll form", async ({ 
   await expect(smartPage).toHaveTitle("REMS SMART on FHIR App");
   await smartPage.waitForLoadState("networkidle");
 
-  const submitButton = smartPage.getByRole("button", { name: "Submit REMS Bundle" });
 
-  // 12c1: Error if form not completely filled out.
-  // TODO: This is somehow passing right now?
-  // await submitButton.click();
-
-  // await expect(smartPage.getByText(/Error: Partially completed form/)).toBeVisible();
-  // 12c1.2: dismiss error dialog to continue
-  // await smartPage.getByRole("button", { name: "OK" }).click();
+  /*
+    // BUG: This is somehow passing right now?
+    // 12c1: Error if form not completely filled out.
+    await submitButton.click();
+    await expect(smartPage.getByText(/Error: Partially completed form/)).toBeVisible();
+    // 12c1.2: dismiss error dialog to continue
+    await smartPage.getByRole("button", { name: "OK" }).click();
+  */
 
   //////////// 12. Fill out the questionnaire and hit **Submit REMS Bundle**. ////////////////
+  expect(smartPage.getByText("Patient Questionnaire")).toBeVisible();
+  const submitButton = smartPage.getByRole("button", { name: "Submit REMS Bundle" });
   await testUtilFillOutForm({ page: smartPage, submitButton });
 
   /*
@@ -223,24 +235,3 @@ test("content appears in SMART on FHIR, fill out patient enroll form", async ({ 
     up/monitoring requests on an as need basis. These forms can be submitted as many times as need be in the prototype
     and will show up as separate ETASU elements each time.*/
 });
-
-/** Fills out all blank text, numeric, and date fields found on the given page, then clicks the submit button. */
-async function testUtilFillOutForm(props: { page: Page; submitButton: Locator }) {
-  const { page, submitButton } = props;
-  const emptyNumericFields = await page.locator("input:visible").getByPlaceholder("Type a number").getByText("").all();
-  for (const emptyField of emptyNumericFields) {
-    await emptyField.fill("1");
-  }
-
-  const emptyTextFields = await page.locator("input:visible").getByPlaceholder("Type a number").getByText("").all();
-  for (const emptyField of emptyTextFields) {
-    await emptyField.fill("TEST");
-  }
-
-  const emptyDateFields = await page.locator("input:visible").getByPlaceholder("MM/DD/YYYY").getByText("").all();
-  for (const emptyField of emptyDateFields) {
-    await emptyField.fill("12/31/2000");
-  }
-
-  await submitButton.click();
-}
