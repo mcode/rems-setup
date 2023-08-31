@@ -10,11 +10,13 @@ User: The test is acting as the Prescriber role.
 import { expect, test } from "@playwright/test";
 import { testUtilFillOutForm } from "../util/fillOutForm";
 
+/* Ideally these would be sourced from the testing environment, but constants are fine too. */
 const patientName = "Jon Snow";
 const medication = "Turalio";
+const username = "alice";
+const password = "alice";
 
-/** Before each, add the medication request above to the patient and submit to PIMS. */
-test.beforeEach(async ({ context, page }, testInfo) => {
+test("UC1: content appears in SMART on FHIR, fill out patient enroll form", async ({ context, page }) => {
   // 1. Go to the EHR UI at <http://localhost:3000>
   await page.goto("localhost:3000");
 
@@ -23,13 +25,13 @@ test.beforeEach(async ({ context, page }, testInfo) => {
   await expect(page.getByText("No Cards")).toBeVisible();
   await expect(page.getByRole("button", { name: "Send RX to PIMS" })).toBeDisabled();
 
-  // Clear any lingering state in the database.
+  // 1b. Clear any lingering state in the database.
   const settingsButton = page.locator(".settings"); // FIXME use of class-based selector
   await settingsButton.click();
   await page.getByRole("button", { name: /Reset REMS/ }).click();
   await page.getByRole("button", { name: /Reset PIMS/ }).click();
   await page.getByRole("button", { name: /Clear EHR/ }).click();
-  // Close Settings
+  // 1c. Close Settings
   await settingsButton.click();
 
   // 2. Click **Patient Select** button in upper left.
@@ -81,30 +83,28 @@ test.beforeEach(async ({ context, page }, testInfo) => {
 
   await expect(patientRequirementsCard).toBeInViewport();
   await expect(prescriberRequirementsCard).toBeVisible();
-});
 
-test("content appears in SMART on FHIR, fill out patient enroll form", async ({ context, page }) => {
   // BEFORE the click, set up promise to listen for new tab being opened. see <https://playwright.dev/docs/pages#handling-new-pages>
-  const smartOnFHIRPagePromise = page.waitForEvent("popup");
+  // const smartOnFHIRPagePromise = page.waitForEvent("popup");
 
   // 9. Select **Patient Enrollment Form** on the returned CDS card with summary **Drug Has REMS: Documentation Required**.
   // TODO: Workflow has changed, fix instructions
-  await page.getByRole("button", { name: /Patient Enrollment Form/ }).click();
+  await page.getByRole("button", { name: /Patient Enrollment Form/i }).click();
 
   // Actually wait for the new page, and use it for the next part of the test.
+  const smartOnFHIRPagePromise = page.waitForEvent("popup");
   const smartPage = await smartOnFHIRPagePromise;
   await smartPage.waitForLoadState("networkidle");
 
   // 10. If you are asked for login credentials, use **alice** for username and **alice** for password
   // NOTE: You cannot have a conditional in a test, so this is written to always require login.
-  await smartPage.getByLabel("Username or email").fill("alice");
-  await smartPage.getByLabel("Password").fill("alice");
+  await smartPage.getByLabel("Username or email").fill(username);
+  await smartPage.getByLabel("Password").fill(password);
   await smartPage.getByRole("button", { name: "Sign In" }).click();
 
   // 11. A webpage should open in a new tab, and after a few seconds, a questionnaire should appear.
   await expect(smartPage).toHaveTitle("REMS SMART on FHIR App");
   await smartPage.waitForLoadState("networkidle");
-
 
   /*
     // BUG: This is somehow passing right now?
@@ -116,7 +116,7 @@ test("content appears in SMART on FHIR, fill out patient enroll form", async ({ 
   */
 
   //////////// 12. Fill out the questionnaire and hit **Submit REMS Bundle**. ////////////////
-  expect(smartPage.getByText("Patient Questionnaire")).toBeVisible();
+  expect(smartPage.getByText("Patient Enrollment")).toBeVisible();
   const submitButton = smartPage.getByRole("button", { name: "Submit REMS Bundle" });
   await testUtilFillOutForm({ page: smartPage, submitButton });
 
@@ -143,6 +143,11 @@ test("content appears in SMART on FHIR, fill out patient enroll form", async ({ 
   /* 14c1: Make sure pharmacy page loaded. */
   await expect(pharmacyPage.getByRole("heading", { name: "Pharmacy" })).toBeVisible();
 
+  /* 14b. Log in again -- is this necessary?. */
+  // await pharmacyPage.getByLabel("Username").fill(username);
+  // await pharmacyPage.getByLabel("Password").fill(password);
+  // await pharmacyPage.getByRole("button", { name: /SIGN IN/i }).click();
+
   /* 15. Click **Doctor Orders** in the top hand navigation menu on the screen */
   await pharmacyPage.getByRole("button", { name: /doctor orders/i }).click();
 
@@ -155,7 +160,7 @@ test("content appears in SMART on FHIR, fill out patient enroll form", async ({ 
 
   /* Find the specific medication's card. */
   // TODO: Update code to make more testable and user-friendly
-  const pharmacyMedCard = pharmacyPage.locator(".MUIPaper-root", { hasText: medication });
+  const pharmacyMedCard = pharmacyPage.locator(".MuiPaper-root", { hasText: medication }).first();
 
   /* 16c2: Verify we are looking at New Orders */
   await expect(pharmacyMedCard).toBeVisible();
@@ -171,8 +176,10 @@ test("content appears in SMART on FHIR, fill out patient enroll form", async ({ 
   // Back to CRD App on :3000
   await page.goto("localhost:3000");
   await page.getByRole("button", { name: "Patient Select" }).click();
-  const patientBox = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
-  await patientBox.getByText("Gender:").click({ force: true }); // FIXME "click 'somewhere' in patient row" is fragile.
+
+  const patientBox2 = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
+  await patientBox2.getByRole("combobox").first().click(); // FIXME: super fragile selector
+  await patientBox2.getByText("Gender:").click({ force: true }); // FIXME "click 'somewhere' in patient row" is fragile.
 
   const smartOnFHIRPagePromise2 = page.waitForEvent("popup");
 
@@ -183,7 +190,7 @@ test("content appears in SMART on FHIR, fill out patient enroll form", async ({ 
 
   /* 18. From the medications dropdown select **Turalio 200 MG Oral Capsule**, which should populate the screen with cards
     similar to those seen in step 7. */
-  await page3.getByText("Select Medication", { exact: true }).selectOption("Turalio");
+  await page3.getByText("Select Medication", { exact: true }).selectOption(medication);
 
   /* 19a. Use the **Check ETASU** button to get status updates on the REMS request */
   await page3.getByRole("button", { name: /Check ETASU/i }).click();
