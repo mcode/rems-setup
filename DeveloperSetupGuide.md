@@ -263,10 +263,10 @@ following--you will need to change the values for user name, password, etc. base
 At this point, you should have credentials to access VSAC. If not, please refer to [Prerequisites](#prerequisites) for
 how to create these credentials and return here after you have confirmed you can access VSAC.
 
-Create a local copy of the file `REMS/.env.example` and rename that copy to `REMS/.env` to reflect your credentials:
+Create a local copy of the file `REMS/.env` and rename that copy to `REMS/.env.local` to reflect your credentials:
 
 ```bash
-# In file: REMS/.env
+# In file: REMS/.env.local
 
 VSAC_API_KEY = <the key you got from the VSAC web site>
 COMPOSE_PROJECT_NAME = <name of Docker Compose project>

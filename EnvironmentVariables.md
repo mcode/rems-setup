@@ -6,7 +6,7 @@
 
 - mcode/rems-setup
 
-  - .env.example
+  - .env
     - `VSAC_API_KEY`: `#Replace_me_with_your_api_key`
     - `COMPOSE_PROJECT_NAME`: `rems_dev`
   - docker-compose.yml
@@ -47,7 +47,7 @@
 
 - mcode/REMS
 
-  - src/.env.example
+  - src/.env
     - `MONGO_URL` : `mongodb://rems-user:pass@127.0.0.1:27017`
     - `MONGO_DB_NAME` : `remsadmin`
     - `WHITELIST` : `http://localhost, http://localhost:3005`
