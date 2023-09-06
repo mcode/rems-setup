@@ -29,8 +29,8 @@ The following DRLS components will be deployed in Docker locally:
 2. [(Test) EHR FHIR Service](https://github.com/HL7-DaVinci/test-ehr)
 3. [Documents, Templates, and Rules (DTR) SMART on FHIR app](https://github.com/mcode/dtr)
 4. [Clinical Decision Support (CDS) Library](https://github.com/mcode/CDS-Library)
-5. [CRD Request Generator](https://github.com/mcode/crd-request-generator)
-6. [REMS](https://github.com/mcode/REMS)
+5. [Request Generator](https://github.com/mcode/request-generator)
+6. [rems-admin](https://github.com/mcode/rems-admin)
 7. [Pharmacy Information System](https://github.com/mcode/pharmacy-information-system)
 8. [Keycloak](https://www.keycloak.org/)
 

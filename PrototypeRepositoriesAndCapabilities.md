@@ -8,7 +8,7 @@
 
 ### Repositories
 
-- mcode/REMS
+- mcode/rems-admin
   - REMS Administrator `(4)`
     - Node/TypeScript
     - `(1.1)(3)` CDS Hooks (server) end points
@@ -25,7 +25,7 @@
     - Contains test patient data
     - Supports launching DTR SMART on FHIR app
 
-- mcode/crd-request-generator
+- mcode/request-generator
   - Request Generator `(2)`
     - Node/JavaScript
     - Web Application mimicking the EHR frontend
@@ -73,4 +73,4 @@
 
 - MongoDB
   - Stores data for REMS Admin and PIMS in separate databases
-  - Docker config hosted and stored in mcode/REMS
+  - Docker config hosted and stored in mcode/rems-setup

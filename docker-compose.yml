@@ -25,9 +25,9 @@ services:
       - "host.docker.internal:host-gateway"
 
   # Create crd request generator container
-  crd-request-generator: # Name of our service
-    image: codexrems/crd-request-generator:REMSvCurrent
-    container_name: rems_prod_crd-request-generator
+  request-generator: # Name of our service
+    image: codexrems/request-generator:REMSvCurrent
+    container_name: rems_prod_request-generator
     environment:
       - REACT_APP_REMS_CONFIG=true
     ports: # Port binding to host from docker container

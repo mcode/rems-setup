@@ -15,8 +15,8 @@ This guide will take you through the development environment setup for each of t
 2. [(Test) EHR FHIR Service](https://github.com/HL7-DaVinci/test-ehr)
 3. [Documents, Templates, and Rules (DTR) SMART on FHIR app](https://github.com/mcode/dtr)
 4. [Clinical Decision Support (CDS) Library](https://github.com/mcode/CDS-Library)
-5. [CRD Request Generator](https://github.com/mcode/crd-request-generator)
-6. [REMS](https://github.com/mcode/REMS.git)
+5. [Request Generator](https://github.com/mcode/request-generator)
+6. [rems-admin](https://github.com/mcode/rems-admin.git)
 7. [Pharmacy Information System](https://github.com/mcode/pharmacy-information-system)
 8. [Keycloak](https://www.keycloak.org/)
 
@@ -208,8 +208,8 @@ to install ruby with a package manager, this guide uses [rbenv](https://github.c
    ```bash
    > cd <drlsroot>
    > git clone https://github.com/mcode/test-ehr.git test-ehr
-   > git clone https://github.com/mcode/crd-request-generator.git crd-request-generator
-   > git clone https://github.com/mcode/REMS.git REMS
+   > git clone https://github.com/mcode/request-generator.git request-generator
+   > git clone https://github.com/mcode/rems-admin.git rems-admin
    > git clone https://github.com/mcode/pims.git pims
    > git clone https://github.com/mcode/rems-smart-on-fhir.git rems-smart-on-fhir
    > git clone https://github.com/mcode/rems-setup.git rems-setup
