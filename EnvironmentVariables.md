@@ -4,11 +4,11 @@
 
 <!-- cSpell: off -->
 
-- mcode/REMS
-  - .env.example
-    - `VSAC_API_KEY`: no default value
+- mcode/rems-setup
+
+  - .env
+    - `VSAC_API_KEY`: `#Replace_me_with_your_api_key`
     - `COMPOSE_PROJECT_NAME`: `rems_dev`
-    - `PORTER_ALLOW_DOCKER_HOST_ACCESS`: `true`
   - docker-compose.yml
     - keycloak
       - `KEYCLOAK_USER`: `admin`
@@ -37,7 +37,6 @@
     - crd-request-generator
       - `REACT_APP_REMS_CONFIG`: `true`
     - rems-administrator
-      - `VSAC_API_KEY`: taken from host machine's value
       - `MONGO_URL`: `mongodb://rems-user:pass@pims_remsadmin_mongo:27017`
     - pims_remsadmin_mongo
       - `MONGO_INITDB_ROOT_USERNAME`: `rems-admin-pims-root`
@@ -46,7 +45,24 @@
       - `REMS_ADMIN_BASE`: `http://rems-administrator:8090`
       - `MONGO_URL`: `mongodb://pims_remsadmin_mongo:27017/pims`
 
+- mcode/REMS
+
+  - src/.env
+    - `MONGO_URL` : `mongodb://rems-user:pass@127.0.0.1:27017`
+    - `MONGO_DB_NAME` : `remsadmin`
+    - `WHITELIST` : `http://localhost, http://localhost:3005`
+    - `LOGGING_LEVEL` : `debug`
+    - `PORT` : `8090`
+    - `RESOURCE_SERVER` : `http://localhost:8090`
+    - `AUTH_SERVER_URI` : `http://localhost:8090`
+    - `VSAC_API_KEY` : `changeMe`
+    - `SMART_ENDPOINT` : `http://localhost:4040/launch`
+    - `HTTPS_KEY_PATH` : `server.key`
+    - `HTTPS_CERT_PATH` : `server.cert`
+    - `USE_HTTPS` : `false`
+
 - mcode/rems-smart-on-fhir
+
   - .env
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`: `http://localhost:8090`
     - `REACT_APP_REMS_HOOKS_PATH`: `/cds-services/rems-order-sign`
@@ -76,20 +92,15 @@
 
 ## Repositories that use environment variables
 
+- mcode/rems-setup
+  - docker-compose-dev.yml
+    - rems-administrator
+      - `VSAC_API_KEY`
+  - docker-compose.yml
+    - rems-administrator
+      - `VSAC_API_KEY`
 - mcode/REMS
-  - src/.env
-    - `MONGO_URL` : `mongodb://rems-user:pass@127.0.0.1:27017`
-    - `MONGO_DB_NAME` : `remsadmin`
-    - `WHITELIST` : `http://localhost, http://localhost:3005`
-    - `LOGGING_LEVEL` : `debug`
-    - `PORT` : `8090`
-    - `RESOURCE_SERVER` : `http://localhost:8090`
-    - `AUTH_SERVER_URI` : `http://localhost:8090`
-    - `VSAC_API_KEY` : `changeMe`
-    - `SMART_ENDPOINT` : `http://localhost:3005/launch`
-    - `HTTPS_KEY_PATH` : `server.key`
-    - `HTTPS_CERT_PATH` : `server.cert`
-    - `USE_HTTPS` : `false`
+
   - src/config.ts
     - `WHITELIST`
     - `PORT`
@@ -103,6 +114,7 @@
     - `AUTH_SERVER_URI`
 
 - mcode/test-ehr
+
   - src/main/java/ca/uhn/fhir/jpa/starter/EnvironmentHelper.java
     - `elasticsearch.required_index_status`
     - `elasticsearch.schema_management_strategy`
@@ -125,6 +137,7 @@
     - `redirect_base`
 
 - mcode/crd-request-generator
+
   - src/registerServiceWorker.js
     - `NODE_ENV`
     - `PUBLIC_URL`
@@ -154,6 +167,7 @@
     - `REACT_APP_CLIENT`
 
 - mcode/dtr
+
   - bin/prod
     - `REACT_APP_SERVER_PORT`
     - `REACT_APP_INITIAL_CLIENT`
@@ -168,6 +182,7 @@
     - `REACT_APP_EPIC_SUPPORTED_QUERIES`
 
 - mcode/pims
+
   - src/backend/server.js
     - `BACKEND_PORT`
     - `ALLOWED_ORIGIN`
