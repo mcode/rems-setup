@@ -28,4 +28,6 @@ export async function testUtilFillOutForm(props: {
   expect(await emptyDateFields).toHaveLength(0);
 
   await submitButton.click();
+
+  expect(page.getByText("Documents successfully submitted")).toBeVisible();
 }
