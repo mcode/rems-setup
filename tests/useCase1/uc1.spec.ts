@@ -9,12 +9,11 @@ User: The test is acting as the Prescriber role.
 
 import { expect, test } from "@playwright/test";
 import { testUtilFillOutForm } from "../util/fillOutForm";
+import { testUtilKeycloakLogin } from "../util/keycloakLogin";
 
 /* Ideally these would be sourced from the testing environment, but constants are fine too. */
 const patientName = "Jon Snow";
 const medication = "Turalio";
-const username = "alice";
-const password = "alice";
 
 test("UC1: content appears in SMART on FHIR, fill out patient enroll form", async ({ context, page }) => {
   // 1. Go to the EHR UI at <http://localhost:3000>
@@ -98,9 +97,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   // 10. If you are asked for login credentials, use **alice** for username and **alice** for password
   // NOTE: You cannot have a conditional in a test, so this is written to always require login.
-  await smartPage.getByLabel("Username or email").fill(username);
-  await smartPage.getByLabel("Password").fill(password);
-  await smartPage.getByRole("button", { name: "Sign In" }).click();
+  await testUtilKeycloakLogin({ page: smartPage });
 
   // 11. A webpage should open in a new tab, and after a few seconds, a questionnaire should appear.
   await expect(smartPage).toHaveTitle("REMS SMART on FHIR App");
@@ -117,8 +114,8 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   //////////// 12. Fill out the questionnaire and hit **Submit REMS Bundle**. ////////////////
   expect(smartPage.getByText("Patient Enrollment")).toBeVisible();
-  const submitButton = smartPage.getByRole("button", { name: "Submit REMS Bundle" });
-  await testUtilFillOutForm({ page: smartPage, submitButton });
+  const peSubmitButton = smartPage.getByRole("button", { name: "Submit REMS Bundle" });
+  await testUtilFillOutForm({ page: smartPage, submitButton: peSubmitButton });
 
   /*
     - 12a. Alternatively fill out only some of the questionnaire for an asynchronous workflow and hit **Save to EHR**.
@@ -144,9 +141,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await expect(pharmacyPage.getByRole("heading", { name: "Pharmacy" })).toBeVisible();
 
   /* 14b. Log in again -- is this necessary?. */
-  // await pharmacyPage.getByLabel("Username").fill(username);
-  // await pharmacyPage.getByLabel("Password").fill(password);
-  // await pharmacyPage.getByRole("button", { name: /SIGN IN/i }).click();
+  //await testUtilKeycloakLogin({ page: pharmacyPage });
 
   /* 15. Click **Doctor Orders** in the top hand navigation menu on the screen */
   await pharmacyPage.getByRole("button", { name: /doctor orders/i }).click();
@@ -231,6 +226,24 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   /* 20. Use the links for the **Prescriber Enrollment Form** and **Prescriber Knowledge Assessment** Questionnaires and
     repeat steps 9-12 to submit those ETASU requirements and see how the ETASU status changes in both the Pharmacist UI
     and Prescriber UI. */
+
+  /** 20a: Fill out prescriber knowledge assessment. */
+  await page3.getByRole("button", { name: "Prescriber Knowledge Assessment" }).click();
+  const pkaPage = await page.waitForEvent("popup");
+  await pkaPage.waitForLoadState("networkidle");
+  await testUtilKeycloakLogin({ page: pkaPage });
+
+  const pkaSubmitButton = pkaPage.getByRole("button", { name: "Submit REMS Bundle" });
+  await testUtilFillOutForm({ page: pkaPage, submitButton: pkaSubmitButton });
+
+  /** 20b: Fill out presscriber enrollment form */
+  await page3.getByRole("button", { name: /Prescriber Enrollment/ }).click();
+  const pefPage = await page.waitForEvent("popup");
+  await pefPage.waitForLoadState("networkidle");
+  await testUtilKeycloakLogin({ page: pefPage });
+
+  const pefSubmitButton = pefPage.getByRole("button", { name: "Submit REMS Bundle" });
+  await testUtilFillOutForm({ page: pefPage, submitButton: pefSubmitButton });
 
   /* 21. Once all the REMS ETASU are met, go back to <http://localhost:5050> and play the role of the Pharmacist, using the
     **Verify Order** button to move the prescription over to the **Verified Orders** Tab. Click on the **Verified
