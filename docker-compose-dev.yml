@@ -48,22 +48,22 @@ services:
       - rems_dev_pims_remsadmin_mongo:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
 
-  crd-request-generator:
+  request-generator:
     build:
-      context: ../crd-request-generator
+      context: ../request-generator
       dockerfile: Dockerfile.dev
-    container_name: rems_dev_crd-request-generator
+    container_name: rems_dev_request-generator
     environment:
       - REACT_APP_REMS_CONFIG=true
     ports:
       - "3000:3000"
       - "3001:3001"
     volumes:
-      - rems_dev_crd-request-generator-sync:/home/node/app/crd-request-generator:nocopy #  nocopy is important
-      - rems_dev_crd-request-generator-nodeModules:/home/node/app/crd-request-generator/node_modules
-      - rems_dev_crd-request-generator-databaseData:/home/node/app/crd-request-generator/databaseData
-      - rems_dev_crd-request-generator-build:/home/node/app/crd-request-generator/build
-      - rems_dev_crd-request-generator-logs:/home/node/app/crd-request-generator/logs
+      - rems_dev_request-generator-sync:/home/node/app/request-generator:nocopy #  nocopy is important
+      - rems_dev_request-generator-nodeModules:/home/node/app/request-generator/node_modules
+      - rems_dev_request-generator-databaseData:/home/node/app/request-generator/databaseData
+      - rems_dev_request-generator-build:/home/node/app/request-generator/build
+      - rems_dev_request-generator-logs:/home/node/app/request-generator/logs
 
   rems-smart-on-fhir:
     build:
@@ -80,7 +80,7 @@ services:
 
   rems-administrator:
     build:
-      context: '../REMS'
+      context: '../rems-admin'
       dockerfile: Dockerfile.dev
     container_name: rems_dev_rems-administrator
     ports:
@@ -90,9 +90,9 @@ services:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
     volumes:
-      - rems_dev_rems-sync:/REMS:nocopy #  nocopy is important
-      - rems_dev_rems-nodeModules:/REMS/node_modules
-      - rems_dev_rems-logs:/REMS/logs
+      - rems_dev_rems-sync:/rems-admin:nocopy #  nocopy is important
+      - rems_dev_rems-nodeModules:/rems-admin/node_modules
+      - rems_dev_rems-logs:/rems-admin/logs
 
   pims:
     build:
@@ -113,7 +113,7 @@ services:
 volumes:
   rems_dev_test-ehr-sync:
     external: true
-  rems_dev_crd-request-generator-sync:
+  rems_dev_request-generator-sync:
     external: true
   rems_dev_rems-sync:
     external: true
@@ -130,10 +130,10 @@ volumes:
   rems_dev_test-ehr-target:
   rems_dev_test-ehr-logs:
   rems_dev_crd-resources-build:
-  rems_dev_crd-request-generator-nodeModules:
-  rems_dev_crd-request-generator-databaseData:
-  rems_dev_crd-request-generator-build:
-  rems_dev_crd-request-generator-logs:
+  rems_dev_request-generator-nodeModules:
+  rems_dev_request-generator-databaseData:
+  rems_dev_request-generator-build:
+  rems_dev_request-generator-logs:
   rems_dev_pims-logs:
   rems_dev_pims-nodeModules:
   rems_dev_rems-nodeModules:

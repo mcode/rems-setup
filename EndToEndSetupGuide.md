@@ -14,7 +14,7 @@ Follow this guide if you would like to start each application without using Dock
 - Java, gradle
 	- test-ehr
 - node
-	- REMS, pims, dtr, rems-smart-on-fhir, crd-request-generator
+	- rems-admin, pims, dtr, rems-smart-on-fhir, request-generator
 - git
 	- On Windows 'Git Bash' was used for the command line interface
 
@@ -26,8 +26,8 @@ Follow this guide if you would like to start each application without using Dock
 ## Clone Repos
 ```
 git clone https://github.com/mcode/test-ehr.git
-git clone https://github.com/mcode/crd-request-generator.git
-git clone https://github.com/mcode/REMS.git
+git clone https://github.com/mcode/request-generator.git
+git clone https://github.com/mcode/rems-admin.git
 git clone https://github.com/mcode/pims.git
 git clone https://github.com/mcode/dtr.git
 git clone https://github.com/mcode/rems-smart-on-fhir.git
@@ -114,11 +114,11 @@ git clone https://github.com/mcode/rems-setup.git
 
 	`gradle loadData`
 
-### crd-request-generator
+### request-generator
 
-- Navigate into directory already cloned from GitHub [www.github.com/mcode/crd-request-generator](https://www.github.com/mcode/crd-request-generator)
+- Navigate into directory already cloned from GitHub [www.github.com/mcode/request-generator](https://www.github.com/mcode/request-generator)
 
-	`cd crd-request-generator`
+	`cd request-generator`
 
 - Setup
 
@@ -130,10 +130,10 @@ git clone https://github.com/mcode/rems-setup.git
 
 ## Core Applications
 
-### REMS
-- Navigate into directory already cloned from GitHub [www.github.com/mcode/REMS](https://www.github.com/mcode/REMS)
+### rems-admin
+- Navigate into directory already cloned from GitHub [www.github.com/mcode/rems-admin](https://www.github.com/mcode/rems-admin)
 
-	`cd REMS`
+	`cd rems-admin`
 
 - Submodule Initialization
 

@@ -37,7 +37,7 @@ You can find complete end-to-end full-stack set up guides for the REMS Proof of 
 1. Clone the REMS repositories from Github:
 
     ```bash
-    git clone https://github.com/mcode/REMS.git REMS  
+    git clone https://github.com/mcode/rems-admin.git rems-admin  
     ```
 
 2. Run dockerRunner.sh script

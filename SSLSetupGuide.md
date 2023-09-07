@@ -69,7 +69,7 @@ To launch the test EHR with ssl enabled, set the following environment variables
 | `EHR_KEY_PASSWORD`       | the password for the key                                              |
 | `EHR_KEY_ALIAS`          | the alias of the key                                                  |
 
-## crd-request-generator
+## request-generator
 
 ### Generate Certs
 
