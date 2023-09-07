@@ -1,7 +1,7 @@
 {
 	"folders": [
 		{
-			"path": "../crd-request-generator"
+			"path": "../request-generator"
 		},
 		{
 			"path": "."
@@ -10,7 +10,7 @@
 			"path": "../pims"
 		},
 		{
-			"path": "../REMS"
+			"path": "../rems-admin"
 		},
 		{
 			"path": "../rems-info"
@@ -42,7 +42,7 @@
 			  "preLaunchTask": "Launch Chrome in Debug Mode",
 			  "configurations": [
 				  "Debug Test-EHR (Local + Docker)", 
-				  "Debug CRD-Request-Generator (Attach Docker)", 
+				  "Debug Request-Generator (Attach Docker)", 
 			// ToDo: Add in PIMS Debugging in Docker
 			// ToDo: Add in REMS Debugging in Docker
 			// ToDo: Add in rems-smart-on-fhir Debuggin in Docker
@@ -104,7 +104,23 @@
 		  ]
 	},
 	"settings": {
-		"debug.onTaskErrors": "debugAnyway"
+		"debug.onTaskErrors": "debugAnyway",
+		"cSpell.words": [
+			"BUILDKIT",
+			"davinci",
+			"DRLS",
+			"drlsroot",
+			"ehrserver",
+			"ETASU",
+			"INITDB",
+			"Keycloak",
+			"mcode",
+			"NCPDP",
+			"PIMS",
+			"Turalio",
+			"UMLS",
+			"VLCS"
+		]
 	},
 	"extensions": {
 		"recommendations": [
