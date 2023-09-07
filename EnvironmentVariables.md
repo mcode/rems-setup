@@ -16,7 +16,7 @@
       - `DB_VENDOR`: `h2`
     - test-ehr
       - `oauth_token`: `http://host.docker.internal:8180/auth/realms/ClientFhirServer/protocol/openid-connect/token`
-    - crd-request-generator
+    - request-generator
       - `REACT_APP_REMS_CONFIG`: `true`
     - rems-administrator
       - `VSAC_API_KEY`: taken from host machine's value
@@ -34,7 +34,7 @@
       - `DB_VENDOR`: `h2`
     - test-ehr
       - `oauth_token`: `http://host.docker.internal:8180/auth/realms/ClientFhirServer/protocol/openid-connect/token`
-    - crd-request-generator
+    - request-generator
       - `REACT_APP_REMS_CONFIG`: `true`
     - rems-administrator
       - `MONGO_URL`: `mongodb://rems-user:pass@pims_remsadmin_mongo:27017`
@@ -45,7 +45,9 @@
       - `REMS_ADMIN_BASE`: `http://rems-administrator:8090`
       - `MONGO_URL`: `mongodb://pims_remsadmin_mongo:27017/pims`
 
-- mcode/REMS
+- mcode/rems-admin
+  - .env.example
+    - `VSAC_API_KEY`: no default value
 
   - src/.env
     - `MONGO_URL` : `mongodb://rems-user:pass@127.0.0.1:27017`
@@ -92,6 +94,7 @@
 
 ## Repositories that use environment variables
 
+
 - mcode/rems-setup
   - docker-compose-dev.yml
     - rems-administrator
@@ -99,7 +102,8 @@
   - docker-compose.yml
     - rems-administrator
       - `VSAC_API_KEY`
-- mcode/REMS
+
+- mcode/rems-admin
 
   - src/config.ts
     - `WHITELIST`
@@ -136,8 +140,8 @@
     - `oauth_token`
     - `redirect_base`
 
-- mcode/crd-request-generator
-
+- mcode/request-generator
+- 
   - src/registerServiceWorker.js
     - `NODE_ENV`
     - `PUBLIC_URL`
