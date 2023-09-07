@@ -7,7 +7,8 @@ const PASSWORD = "alice";
 /** Attempts to log into a fresh Keycloak page using a hard-coded username/password, or the one specified in the call. */
 export async function testUtilKeycloakLogin(props: { page: Page; username?: string; password?: string }) {
   const { page, username = USERNAME, password = PASSWORD } = props;
-
+  
+  await page.waitForLoadState("networkidle");
   await page.getByLabel("Username or email").fill(username);
   await page.getByLabel("Password").fill(password);
   const submitButton = page.getByRole("button", { name: "Sign In" });

@@ -15,9 +15,12 @@ import { testUtilKeycloakLogin } from "../util/keycloakLogin";
 const patientName = "Jon Snow";
 const medication = "Turalio";
 
+// test.slow();
+
 test("UC1: content appears in SMART on FHIR, fill out patient enroll form", async ({ context, page }) => {
   // 1. Go to the EHR UI at <http://localhost:3000>
   await page.goto("localhost:3000");
+  await page.waitForLoadState("networkidle");
 
   // 1c1. Expect blank state.
   await expect(page).toHaveTitle(/EHR/);
@@ -84,16 +87,13 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await expect(prescriberRequirementsCard).toBeVisible();
 
   // BEFORE the click, set up promise to listen for new tab being opened. see <https://playwright.dev/docs/pages#handling-new-pages>
-  // const smartOnFHIRPagePromise = page.waitForEvent("popup");
+  const smartOnFHIRPagePromise = page.waitForEvent("popup");
 
   // 9. Select **Patient Enrollment Form** on the returned CDS card with summary **Drug Has REMS: Documentation Required**.
-  // TODO: Workflow has changed, fix instructions
   await page.getByRole("button", { name: /Patient Enrollment Form/i }).click();
 
   // Actually wait for the new page, and use it for the next part of the test.
-  const smartOnFHIRPagePromise = page.waitForEvent("popup");
   const smartPage = await smartOnFHIRPagePromise;
-  await smartPage.waitForLoadState("networkidle");
 
   // 10. If you are asked for login credentials, use **alice** for username and **alice** for password
   // NOTE: You cannot have a conditional in a test, so this is written to always require login.
@@ -104,7 +104,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await smartPage.waitForLoadState("networkidle");
 
   /*
-    // BUG: This is somehow passing right now?
+    // This is somehow passing right now?
     // 12c1: Error if form not completely filled out.
     await submitButton.click();
     await expect(smartPage.getByText(/Error: Partially completed form/)).toBeVisible();
@@ -170,25 +170,31 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   // Back to CRD App on :3000
   await page.goto("localhost:3000");
+  await page.waitForLoadState("networkidle");
   await page.getByRole("button", { name: "Patient Select" }).click();
+  await page.waitForLoadState("networkidle");
 
   const patientBox2 = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
   await patientBox2.getByRole("combobox").first().click(); // FIXME: super fragile selector
   await patientBox2.getByText("Gender:").click({ force: true }); // FIXME "click 'somewhere' in patient row" is fragile.
 
   const smartOnFHIRPagePromise2 = page.waitForEvent("popup");
-
   await page.getByRole("button", { name: "Launch SMART on FHIR App" }).click();
-
   const page3 = await smartOnFHIRPagePromise2;
   await page3.waitForLoadState("networkidle");
 
   /* 18. From the medications dropdown select **Turalio 200 MG Oral Capsule**, which should populate the screen with cards
     similar to those seen in step 7. */
-  await page3.getByText("Select Medication", { exact: true }).selectOption(medication);
+
+  await page3.getByLabel("Select Medication Request").click();
+
+  await page3.getByText(medication).click();
 
   /* 19a. Use the **Check ETASU** button to get status updates on the REMS request */
   await page3.getByRole("button", { name: /Check ETASU/i }).click();
+
+  /* 19aw. Wait for the network accesses to complete, otherwise we'll hit the popup before the status loads. */
+  await page3.waitForLoadState("networkidle", { timeout: 500 });
 
   // TODO: fragile use of class selector
   const remsPopup = page3.locator(".MuiBox-root", { hasText: "REMS Status" });
@@ -206,8 +212,9 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   ).toEqual(4);
 
   /** Dismiss the modal */
-  await page3.locator(".MuiModal-backdrop").click(); // TODO fragile class selector
-  await expect(remsPopup.getByRole("heading", { name: "REMS Status" })).not.toBeVisible();
+  await remsPopup.press("Escape");
+
+  await expect(remsPopup).not.toBeVisible();
 
   /* 19b. Use the **Check Pharmacy** buttons to get status updates on the prescription  */
 
@@ -220,16 +227,18 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await expect(pharmacyPopup.getByText("Status: Pending")).toBeVisible();
 
   /** Dismiss the modal */
-  await page3.locator(".MuiModal-backdrop").click(); // TODO fragile class selector
-  await expect(pharmacyPopup.getByRole("heading", { name: "Pharmacy Status" })).not.toBeVisible();
+  await page3.press("html", "Escape");
+
+  await expect(pharmacyPopup).not.toBeVisible();
 
   /* 20. Use the links for the **Prescriber Enrollment Form** and **Prescriber Knowledge Assessment** Questionnaires and
     repeat steps 9-12 to submit those ETASU requirements and see how the ETASU status changes in both the Pharmacist UI
     and Prescriber UI. */
 
   /** 20a: Fill out prescriber knowledge assessment. */
+  const pkaPromise = page.waitForEvent("popup");
   await page3.getByRole("button", { name: "Prescriber Knowledge Assessment" }).click();
-  const pkaPage = await page.waitForEvent("popup");
+  const pkaPage = await pkaPromise;
   await pkaPage.waitForLoadState("networkidle");
   await testUtilKeycloakLogin({ page: pkaPage });
 
@@ -237,8 +246,9 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await testUtilFillOutForm({ page: pkaPage, submitButton: pkaSubmitButton });
 
   /** 20b: Fill out presscriber enrollment form */
+  const pefPromise = page.waitForEvent("popup");
   await page3.getByRole("button", { name: /Prescriber Enrollment/ }).click();
-  const pefPage = await page.waitForEvent("popup");
+  const pefPage = await pefPromise;
   await pefPage.waitForLoadState("networkidle");
   await testUtilKeycloakLogin({ page: pefPage });
 
