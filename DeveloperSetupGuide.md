@@ -214,7 +214,7 @@ to install ruby with a package manager, this guide uses [rbenv](https://github.c
    > git clone https://github.com/mcode/rems-smart-on-fhir.git rems-smart-on-fhir
    > git clone https://github.com/mcode/rems-setup.git rems-setup
 
-   > cd REMS
+   > cd rems-admin
    > git submodule update --init
 
    > cd ..
