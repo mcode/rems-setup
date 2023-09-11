@@ -25,7 +25,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   // 1c1. Expect blank state.
   await expect(page).toHaveTitle(/EHR/);
   await expect(page.getByText("No Cards")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Send RX to PIMS" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Send RX to PIMS" })).not.toBeVisible();
 
   // 1b. Clear any lingering state in the database.
   const settingsButton = page.locator(".settings"); // FIXME use of class-based selector
@@ -37,7 +37,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await settingsButton.click();
 
   // 2. Click **Patient Select** button in upper left.
-  await page.getByRole("button", { name: /Patient Select/ }).click();
+  await page.getByRole("button", { name: /Select A Patient/i }).click();
 
   // 3. Find **Jon Snow** in the list of patients and click the first dropdown menu next to his name.
   const patientBox = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
@@ -60,13 +60,13 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await expect(page.getByText(medicationRE)).toBeVisible();
 
   // 6. Click **Send Rx to PIMS** at the bottom of the page to send a prescription to the Pharmacist.
-  await page.getByRole("button", { name: "Send Rx to PIMS" }).click();
+  await page.getByRole("button", { name: "Send Rx to Pharmacy" }).click();
 
   // TODO: Expect feedback! but GUI doesn't show any yet.
 
   // 7. Click **Submit to REMS-Admin** at the bottom of the page, which demonstrates the case where an EHR has CDS Hooks
   //    implemented natively.
-  await page.getByRole("button", { name: "Submit to REMS-Admin" }).click();
+  await page.getByRole("button", { name: "Sign Order" }).click();
 
   // 8. After several seconds you should receive a response in the form of two **CDS cards**:
   // ??? what is the right timeout here?
