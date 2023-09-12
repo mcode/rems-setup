@@ -5,7 +5,6 @@
 <!-- cSpell: off -->
 
 - mcode/rems-setup
-
   - .env
     - `VSAC_API_KEY`: `#Replace_me_with_your_api_key`
     - `COMPOSE_PROJECT_NAME`: `rems_dev`
@@ -48,7 +47,6 @@
 - mcode/rems-admin
   - .env.example
     - `VSAC_API_KEY`: no default value
-
   - src/.env
     - `MONGO_URL` : `mongodb://rems-user:pass@127.0.0.1:27017`
     - `MONGO_DB_NAME` : `remsadmin`
@@ -64,7 +62,6 @@
     - `USE_HTTPS` : `false`
 
 - mcode/rems-smart-on-fhir
-
   - .env
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`: `http://localhost:8090`
     - `REACT_APP_REMS_HOOKS_PATH`: `/cds-services/rems-order-sign`
@@ -104,7 +101,6 @@
       - `VSAC_API_KEY`
 
 - mcode/rems-admin
-
   - src/config.ts
     - `WHITELIST`
     - `PORT`
@@ -118,7 +114,6 @@
     - `AUTH_SERVER_URI`
 
 - mcode/test-ehr
-
   - src/main/java/ca/uhn/fhir/jpa/starter/EnvironmentHelper.java
     - `elasticsearch.required_index_status`
     - `elasticsearch.schema_management_strategy`
@@ -141,7 +136,6 @@
     - `redirect_base`
 
 - mcode/request-generator
-- 
   - src/registerServiceWorker.js
     - `NODE_ENV`
     - `PUBLIC_URL`
@@ -170,23 +164,7 @@
     - `REACT_APP_REALM`
     - `REACT_APP_CLIENT`
 
-- mcode/dtr
-
-  - bin/prod
-    - `REACT_APP_SERVER_PORT`
-    - `REACT_APP_INITIAL_CLIENT`
-  - bin/template
-    - `REACT_APP_SERVER_PORT`
-    - `REACT_APP_INITIAL_CLIENT`
-  - src/backend/routes/metadata.js
-    - `FHIR_VERSION`
-  - bin/www
-    - `PORT`
-  - src/elmExecutor/buildPopulatedResourceBundle.js
-    - `REACT_APP_EPIC_SUPPORTED_QUERIES`
-
 - mcode/pims
-
   - src/backend/server.js
     - `BACKEND_PORT`
     - `ALLOWED_ORIGIN`
