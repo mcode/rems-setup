@@ -195,8 +195,7 @@
 	npm install
 
 	# Run
-	npm start # Mac or Linux
-	PORT=5050 npm start # Windows
+	PORT=5050 npm start
 	```
 
 ### rems-smart-on-fhir
@@ -212,6 +211,5 @@
 	npm install
 
 	# Run
-	npm start # Mac or Linux
-	PORT=4040 npm run start # Windows
+	PORT=4040 npm start
 	```
