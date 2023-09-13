@@ -6,8 +6,8 @@ services:
     ports:
       - '8180:8080'
     environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
       - DB_VENDOR=h2
     volumes:
       - rems_dev_keycloak-data:/opt/keycloak/data/
@@ -32,7 +32,6 @@ services:
       - rems_dev_test-ehr-bin:/test-ehr/bin
       - rems_dev_test-ehr-build:/test-ehr/build
       - rems_dev_test-ehr-target:/test-ehr/target
-      - rems_dev_test-ehr-logs:/test-ehr/logs
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
@@ -76,7 +75,6 @@ services:
     volumes:
       - rems_dev_rems-smart-on-fhir-sync:/home/node/app/rems-smart-on-fhir:nocopy #  nocopy is important
       - rems_dev_rems-smart-on-fhir-nodeModules:/home/node/app/rems-smart-on-fhir/node_modules
-      - rems_dev_rems-smart-on-fhir-logs:/home/node/app/rems-smart-on-fhir/logs
 
   rems-administrator:
     build:
@@ -90,9 +88,9 @@ services:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
     volumes:
-      - rems_dev_rems-sync:/rems-admin:nocopy #  nocopy is important
-      - rems_dev_rems-nodeModules:/rems-admin/node_modules
-      - rems_dev_rems-logs:/rems-admin/logs
+      - rems_dev_rems-admin-sync:/rems-admin:nocopy #  nocopy is important
+      - rems_dev_rems-admin-nodeModules:/rems-admin/node_modules
+      - rems_dev_rems-admin-logs:/rems-admin/logs
 
   pims:
     build:
@@ -106,16 +104,17 @@ services:
       REMS_ADMIN_BASE: http://rems-administrator:8090
       MONGO_URL: mongodb://pims_remsadmin_mongo:27017/pims
     volumes:
-      - rems_dev_pims-sync:/home/node/app/pims:nocopy
-      - rems_dev_pims-nodeModules:/home/node/app/pims/node_modules
-      - rems_dev_pims-logs:/home/node/app/pims/logs
+      - rems_dev_pims-sync:/home/node/app:nocopy
+      - rems_dev_pims-nodeModules:/home/node/app/frontend/node_modules
+      - rems_dev_pims-backend-nodeModules:/home/node/app/backend/node_modules
+      - rems_dev_pims-backend-dist:/home/node/app/backend/dist
 
 volumes:
   rems_dev_test-ehr-sync:
     external: true
   rems_dev_request-generator-sync:
     external: true
-  rems_dev_rems-sync:
+  rems_dev_rems-admin-sync:
     external: true
   rems_dev_pims-sync:
     external: true
@@ -128,7 +127,6 @@ volumes:
   rems_dev_test-ehr-bin:
   rems_dev_test-ehr-build:
   rems_dev_test-ehr-target:
-  rems_dev_test-ehr-logs:
   rems_dev_crd-resources-build:
   rems_dev_request-generator-nodeModules:
   rems_dev_request-generator-databaseData:
@@ -136,7 +134,10 @@ volumes:
   rems_dev_request-generator-logs:
   rems_dev_pims-logs:
   rems_dev_pims-nodeModules:
-  rems_dev_rems-nodeModules:
-  rems_dev_rems-logs:
+  rems_dev_pims-backend-nodeModules:
+  rems_dev_pims-backend-dist:
+  rems_dev_rems-admin-nodeModules:
+  rems_dev_rems-admin-logs:
   rems_dev_rems-smart-on-fhir-nodeModules:
   rems_dev_rems-smart-on-fhir-logs:
+
