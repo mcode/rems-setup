@@ -34,16 +34,6 @@
       - `(1.2)(3)` Handles CARDS returned from REMS Admin to launch DTR
       - Sends Rx to PIMS using NCPDP Script NewRx
 
-- mcode/dtr
-  - DTR Server
-    - Node/JavaScript
-    - `(1.3)` SMART on FHIR application
-    - `(1.4)` Retrieves Questionnaires and other resources from REMS Admin
-    - Runs CQL to pre-populate Questionnaire with data from the Test EHR
-    - Sends completed Questionnaires to REMS Admin
-    - Saves partially completed Questionnaires to Test EHR
-    - After submitting completed form to REMS Admin, displays page showing ETASU and Pharmacy status
-
 - mcode/pims
   - Pharmacy Information System `(6)`
     - Node/TypeScript

@@ -1,60 +1,53 @@
-# REMS-Docker - The Ultimate Guide to Running DRLS REMS for Local Development
+# Docker Developer Setup Guide 
+>Follow this guide if you would  like to use [Docker](https://docs.docker.com/get-started/overview/) for running REMS Integration Prototype for Local Development.
+
+
+## Table of Contents
+
+  - [Purpose of this guide](#purpose-of-this-guide)
+    - [Expected Functionality](#expected-functionality)
+  - [Prerequisites](#prerequisites)
+    - [Setting Environment Variables & System Path](#setting-environment-variables-and-system-path)
+  - [Install core tools](#install-core-tools)
+  - [Clone REMS repositories](#clone-rems-repositories)
+  - [VS Code & VSAC](#open-rems-as-vs-code-workspace)
+    - [Pre-configured settings in the VS Code workspace](#pre-configured-settings-in-the-vs-code-workspace)
+    - [Add VSAC credentials](#add-vsac-credentials-to-your-development-environment)
+  - [Run the Run REMS Integration Prototype](#run-rems-integration-prototype)
+    - [Start application using docker-sync](#start-application-using-docker-sync)
+    - [Debugging docker-sync application](#debugging-docker-sync-application)
+    - [Stop docker-sync & Cleaning](#stop-docker-sync-application-and-remove-all-containersvolumesimages)
+    - [Rebuilding Images & Containers](#rebuilding-images-and-containers)
+    - [Useful docker-sync commands](#useful-docker-sync-commands)
+  - [Verify the REMS prototype is working](#verify-the-rems-integration-prototype-is-working)
+  - [Running with SSL](#running-with-ssl)
 
 ## Purpose of this guide
 
-This document details the installation process for the dockerized version of the **REMS Proof of Concept Prototype
-Workflow** system for Local Development. Be aware that each component of DRLS has its own README where you will find
+This document details the installation process for the dockerized version of the **REMS Integration Prototype**
+workflow for Local Development. Be aware that each component has its own README where you will find
 more detailed documentation. This document **is not designed to replace those individual READMEs**.
 
-This document **is designed to take you through the entire set up process for DRLS using docker containers**. It is a
-standalone guide that does not depend on any supplementary DRLS documentation.
+This document is designed to take you through the entire set up process for the **REMS Integration Prototype** using [Docker containers](https://www.docker.com/resources/what-container/).
 
-This guide will take you through the development environment setup for each of the following DRLS components:
+This guide will take you through the development environment setup for each of the following REMS components:
 
-1. [Coverage Requirements Discovery (CRD)](https://github.com/mcode/CRD)
-2. [(Test) EHR FHIR Service](https://github.com/HL7-DaVinci/test-ehr)
-3. [Documents, Templates, and Rules (DTR) SMART on FHIR app](https://github.com/mcode/dtr)
-4. [Clinical Decision Support (CDS) Library](https://github.com/mcode/CDS-Library)
-5. [Request Generator](https://github.com/mcode/request-generator)
-6. [rems-admin](https://github.com/mcode/rems-admin.git)
-7. [Pharmacy Information System](https://github.com/mcode/pharmacy-information-system)
-8. [Keycloak](https://www.keycloak.org/)
+
+1. [test-ehr](https://github.com/HL7-DaVinci/test-ehr)
+2. [request-generator](https://github.com/mcode/request-generator)
+3. [rems-admin](https://github.com/mcode/rems-admin.git)
+4. [pims (Pharmacy Information Managment System)](https://github.com/mcode/pharmacy-information-system)
+5. [rems-smart-on-fhir](https://github.com/mcode/rems-smart-on-fhir)
+6. [Keycloak](https://www.keycloak.org/)
 
 ### Expected Functionality
 
 1. File Synchronization between local host system and docker container
 2. Automatic Server Reloading whenever source file is changed
-   - CRD also reloads on CDS_Library changes
 3. Automatic Dependency Installation whenever package.json, package-lock.json, or build.gradle are changed
 4. Automatic Data Loader in test-ehr whenever the fhirResourcesToLoad directory is changed
 
-## Table of Contents
 
-- [REMS-Docker - The Ultimate Guide to Running DRLS REMS for Local Development](#rems-docker---the-ultimate-guide-to-running-drls-rems-for-local-development)
-  - [Purpose of this guide](#purpose-of-this-guide)
-    - [Expected Functionality](#expected-functionality)
-  - [Table of Contents](#table-of-contents)
-  - [Prerequisites](#prerequisites)
-    - [Setting Environment Variables and System Path](#setting-environment-variables-and-system-path)
-  - [Install core tools](#install-core-tools)
-    - [Installing core tools](#installing-core-tools)
-      - [Install Docker Desktop](#install-docker-desktop)
-      - [Install Visual Studio Code and Extensions](#install-visual-studio-code-and-extensions)
-      - [Install Ruby](#install-ruby)
-      - [Install Docker-sync](#install-docker-sync)
-  - [Clone REMS repositories](#clone-rems-repositories)
-  - [Open REMS as VS Code workspace](#open-rems-as-vs-code-workspace)
-    - [Pre-configured settings in the VS Code workspace](#pre-configured-settings-in-the-vs-code-workspace)
-    - [Add VSAC credentials to your development environment](#add-vsac-credentials-to-your-development-environment)
-  - [Run DRLS](#run-drls)
-    - [Start application using docker-sync](#start-application-using-docker-sync)
-    - [Debugging docker-sync application](#debugging-docker-sync-application)
-    - [Stop docker-sync application and remove all containers/volumes/images](#stop-docker-sync-application-and-remove-all-containersvolumesimages)
-    - [Rebuilding Images and Containers](#rebuilding-images-and-containers)
-    - [Useful docker-sync commands](#useful-docker-sync-commands)
-  - [Verify the REMS prototype is working](#verify-the-rems-prototype-is-working)
-    - [The fun part: Generate a test request](#the-fun-part-generate-a-test-request)
-  - [Running with SSL](#running-with-ssl)
 
 ## Prerequisites
 
@@ -99,8 +92,6 @@ variables for your system, consult the guides below or google
 
 ## Install core tools
 
-### Installing core tools
-
 #### Install Docker Desktop
 
 1. Download the **stable** version of **[Docker Desktop](https://www.docker.com/products/docker-desktop)** and follow
@@ -129,38 +120,38 @@ to install ruby with a package manager, this guide uses [rbenv](https://github.c
 1. Install rbenv
 
    ```bash
-   > brew install rbenv
+   brew install rbenv
    ```
 
 2. Initialize rbenv and follow instructions (setting system path troubleshooting:
    <https://stackoverflow.com/questions/10940736/rbenv-not-changing-ruby-version>)
 
    ```bash
-   > rbenv init
+   rbenv init
    ```
 
 3. Close Terminal so changes take effect
 4. Test rbenv is installed correctly
 
    ```bash
-   > curl -fsSL https://github.com/rbenv/rbenv-installer/raw/main/bin/rbenv-doctor | bash
+   curl -fsSL https://github.com/rbenv/rbenv-installer/raw/main/bin/rbenv-doctor | bash
    ```
 
 5. Install Ruby
 
    ```bash
-   > rbenv install 2.7.2
+   rbenv install 2.7.2
    ```
 
 6. Verify that the system is using the correct ruby versions
 
    ```bash
-   > which ruby
+   which ruby
    /Users/$USER/.rbenv/shims/ruby # Correct
 
    ...
 
-   > which ruby
+   which ruby
    /usr/bin/ruby # Incorrect, using system default ruby. Path not set correctly, reference step 2
    ```
 
@@ -169,18 +160,18 @@ to install ruby with a package manager, this guide uses [rbenv](https://github.c
 1. Download and Install docker-sync using the following command:
 
    ```bash
-   > gem install docker-sync -v 0.7.0
+   gem install docker-sync -v 0.7.0
    ```
 
 2. Test that the right version is installed
 
    ```bash
-   > docker-sync -v
+   docker-sync -v
    0.7.0  # Correct
 
     ...
 
-   > docker-sync -v
+   docker-sync -v
    0.1.1  # Incorrect, make sure you have ruby installed and are not using the default system ruby
    ```
 
@@ -189,38 +180,40 @@ to install ruby with a package manager, this guide uses [rbenv](https://github.c
 
 ## Clone REMS repositories
 
-1. Create a root directory for the REMS development work (we will call this `<drlsroot>` for the remainder of this setup
-   guide). While this step is not required, having a common root for the DRLS components will make things a lot easier
+1. Create a root directory for the REMS development work (we will call this `<rems-root>` for the remainder of this setup
+   guide). While this step is not required, having a common root for the REMS Integration Prototype components will make things a lot easier
    down the line.
 
    ```bash
-   > mkdir <drlsroot>
+   mkdir <REMSroot>
    ```
 
-   `<drlsroot>` will be the base directory into which all the other components will be installed. For example, CRD will
-   be cloned to `<drlsroot>/crd`.
+   `<rems-root>` will be the base directory into which all the other components will be installed. For example, test-ehr will
+   be cloned to `<rems-root>/test-ehr`.
 
    Note: If you are using a different project structure from the above description, you will need to change the
    corresponding repo paths in docker-compose-dev.yml, docker-sync.yml, and docker-compose.yml
 
-2. Now clone the DRLS component repositories from Github:
+2. Now clone the REMS Integration Prototype component repositories from Github:
 
    ```bash
-   > cd <drlsroot>
-   > git clone https://github.com/mcode/test-ehr.git test-ehr
-   > git clone https://github.com/mcode/request-generator.git request-generator
-   > git clone https://github.com/mcode/rems-admin.git rems-admin
-   > git clone https://github.com/mcode/pims.git pims
-   > git clone https://github.com/mcode/rems-smart-on-fhir.git rems-smart-on-fhir
-   > git clone https://github.com/mcode/rems-setup.git rems-setup
+   cd <rems-root>
 
-   > cd rems-admin
-   > git submodule update --init
+   git clone https://github.com/mcode/test-ehr.git test-ehr
+   git clone https://github.com/mcode/request-generator.git request-generator
+   git clone https://github.com/mcode/rems-admin.git rems-admin
+   git clone https://github.com/mcode/pims.git pims
+   git clone https://github.com/mcode/rems-smart-on-fhir.git rems-smart-on-fhir
+   git clone https://github.com/mcode/rems-setup.git rems-setup
+   
+   # Update the Submodules
+   cd rems-admin
+   git submodule update --init
 
-   > cd ..
+   cd ..
 
-   > cd rems-smart-on-fhir
-   > git submodule update --init
+   cd rems-smart-on-fhir
+   git submodule update --init
    ```
 
 ## Open REMS as VS Code workspace
@@ -229,7 +222,7 @@ The REMS repository contains the **REMS.code-workspace** file. This will open th
 multi-root VS Code workspace.
 
 To open this workspace, select `File > Open Workspace from File...` and select
-`<drls-root>/rems-setup/REMS.code-workspace`, or double-click on the `REMS.code-workspace` file in your file browser.
+`<rems-root>/rems-setup/REMS.code-workspace`, or double-click on the `REMS.code-workspace` file in your file browser.
 
 ### Pre-configured settings in the VS Code workspace
 
@@ -274,7 +267,7 @@ COMPOSE_PROJECT_NAME = <name of Docker Compose project>
 
 To download the full ValueSets, your VSAC account will need to be added to the CMS-DRLS author group on
 <https://vsac.nlm.nih.gov/>. You will need to request membership access from an admin. While this step is optional, we
-**highly recommend** that you do it so that DRLS will have the ability to dynamically load value sets from VSAC. Please
+**highly recommend** that you do it so that REMS Integration Prototype will have the ability to dynamically load value sets from VSAC. Please
 reach out to Sahil Malhotra at <smalhotra@mitre.org> in order to request access to the CMS-DRLS author group.
 
 If this is not configured, you will get errors like this:
@@ -282,7 +275,7 @@ If this is not configured, you will get errors like this:
 > Error: org.hl7.davinci.endpoint.vsac.errors.VSACValueSetNotFoundException: ValueSet 2.16.840.1.113762.1.4.1219.62 Not
 > Found
 
-## Run DRLS
+## Run REMS Integration Prototype
 
 ### Start application using docker-sync
 
@@ -293,7 +286,7 @@ _Note:_ Initial set up will take several minutes and spin up fans with high reso
 be much quicker, quieter, and less resource intensive.
 
 ```bash
-> docker-sync-stack start # This is the equivalent of running docker-sync start followed by docker-compose up
+docker-sync-stack start # This is the equivalent of running docker-sync start followed by docker-compose up
 ```
 
 Watch the output until `rems_dev_test-ehr` has finished starting up, usually something like this:
@@ -342,22 +335,25 @@ To debug the application hosted by docker-sync:
 ### Stop docker-sync application and remove all containers/volumes/images
 
 ```bash
-> docker-sync-stack clean # This is the equivalent of running docker-sync clean followed by docker-compose down
-> docker image prune -a #Remove unused images
-> docker volume prune # Remove unused volumes
+docker-sync-stack clean # This is the equivalent of running docker-sync clean followed by docker-compose down
+
+docker image prune -a # Remove unused images
+
+docker volume prune # Remove unused volumes
 ```
 
 ### Rebuilding Images and Containers
 
 ```bash
-> docker-compose -f docker-compose-dev.yml up --build --force-recreate  [<service_name1> <service_name2> ...]
+docker-compose -f docker-compose-dev.yml up --build --force-recreate  [<service_name1> <service_name2> ...]
 ```
 
 or, if you need to rebuild first:
 
 ```bash
-> docker-compose -f docker-compose-dev.yml build --no-cache --pull [<service_name1> <service_name2> ...]
-> docker-compose -f docker-compose-dev.yml up --force-recreate  [<service_name1> <service_name2> ...]
+docker-compose -f docker-compose-dev.yml build --no-cache --pull [<service_name1> <service_name2> ...]
+
+docker-compose -f docker-compose-dev.yml up --force-recreate  [<service_name1> <service_name2> ...]
 ```
 
 After rebuilding images and containers, start docker-sync normally.
@@ -366,14 +362,14 @@ You may need to first type <kbd>Control-C</kbd> to stop running the `docker-comp
 without sync functionality).
 
 ```bash
-> docker-sync-stack start # If this command fails to run, running a second time usually fixes the issue
+docker-sync-stack start # If this command fails to run, running a second time usually fixes the issue
 ```
 
 ### Useful docker-sync commands
 
 Reference: <https://docker-sync.readthedocs.io/en/latest/getting-started/commands.html>
 
-## Verify the REMS prototype is working
+## Verify the REMS Integration Prototype is working
 
 ### The fun part: Generate a test request
 
