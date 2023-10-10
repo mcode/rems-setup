@@ -24,7 +24,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   // 1c1. Expect blank state.
   await expect(page).toHaveTitle(/EHR/);
-  await expect(page.getByText("No Cards")).toBeVisible();
+  await expect(page.getByText("No patient selected")).toBeVisible();
   await expect(page.getByRole("button", { name: "Send RX to PIMS" })).not.toBeVisible();
 
   // 1b. Clear any lingering state in the database.
@@ -40,14 +40,16 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await page.getByRole("button", { name: /Select A Patient/i }).click();
 
   // 3. Find **Jon Snow** in the list of patients and click the first dropdown menu next to his name.
+  await expect(page.getByText("ID").first()).toBeVisible();
   const patientBox = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
-  await patientBox.getByRole("combobox").first().click(); // FIXME: super fragile selector
+  // await patientBox.getByTestId("dropdown-box").click(); // FIXME: using new dropdown ui
+  await patientBox.getByRole("combobox").click(); // FIXME: with old dropdown
 
   // 4. Select **2183126 (MedicationRequest) Turalio 200 MG Oral Capsule** in the dropdown menu.
   await page.getByText(medication).click();
 
-  // 5. Dismiss the dialog by clicking anywhere in the row to select Jon Snow. FIXME
-  await patientBox.getByText("Gender:").click({ force: true }); // FIXME "click 'somewhere' in patient row" is fragile.
+  // 5. Dismiss the dialog by select Jon Snow.
+  await patientBox.getByText("Select").first().click();
 
   // 5c1. Expect the dialog to have closed.
   await expect(page.getByText("Bobby Tables")).not.toBeVisible();
@@ -132,6 +134,10 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await expect(smartPage.getByRole("heading", { name: "REMS Admin Status" })).toBeVisible();
   await expect(smartPage.getByRole("heading", { name: "Pharmacy Status" })).toBeVisible();
 
+  // hit rems admin status button here to see etasu status
+  await smartPage.getByRole("button", { name: /view etasu/i }).click();
+  await expect(smartPage.getByText("Patient Enrollment" ).first()).toBeVisible();
+
   /* 14. Go to <http://localhost:5050> in a new tab, and play the role of a pharmacist. */
   const pharmacyPage = await context.newPage(); // Create new page in Playwright's browser
   await pharmacyPage.goto("http://localhost:5050/");
@@ -171,12 +177,15 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   // Back to CRD App on :3000
   await page.goto("localhost:3000");
   await page.waitForLoadState("networkidle");
-  await page.getByRole("button", { name: "Patient Select" }).click();
+  await page.getByRole("button", { name: /Select A Patient/i }).click();
   await page.waitForLoadState("networkidle");
 
   const patientBox2 = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
+  // TODO: update here with UI updates as well
   await patientBox2.getByRole("combobox").first().click(); // FIXME: super fragile selector
-  await patientBox2.getByText("Gender:").click({ force: true }); // FIXME "click 'somewhere' in patient row" is fragile.
+  await page.getByText(medication).click();
+  // await patientBox2.getByText("Gender:").click({ force: true }); // FIXME "click 'somewhere' in patient row" is fragile.
+  await patientBox2.getByText("Select").first().click();
 
   const smartOnFHIRPagePromise2 = page.waitForEvent("popup");
   await page.getByRole("button", { name: "Launch SMART on FHIR App" }).click();
@@ -189,17 +198,17 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await page3.getByLabel("Select Medication Request").click();
 
   await page3.getByText(medication).click();
+  /* 19aw. Wait for the network accesses to complete, otherwise we'll hit the popup before the status loads. */
+  await page3.waitForLoadState("networkidle");
 
   /* 19a. Use the **Check ETASU** button to get status updates on the REMS request */
   await page3.getByRole("button", { name: /Check ETASU/i }).click();
 
-  /* 19aw. Wait for the network accesses to complete, otherwise we'll hit the popup before the status loads. */
-  await page3.waitForLoadState("networkidle", { timeout: 500 });
-
+  await page3.waitForLoadState("networkidle");
   // TODO: fragile use of class selector
   const remsPopup = page3.locator(".MuiBox-root", { hasText: "REMS Status" });
 
-  await expect(remsPopup.getByRole("heading", { name: "REMS Status" })).toBeVisible();
+  await expect(remsPopup.getByText("Patient Enrollment")).toBeVisible();
 
   /* 19.c1. Number of checks and x's should sum to four...not sure if I like this 'check'.
    * But it also demonstrates how to do custom error strings and computation-based testing.
@@ -218,10 +227,10 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   /* 19b. Use the **Check Pharmacy** buttons to get status updates on the prescription  */
 
-  await page3.getByRole("button", { name: /Check ETASU/i }).click();
+  await page3.getByRole("button", { name: /Check Pharmacy/i }).click();
 
   // TODO: fragile use of class selector
-  const pharmacyPopup = page3.locator(".MuiBox-root", { hasText: "REMS Status" });
+  const pharmacyPopup = page3.locator(".MuiBox-root", { hasText: "Pharmacy Status" });
 
   await expect(pharmacyPopup.getByRole("heading", { name: "Pharmacy Status" })).toBeVisible();
   await expect(pharmacyPopup.getByText("Status: Pending")).toBeVisible();
@@ -236,21 +245,28 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     and Prescriber UI. */
 
   /** 20a: Fill out prescriber knowledge assessment. */
-  const pkaPromise = page.waitForEvent("popup");
+  
   await page3.getByRole("button", { name: "Prescriber Knowledge Assessment" }).click();
-  const pkaPage = await pkaPromise;
-  await pkaPage.waitForLoadState("networkidle");
-  await testUtilKeycloakLogin({ page: pkaPage });
+  const pkaPage = page3;
+  await page3.waitForLoadState("networkidle");
 
   const pkaSubmitButton = pkaPage.getByRole("button", { name: "Submit REMS Bundle" });
   await testUtilFillOutForm({ page: pkaPage, submitButton: pkaSubmitButton });
 
-  /** 20b: Fill out presscriber enrollment form */
-  const pefPromise = page.waitForEvent("popup");
+  /** 20b: Return to home to click button */
+
+  // await page3.waitForLoadState("networkidle");
+  // await expect(page3.getByRole("button", { name: "Home" })).toBeVisible();
+  
+  await pkaPage.getByRole('tab', { name: 'Home' }).click();
+
+  /** 20c: Fill out presscriber enrollment form */
+  // const pefPromise = page3;
   await page3.getByRole("button", { name: /Prescriber Enrollment/ }).click();
-  const pefPage = await pefPromise;
+  const pefPage = page3;
   await pefPage.waitForLoadState("networkidle");
-  await testUtilKeycloakLogin({ page: pefPage });
+  // TODO: conditionallyi check load state??
+  // await testUtilKeycloakLogin({ page: pefPage });
 
   const pefSubmitButton = pefPage.getByRole("button", { name: "Submit REMS Bundle" });
   await testUtilFillOutForm({ page: pefPage, submitButton: pefSubmitButton });
@@ -259,9 +275,87 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     **Verify Order** button to move the prescription over to the **Verified Orders** Tab. Click on the **Verified
     Orders** Tab and from there use the **Mark as Picked Up** button to move the prescription over to the **Picked Up
     Orders** Tab. */
+
+    const pharmacyPage2 = await context.newPage(); // Create new page in Playwright's browser
+    await pharmacyPage2.goto("http://localhost:5050/");
+    await pharmacyPage2.waitForLoadState("networkidle");
+  
+    /* 21a: Make sure pharmacy page loaded. */
+    await expect(pharmacyPage2.getByRole("heading", { name: "Pharmacy" })).toBeVisible();
+  
+    /* 21b. Log in again -- is this necessary?. */
+    //await testUtilKeycloakLogin({ page: pharmacyPage });
+  
+    /* 21c. Click **Doctor Orders** in the top hand navigation menu on the screen */
+    await pharmacyPage2.getByRole("button", { name: /doctor orders/i }).click();
+    const pharmacyMedCard2 = pharmacyPage2.locator(".MuiPaper-root", { hasText: medication }).first();
+  
+    /* 21d: Verify we are looking at New Orders */
+    await expect(pharmacyMedCard2).toBeVisible();
+    await expect(pharmacyMedCard2.getByText("Pending")).toBeVisible();
+
+    /* 21e: View etasu, ensure its been met and hit verify order */
+    await pharmacyPage2.getByRole('button', { name: 'VIEW ETASU' }).click();
+    await expect(pharmacyPage2.getByText('✅').first()).toBeVisible();
+    const numChecks = await pharmacyPage2.getByText('✅').count();
+    expect(
+      (numChecks),
+      `REMS Status panel showed wrong number of green check icons (${numChecks} checks)`
+    ).toEqual(4);
+    
+    await pharmacyPage2.getByRole('button', { name: 'Close' }).click();
+
+    await pharmacyPage2.getByRole('button', { name: 'VERIFY ORDER' }).click();
+
+    await expect(pharmacyMedCard2).not.toBeVisible();
+
+    /* 21f: Go to verify order tab */
+    await pharmacyPage2.getByRole('tab', { name: 'Verified Orders' }).click();
+    await expect(pharmacyMedCard2).toBeVisible();
+
+    await expect(pharmacyMedCard2.getByText("Approved")).toBeVisible();
+    await pharmacyPage2.getByRole('button', { name: 'Mark as Picked Up' }).click();
+    await expect(pharmacyMedCard2).not.toBeVisible();
+
+
+    /* 21g: Go to mark as pickedup */
+    await pharmacyPage2.getByRole('tab', { name: 'Picked Up Orders' }).click();
+    await expect(pharmacyMedCard2).toBeVisible();
+
+    await expect(pharmacyMedCard2.getByText("Picked Up")).toBeVisible();
+  
   /* 22. Go back to the SMART on FHIR App launched in step 17 and play the role of the prescriber using the **Check
     Pharmacy** button to see the status change of the prescription. */
+    // Return to home page and check pharmacy status
+    await page3.getByRole('tab', { name: 'Home' }).click();
+
+    await page3.getByRole('button', { name: 'Check Pharmacy' }).click();
+
+    const popup = page3.locator(".MuiBox-root", { hasText: "Pharmacy Status" });
+
+    await expect(popup.getByRole("heading", { name: "Pharmacy Status" })).toBeVisible();
+    await expect(popup.getByText("Status: Picked Up")).toBeVisible();
+
+    /** Dismiss the modal */
+    await page3.press("html", "Escape");
+
   /* 23. Lastly, repeat step 20 to open the **Patient Status Update Form** in the returned cards to submit follow
     up/monitoring requests on an as need basis. These forms can be submitted as many times as need be in the prototype
     and will show up as separate ETASU elements each time.*/
+
+    await page3.getByRole('button', { name: 'Patient Status Update Form Form' }).click();
+    await page3.waitForLoadState("networkidle");
+
+    const pufSubmitButton = pkaPage.getByRole("button", { name: "Submit REMS Bundle" });
+    await testUtilFillOutForm({ page: pkaPage, submitButton: pufSubmitButton });
+
+    await page3.waitForLoadState("networkidle");
+
+    await expect(page3.getByRole("heading", { name: "REMS Admin Status" })).toBeVisible();
+    await expect(page3.getByRole("heading", { name: "Pharmacy Status" })).toBeVisible();
+
+    // hit rems admin status button here to see etasu status
+    await page3.getByRole("button", { name: /view etasu/i }).click();
+    await expect(page3.getByText('✅').nth(4)).toBeVisible();
+  
 });
