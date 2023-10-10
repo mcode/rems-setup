@@ -130,7 +130,8 @@
 			"mitre-health.vscode-language-fsh",
 			"redhat.java",
 			"mongodb.mongodb-vscode",
-			"VisualStudioExptTeam.vscodeintellicode"
+			"VisualStudioExptTeam.vscodeintellicode",
+			"streetsidesoftware.code-spell-checker"
 		]
 	},
 
