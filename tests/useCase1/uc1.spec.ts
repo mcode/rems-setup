@@ -42,8 +42,8 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   // 3. Find **Jon Snow** in the list of patients and click the first dropdown menu next to his name.
   await expect(page.getByText("ID").first()).toBeVisible();
   const patientBox = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
-  // await patientBox.getByTestId("dropdown-box").click(); // FIXME: using new dropdown ui
-  await patientBox.getByRole("combobox").click(); // FIXME: with old dropdown
+  await patientBox.getByTestId("dropdown-box").click(); // FIXME: using new dropdown ui
+  // await patientBox.getByRole("combobox").click(); // FIXME: with old dropdown
 
   // 4. Select **2183126 (MedicationRequest) Turalio 200 MG Oral Capsule** in the dropdown menu.
   await page.getByText(medication).click();
@@ -182,9 +182,8 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   const patientBox2 = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
   // TODO: update here with UI updates as well
-  await patientBox2.getByRole("combobox").first().click(); // FIXME: super fragile selector
+  await patientBox2.getByTestId("dropdown-box").first().click();
   await page.getByText(medication).click();
-  // await patientBox2.getByText("Gender:").click({ force: true }); // FIXME "click 'somewhere' in patient row" is fragile.
   await patientBox2.getByText("Select").first().click();
 
   const smartOnFHIRPagePromise2 = page.waitForEvent("popup");
