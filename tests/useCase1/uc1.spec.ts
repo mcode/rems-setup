@@ -42,8 +42,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   // 3. Find **Jon Snow** in the list of patients and click the first dropdown menu next to his name.
   await expect(page.getByText("ID").first()).toBeVisible();
   const patientBox = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
-  await patientBox.getByTestId("dropdown-box").click(); // FIXME: using new dropdown ui
-  // await patientBox.getByRole("combobox").click(); // FIXME: with old dropdown
+  await patientBox.getByTestId("dropdown-box").click();
 
   // 4. Select **2183126 (MedicationRequest) Turalio 200 MG Oral Capsule** in the dropdown menu.
   await page.getByText(medication).click();
@@ -181,7 +180,6 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await page.waitForLoadState("networkidle");
 
   const patientBox2 = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
-  // TODO: update here with UI updates as well
   await patientBox2.getByTestId("dropdown-box").first().click();
   await page.getByText(medication).click();
   await patientBox2.getByText("Select").first().click();
@@ -253,18 +251,13 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await testUtilFillOutForm({ page: pkaPage, submitButton: pkaSubmitButton });
 
   /** 20b: Return to home to click button */
-
-  // await page3.waitForLoadState("networkidle");
-  // await expect(page3.getByRole("button", { name: "Home" })).toBeVisible();
-  
   await pkaPage.getByRole('tab', { name: 'Home' }).click();
 
   /** 20c: Fill out presscriber enrollment form */
-  // const pefPromise = page3;
   await page3.getByRole("button", { name: /Prescriber Enrollment/ }).click();
   const pefPage = page3;
   await pefPage.waitForLoadState("networkidle");
-  // TODO: conditionallyi check load state??
+  // TODO: maybe conditionallyi check load state
   // await testUtilKeycloakLogin({ page: pefPage });
 
   const pefSubmitButton = pefPage.getByRole("button", { name: "Submit REMS Bundle" });
