@@ -42,7 +42,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   // 3. Find **Jon Snow** in the list of patients and click the first dropdown menu next to his name.
   await expect(page.getByText("ID").first()).toBeVisible();
   const patientBox = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
-  await patientBox.getByTestId("dropdown-box").click();
+  await patientBox.getByTestId("dropdown-box").first().click();
 
   // 4. Select **2183126 (MedicationRequest) Turalio 200 MG Oral Capsule** in the dropdown menu.
   await page.getByText(medication).click();
@@ -135,7 +135,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   // hit rems admin status button here to see etasu status
   await smartPage.getByRole("button", { name: /view etasu/i }).click();
-  await expect(smartPage.getByText("Patient Enrollment" ).first()).toBeVisible();
+  await expect(smartPage.getByText("Prescriber").first()).toBeVisible();
 
   /* 14. Go to <http://localhost:5050> in a new tab, and play the role of a pharmacist. */
   const pharmacyPage = await context.newPage(); // Create new page in Playwright's browser
@@ -225,6 +225,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   /* 19b. Use the **Check Pharmacy** buttons to get status updates on the prescription  */
 
   await page3.getByRole("button", { name: /Check Pharmacy/i }).click();
+  await page3.waitForLoadState("networkidle");
 
   // TODO: fragile use of class selector
   const pharmacyPopup = page3.locator(".MuiBox-root", { hasText: "Pharmacy Status" });
@@ -233,7 +234,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await expect(pharmacyPopup.getByText("Status: Pending")).toBeVisible();
 
   /** Dismiss the modal */
-  await page3.press("html", "Escape");
+  await pharmacyPopup.press("Escape");
 
   await expect(pharmacyPopup).not.toBeVisible();
 
@@ -329,7 +330,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     await expect(popup.getByText("Status: Picked Up")).toBeVisible();
 
     /** Dismiss the modal */
-    await page3.press("html", "Escape");
+    await popup.press("Escape");
 
   /* 23. Lastly, repeat step 20 to open the **Patient Status Update Form** in the returned cards to submit follow
     up/monitoring requests on an as need basis. These forms can be submitted as many times as need be in the prototype
