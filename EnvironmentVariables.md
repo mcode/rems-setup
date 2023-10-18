@@ -68,6 +68,7 @@
     - `REACT_APP_PHARMACY_SERVER_BASE`: `http://localhost:5051`
     - `REACT_APP_ETASU_STATUS_ENABLED`: `true`
     - `REACT_APP_PHARMACY_STATUS_ENABLED`: `true`
+    - `REACT_APP_DEVELOPER_MODE`: `true`
     - `PORT`: `4040`
 
 - mcode/test-ehr
