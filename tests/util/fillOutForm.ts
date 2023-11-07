@@ -26,6 +26,6 @@ export async function testUtilFillOutForm(props: {
     await emptyField.fill(date);
   }
   expect(await emptyDateFields).toHaveLength(0);
-
+  
   await submitButton.click();
 }

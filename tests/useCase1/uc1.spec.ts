@@ -42,13 +42,15 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   // 3. Find **Jon Snow** in the list of patients and click the first dropdown menu next to his name.
   await expect(page.getByText("ID").first()).toBeVisible();
   const patientBox = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
-  await patientBox.getByTestId("dropdown-box").first().click();
+  await page.getByRole("combobox").first().click();
 
   // 4. Select **2183126 (MedicationRequest) Turalio 200 MG Oral Capsule** in the dropdown menu.
   await page.getByText(medication).click();
 
   // 5. Dismiss the dialog by select Jon Snow.
-  await patientBox.getByText("Select").first().click();
+  const selectBtn = page.locator('.select-btn').nth(1);
+  await expect(selectBtn).toBeVisible();
+  await selectBtn.click();
 
   // 5c1. Expect the dialog to have closed.
   await expect(page.getByText("Bobby Tables")).not.toBeVisible();
@@ -116,6 +118,13 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   //////////// 12. Fill out the questionnaire and hit **Submit REMS Bundle**. ////////////////
   expect(smartPage.getByText("Patient Enrollment")).toBeVisible();
   const peSubmitButton = smartPage.getByRole("button", { name: "Submit REMS Bundle" });
+    const firstField = smartPage.getByRole('row', { name: 'Signature * Name (Printed) * Date * Show date picker NPI *' }).getByLabel('Signature *');
+  await firstField.fill('Jane Doe');
+
+  const field = smartPage.getByRole('row', { name: 'Signature * Name (Printed) * Date * Show date picker', exact: true }).getByLabel('Signature *');
+  await field.fill('John Doe');
+
+  await smartPage.getByText('Form Loaded:').click();
   await testUtilFillOutForm({ page: smartPage, submitButton: peSubmitButton });
 
   /*
@@ -174,15 +183,18 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     from the patient select UI.*/
 
   // Back to CRD App on :3000
-  await page.goto("localhost:3000");
+  await page.goto("http://localhost:3000/");
   await page.waitForLoadState("networkidle");
   await page.getByRole("button", { name: /Select A Patient/i }).click();
-  await page.waitForLoadState("networkidle");
+  await expect(page.getByText("ID").first()).toBeVisible();
 
-  const patientBox2 = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
-  await patientBox2.getByTestId("dropdown-box").first().click();
+  // const patientBox2 = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
+  // await patientBox2.getByTestId("dropdown-box").first().click();
+  await page.getByRole("combobox").click();
   await page.getByText(medication).click();
-  await patientBox2.getByText("Select").first().click();
+  const selectBtn2 = page.locator('.select-btn').nth(1);
+  await expect(selectBtn2).toBeVisible();
+  await selectBtn2.click();
 
   const smartOnFHIRPagePromise2 = page.waitForEvent("popup");
   await page.getByRole("button", { name: "Launch SMART on FHIR App" }).click();
@@ -262,6 +274,10 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   // await testUtilKeycloakLogin({ page: pefPage });
 
   const pefSubmitButton = pefPage.getByRole("button", { name: "Submit REMS Bundle" });
+  const firstField3 = pefPage.getByLabel('Signature *');
+  await firstField3.fill('Jane Doe');
+
+  await pefPage.getByText('Form Loaded:').click();
   await testUtilFillOutForm({ page: pefPage, submitButton: pefSubmitButton });
 
   /* 21. Once all the REMS ETASU are met, go back to <http://localhost:5050> and play the role of the Pharmacist, using the
@@ -340,6 +356,10 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     await page3.waitForLoadState("networkidle");
 
     const pufSubmitButton = pkaPage.getByRole("button", { name: "Submit REMS Bundle" });
+    const firstField4 = pefPage.getByLabel('Signature *');
+    await firstField4.fill('Jane Doe');
+  
+    await pefPage.getByText('Form Loaded:').click();
     await testUtilFillOutForm({ page: pkaPage, submitButton: pufSubmitButton });
 
     await page3.waitForLoadState("networkidle");
