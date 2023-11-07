@@ -29,10 +29,12 @@ services:
     image: codexrems/request-generator:REMSvCurrent
     container_name: rems_prod_request-generator
     environment:
-      - REACT_APP_REMS_CONFIG=true
+      - REACT_APP_EHR_SERVER_TO_BE_SENT_TO_REMS_ADMIN_FOR_PREFETCH=http://host.docker.internal:8080/test-ehr/r4
     ports: # Port binding to host from docker container
       - "3000:3000" # Bind port 3000 of host to 3000 of container
       - "3001:3001"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   # Create rems-smart-on-fhir container
   rems-smart-on-fhir:
