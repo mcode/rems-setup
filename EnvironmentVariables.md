@@ -68,8 +68,14 @@
     - `REACT_APP_PHARMACY_SERVER_BASE`: `http://localhost:5051`
     - `REACT_APP_ETASU_STATUS_ENABLED`: `true`
     - `REACT_APP_PHARMACY_STATUS_ENABLED`: `true`
-    - `REACT_APP_DEVELOPER_MODE`: `true`
+    - `REACT_APP_SEND_RX_ENABLED` = `true`
+    - `REACT_APP_SEND_FHIR_AUTH_ENABLED` = `false`
     - `PORT`: `4040`
+    - `REACT_APP_CLIENT_ID`: `app-login`
+    - `REACT_APP_CLIENT_SCOPES`: `launch openid profile user/Patient.read patient/Patient.read user/Practitioner.read`
+    - `REACT_APP_DEVELOPER_MODE`: `true`
+    - `GENERATE_SOURCEMAP`: `false`
+    - `BROWSER`: `none`
 
 - mcode/test-ehr
   - src/main/resources/application.yml
@@ -189,7 +195,14 @@
 - mcode/rems-smart-on-fhir
   - src/views/Patient/MedReqDropDown/MedReqDropDown.tsx
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`
+    - `REACT_APP_SEND_RX_ENABLED`
+    - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
   - src/views/Patient/MedReqDropDown/etasuStatus/EtasuStatus.tsx
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`
   - src/views/Patient/MedReqDropDown/pharmacyStatus/PharmacyStatus.tsx
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`
+  - src/index.tsx
+    - `REACT_APP_CLIENT_ID`
+    - `REACT_APP_CLIENT_SCOPES`
+  - src/views/Questionnaire/SmartApp.tsx
+    - `REACT_APP_DEVELOPER_MODE`
