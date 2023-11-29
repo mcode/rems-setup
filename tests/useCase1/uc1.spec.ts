@@ -22,6 +22,9 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await page.goto("localhost:3000");
   await page.waitForLoadState("networkidle");
 
+  // 1a. Sign in 
+  await testUtilKeycloakLogin({ page: page });
+
   // 1c1. Expect blank state.
   await expect(page).toHaveTitle(/EHR/);
   await expect(page.getByText("No patient selected")).toBeVisible();
@@ -100,7 +103,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   // 10. If you are asked for login credentials, use **alice** for username and **alice** for password
   // NOTE: You cannot have a conditional in a test, so this is written to always require login.
-  await testUtilKeycloakLogin({ page: smartPage });
+  // await testUtilKeycloakLogin({ page: smartPage });
 
   // 11. A webpage should open in a new tab, and after a few seconds, a questionnaire should appear.
   await expect(smartPage).toHaveTitle("REMS SMART on FHIR App");
@@ -190,7 +193,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   // const patientBox2 = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
   // await patientBox2.getByTestId("dropdown-box").first().click();
-  await page.getByRole("combobox").click();
+  await page.getByRole("combobox").first().click();
   await page.getByText(medication).click();
   const selectBtn2 = page.locator('.select-btn').nth(1);
   await expect(selectBtn2).toBeVisible();
@@ -206,7 +209,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   await page3.getByLabel("Select Medication Request").click();
 
-  await page3.getByText(medication).click();
+  await page3.getByRole('option', { name: 'Turalio 200 MG Oral Capsule' }).click();
   /* 19aw. Wait for the network accesses to complete, otherwise we'll hit the popup before the status loads. */
   await page3.waitForLoadState("networkidle");
 
@@ -352,7 +355,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     up/monitoring requests on an as need basis. These forms can be submitted as many times as need be in the prototype
     and will show up as separate ETASU elements each time.*/
 
-    await page3.getByRole('button', { name: 'Patient Status Update Form Form' }).click();
+    await page3.getByRole('button', { name: 'Patient Status Update Form' }).click();
     await page3.waitForLoadState("networkidle");
 
     const pufSubmitButton = pkaPage.getByRole("button", { name: "Submit REMS Bundle" });
