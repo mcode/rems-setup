@@ -53,7 +53,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: rems_dev_request-generator
     environment:
-      - REACT_APP_REMS_CONFIG=true
+      - REACT_APP_EHR_SERVER_TO_BE_SENT_TO_REMS_ADMIN_FOR_PREFETCH=http://host.docker.internal:8080/test-ehr/r4
     ports:
       - "3000:3000"
       - "3001:3001"
@@ -63,6 +63,8 @@ services:
       - rems_dev_request-generator-databaseData:/home/node/app/request-generator/databaseData
       - rems_dev_request-generator-build:/home/node/app/request-generator/build
       - rems_dev_request-generator-logs:/home/node/app/request-generator/logs
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   rems-smart-on-fhir:
     build:
