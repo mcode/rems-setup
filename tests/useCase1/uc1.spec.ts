@@ -45,7 +45,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   // 3. Find **Jon Snow** in the list of patients and click the first dropdown menu next to his name.
   await expect(page.getByText("ID").first()).toBeVisible();
   const patientBox = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
-  await page.getByRole("combobox").first().click();
+  await page.getByRole("combobox").nth(1).click();
 
   // 4. Select **2183126 (MedicationRequest) Turalio 200 MG Oral Capsule** in the dropdown menu.
   await page.getByText(medication).click();
@@ -193,7 +193,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   // const patientBox2 = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
   // await patientBox2.getByTestId("dropdown-box").first().click();
-  await page.getByRole("combobox").first().click();
+  await page.getByRole("combobox").nth(1).click();
   await page.getByText(medication).click();
   const selectBtn2 = page.locator('.select-btn').nth(1);
   await expect(selectBtn2).toBeVisible();
