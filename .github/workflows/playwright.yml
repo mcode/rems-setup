@@ -81,7 +81,7 @@ jobs:
 
       - name: Start containers
         working-directory: ./rems-setup
-        run: docker-compose -f docker-compose-local-build.yml up --wait 
+        run: docker-compose -f docker-compose-local-build.yml up 
 
       - name: Navigate to rems set up 
         run: cd rems-setup
