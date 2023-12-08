@@ -88,14 +88,15 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: list dir
-        run: ls 
-        
+
       - name: Install dependencies
+        working-directory: ./rems-setup
         run: npm ci
       - name: Install Playwright Browsers
+        working-directory: ./rems-setup
         run: npx playwright install --with-deps
       - name: Run Playwright tests
+        working-directory: ./rems-setup
         run: npx playwright test
       - uses: actions/upload-artifact@v3
         if: always()
