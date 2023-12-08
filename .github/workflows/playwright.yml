@@ -80,7 +80,8 @@ jobs:
           ref: ${{ github.event.inputs.rems-smart-on-fhir-branch }}
 
       - name: Start containers
-        run: docker-compose -f docker-compose-local-build.yml up
+        working-directory: ./rems-setup
+        run: docker-compose -f docker-compose-local-build.yml up -d --wait 
 
       - name: Navigate to rems set up 
         run: cd rems-setup
