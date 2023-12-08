@@ -83,8 +83,21 @@ jobs:
         working-directory: ./rems-setup
         run: docker-compose -f docker-compose-local-build.yml up -d
 
-      - name: Wait for healthchecks to pass
-        run: timeout 15m sh -c "until [(docker ps | grep -ow 'healthy' | wc -l) -eq 7]; do echo 'Waiting for container to be healthy...'; echo $(docker ps); echo $(docker ps | grep -ow 'healthy' | wc -l); sleep 1m; done"
+      - name: Wait for request-generator healthcheck
+        run: timeout 15m sh -c 'until docker ps | grep rems_dev_request-generator | grep -q healthy; do echo "Waiting for container to be healthy..."; echo $(docker ps); sleep 1m; done'
+      
+      - name: Wait for rems-smart-on-fhir healthcheck
+        run: timeout 15m sh -c 'until docker ps | grep rems_dev_rems-smart-on-fhir | grep -q healthy; do echo "Waiting for container to be healthy..."; echo $(docker ps); sleep 1m; done'
+
+      - name: Wait for rems-administrator healthcheck
+        run: timeout 15m sh -c 'until docker ps | grep rems_dev_rems-administrator| grep -q healthy; do echo "Waiting for container to be healthy..."; echo $(docker ps); sleep 1m; done'
+      
+      - name: Wait for pims healthcheck
+        run: timeout 15m sh -c 'until docker ps | grep rems_dev_pims | grep -q healthy; do echo "Waiting for container to be healthy..."; echo $(docker ps); sleep 1m; done'
+      
+      - name: Wait for test-ehr healthcheck
+        run: timeout 15m sh -c 'until docker ps | grep rems_dev_test-ehr | grep -q healthy; do echo "Waiting for container to be healthy..."; echo $(docker ps); sleep 1m; done'
+
 
       - name: Navigate to rems set up 
         run: cd rems-setup
