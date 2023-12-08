@@ -81,7 +81,9 @@ jobs:
 
       - name: Start containers
         run: docker-compose -f docker-compose-local-build.yml up -d --wait 
-
+      - name: Navigate to rems set up 
+        run: cd rems-setup
+        
       - uses: actions/setup-node@v3
         with:
           node-version: 18
