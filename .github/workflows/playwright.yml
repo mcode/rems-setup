@@ -83,8 +83,8 @@ jobs:
         working-directory: ./rems-setup
         run: docker-compose -f docker-compose-local-build.yml up -d
 
-      - name: Wait for test-ehr healthcheck
-        run: timeout 15m sh -c 'until [(docker ps | grep -ow "healthy" | wc -l) -eq 7]; do echo "Waiting for container to be healthy..."; echo $(docker ps); echo $(docker ps | grep -ow "healthy" | wc -l); sleep 1m; done'
+      - name: Wait for healthchecks to pass
+        run: timeout 15m sh -c "until [(docker ps | grep -ow 'healthy' | wc -l) -eq 7]; do echo 'Waiting for container to be healthy...'; echo $(docker ps); echo $(docker ps | grep -ow 'healthy' | wc -l); sleep 1m; done"
 
       - name: Navigate to rems set up 
         run: cd rems-setup
