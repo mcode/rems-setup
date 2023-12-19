@@ -13,16 +13,10 @@
       "path": "../rems-admin"
     },
     {
-      "path": "../rems-info"
-    },
-    {
       "path": "../rems-smart-on-fhir"
     },
     {
       "path": "../test-ehr"
-    },
-    {
-      "path": "../cql-to-fhir-library"
     }
   ],
   "launch": {
@@ -45,7 +39,7 @@
           "Debug Request-Generator (Attach Docker)",
           // ToDo: Add in PIMS Debugging in Docker
           // ToDo: Add in REMS Debugging in Docker
-          // ToDo: Add in rems-smart-on-fhir Debuggin in Docker
+          // ToDo: Add in rems-smart-on-fhir Debugging in Docker
           "Post Debug Task - Terminate Chrome (This is not a Debugger)"
         ]
       }
