@@ -18,6 +18,6 @@ You can find complete end-to-end full-stack set up guides for the REMS Proof of 
 
 [Docker Developer Setup Guide](DeveloperSetupGuide.md) - Follow this guide if you would like to use [Docker](https://docs.docker.com/get-started/overview/) for running REMS Integration Prototype for Local Development.
 
-[Local Developer Setup Guide (No Docker)](EndToEndSetupGuide.md) - Follow this guide if you would like to start each application locally **without** using Docker for devlopment.
+[Local Developer Setup Guide (No Docker)](EndToEndSetupGuide.md) - Follow this guide if you would like to start each application locally **without** using Docker for development.
 
-For information on how to launch each application in the prototype workflow with SSL enabled see out [HTTPS / SSL Setup Guide](https://github.com/mcode/rems-setup/blob/main/SSLSetupGuide.md).
+[HTTPS / SSL Setup Guide](SSLSetupGuide.md) - Follow this guide to launch each application in the prototype workflow with SSL enabled.
