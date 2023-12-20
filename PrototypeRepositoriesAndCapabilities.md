@@ -9,6 +9,7 @@
 ### Repositories
 
 - mcode/rems-admin
+
   - REMS Administrator `(4)`
     - Node/TypeScript
     - `(1.1)(3)` CDS Hooks (server) end points
@@ -20,12 +21,14 @@
   - Docker scripts to launch the entire stack
 
 - mcode/test-ehr
+
   - Test EHR `(2)`
     - Java HAPI FHIR Server
     - Contains test patient data
     - Supports launching DTR SMART on FHIR app
 
 - mcode/request-generator
+
   - Request Generator `(2)`
     - Node/JavaScript
     - Web Application mimicking the EHR frontend
@@ -35,6 +38,7 @@
       - Sends Rx to PIMS using NCPDP Script NewRx
 
 - mcode/pims
+
   - Pharmacy Information System `(6)`
     - Node/TypeScript
     - Receives Rx from Request Generator
@@ -45,6 +49,7 @@
   - Stores data in MongoDB
 
 - mcode/rems-smart-on-fhir
+
   - REMS SMART on FHIR Application
     - SMART on FHIR application to generate CDS Hooks interaction with REMS Admin for any EHR that does not support CDS Hooks
       - Node/TypeScript
@@ -58,6 +63,7 @@
 ### Other Components
 
 - KeyCloak
+
   - Authentication of users
   - Docker config hosted in mcode/test-ehr
 

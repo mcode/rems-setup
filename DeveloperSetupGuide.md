@@ -1,25 +1,32 @@
-# Docker Developer Setup Guide 
->Follow this guide if you would  like to use [Docker](https://docs.docker.com/get-started/overview/) for running REMS Integration Prototype for Local Development.
+# Docker Developer Setup Guide
 
+> Follow this guide if you would like to use [Docker](https://docs.docker.com/get-started/overview/) for running REMS Integration Prototype for Local Development.
 
 ## Table of Contents
 
+- [Docker Developer Setup Guide](#docker-developer-setup-guide)
+  - [Table of Contents](#table-of-contents)
   - [Purpose of this guide](#purpose-of-this-guide)
     - [Expected Functionality](#expected-functionality)
   - [Prerequisites](#prerequisites)
-    - [Setting Environment Variables & System Path](#setting-environment-variables-and-system-path)
+    - [Setting Environment Variables and System Path](#setting-environment-variables-and-system-path)
   - [Install core tools](#install-core-tools)
+      - [Install Docker Desktop](#install-docker-desktop)
+      - [Install Visual Studio Code and Extensions](#install-visual-studio-code-and-extensions)
+      - [Install Ruby](#install-ruby)
+      - [Install Docker-sync](#install-docker-sync)
   - [Clone REMS repositories](#clone-rems-repositories)
-  - [VS Code & VSAC](#open-rems-as-vs-code-workspace)
+  - [Open REMS as VS Code workspace](#open-rems-as-vs-code-workspace)
     - [Pre-configured settings in the VS Code workspace](#pre-configured-settings-in-the-vs-code-workspace)
-    - [Add VSAC credentials](#add-vsac-credentials-to-your-development-environment)
-  - [Run the Run REMS Integration Prototype](#run-rems-integration-prototype)
+    - [Add VSAC credentials to your development environment](#add-vsac-credentials-to-your-development-environment)
+  - [Run REMS Integration Prototype](#run-rems-integration-prototype)
     - [Start application using docker-sync](#start-application-using-docker-sync)
     - [Debugging docker-sync application](#debugging-docker-sync-application)
-    - [Stop docker-sync & Cleaning](#stop-docker-sync-application-and-remove-all-containersvolumesimages)
-    - [Rebuilding Images & Containers](#rebuilding-images-and-containers)
+    - [Stop docker-sync application and remove all containers/volumes/images](#stop-docker-sync-application-and-remove-all-containersvolumesimages)
+    - [Rebuilding Images and Containers](#rebuilding-images-and-containers)
     - [Useful docker-sync commands](#useful-docker-sync-commands)
-  - [Verify the REMS prototype is working](#verify-the-rems-integration-prototype-is-working)
+  - [Verify the REMS Integration Prototype is working](#verify-the-rems-integration-prototype-is-working)
+    - [The fun part: Generate a test request](#the-fun-part-generate-a-test-request)
   - [Running with SSL](#running-with-ssl)
 
 ## Purpose of this guide
@@ -31,7 +38,6 @@ more detailed documentation. This document **is not designed to replace those in
 This document is designed to take you through the entire set up process for the **REMS Integration Prototype** using [Docker containers](https://www.docker.com/resources/what-container/).
 
 This guide will take you through the development environment setup for each of the following REMS components:
-
 
 1. [test-ehr](https://github.com/HL7-DaVinci/test-ehr)
 2. [request-generator](https://github.com/mcode/request-generator)
@@ -46,8 +52,6 @@ This guide will take you through the development environment setup for each of t
 2. Automatic Server Reloading whenever source file is changed
 3. Automatic Dependency Installation whenever package.json, package-lock.json, or build.gradle are changed
 4. Automatic Data Loader in test-ehr whenever the fhirResourcesToLoad directory is changed
-
-
 
 ## Prerequisites
 
@@ -205,7 +209,7 @@ to install ruby with a package manager, this guide uses [rbenv](https://github.c
    git clone https://github.com/mcode/pims.git pims
    git clone https://github.com/mcode/rems-smart-on-fhir.git rems-smart-on-fhir
    git clone https://github.com/mcode/rems-setup.git rems-setup
-   
+
    # Update the Submodules
    cd rems-admin
    git submodule update --init

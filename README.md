@@ -6,7 +6,7 @@ This repository contains all of the Docker, setup scripts, and documentation for
 
 ### Prototype Organization Overview
 
->For information on the project and how to get involved visit our [CodeX Confluence Page](https://confluence.hl7.org/display/COD/Risk+Evaluation+and+Mitigation+Strategies+%28REMS%29+Integration) 
+> For information on the project and how to get involved visit our [CodeX Confluence Page](https://confluence.hl7.org/display/COD/Risk+Evaluation+and+Mitigation+Strategies+%28REMS%29+Integration)
 
 [Prototype Repositories and Capabilities](PrototypeRepositoriesAndCapabilities.md)
 
