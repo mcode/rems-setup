@@ -57,7 +57,7 @@ jobs:
           ref: ${{ github.event.inputs.request-generator-branch }}
 
       - name: Checkout rems-admin repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           repository: mcode/rems-admin
           path: rems-admin
@@ -84,7 +84,7 @@ jobs:
           ref: ${{ github.event.inputs.rems-smart-on-fhir-branch }}
 
       - name: Check submodules 
-        working-directory: ./rems-admin
+        working-directory: ./rems-smart-on-fhir
         run: ls src; ls src/cds-hooks; ls src/cds-hooks/resources;
 
       - name: Start containers
