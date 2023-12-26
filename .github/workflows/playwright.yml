@@ -61,8 +61,12 @@ jobs:
         with:
           repository: mcode/rems-admin
           path: rems-admin
-          submodule: true
+          submodule: 'true'
           ref: ${{ github.event.inputs.rems-admin-branch }}
+  
+      - name: Check submodules 
+        working-directory: ./rems-admin
+        run: ls src; ls src/rems-cds-hooks; ls src/rems-cds-hooks/resources;
 
       - name: Checkout pims repo
         uses: actions/checkout@v4
@@ -76,8 +80,12 @@ jobs:
         with:
           repository: mcode/rems-smart-on-fhir
           path: rems-smart-on-fhir
-          submodule: true
+          submodule: 'recursive'
           ref: ${{ github.event.inputs.rems-smart-on-fhir-branch }}
+
+      - name: Check submodules 
+        working-directory: ./rems-admin
+        run: ls src; ls src/cds-hooks; ls src/cds-hooks/resources;
 
       - name: Start containers
         working-directory: ./rems-setup
