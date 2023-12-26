@@ -89,7 +89,7 @@ jobs:
 
       - name: Start containers
         working-directory: ./rems-setup
-        run: docker-compose --parallel -1 -f docker-compose-local-build.yml up -d
+        run: docker-compose -f docker-compose-local-build.yml up -d
 
       - name: Wait for rems-administrator healthcheck
         run: echo $(docker ps | grep rems_dev_rems-administrator); timeout 15m sh -c 'until docker ps | grep rems_dev_rems-administrator | grep -qw healthy; do echo "Waiting for container to be healthy..."; echo $(docker inspect --format "{{json .State.Health }}" rems_dev_rems-administrator | jq); echo $(docker logs --since=1m rems_dev_rems-administrator); echo $(docker ps | grep rems_dev_rems-administrator); echo $(docker ps); sleep 1m; done'
