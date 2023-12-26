@@ -61,7 +61,7 @@ jobs:
         with:
           repository: mcode/rems-admin
           path: rems-admin
-          submodule: 'true'
+          submodule: 'recursive'
           ref: ${{ github.event.inputs.rems-admin-branch }}
   
       - name: Check submodules 
