@@ -92,19 +92,19 @@ jobs:
         run: docker-compose -f docker-compose-local-build.yml up -d
 
       - name: Wait for rems-administrator healthcheck
-        run: echo $(docker ps | grep rems_dev_rems-administrator); timeout 15m sh -c 'until echo docker ps | grep rems_dev_rems-administrator | grep -qw (healthy); do echo "Waiting for container to be healthy..."; echo $(docker inspect --format "{{json .State.Health }}" rems_dev_rems-administrator | jq); echo $(docker logs --since=1m rems_dev_rems-administrator); echo $(docker ps | grep rems_dev_rems-administrator); echo $(docker ps); sleep 1m; done'
+        run: echo $(docker ps | grep rems_dev_rems-administrator); timeout 15m sh -c 'until echo docker ps | grep rems_dev_rems-administrator | grep -qw "(healthy)"; do echo "Waiting for container to be healthy..."; echo $(docker inspect --format "{{json .State.Health }}" rems_dev_rems-administrator | jq); echo $(docker logs --since=1m rems_dev_rems-administrator); echo $(docker ps | grep rems_dev_rems-administrator); echo $(docker ps); sleep 1m; done'
       
       - name: Wait for request-generator healthcheck
-        run: echo $(docker ps | grep rems_dev_request-generator); timeout 15m sh -c 'until docker ps | grep rems_dev_request-generator | grep -qw (healthy); do echo "Waiting for container to be healthy..."; echo $(docker inspect --format "{{json .State.Health }}" rems_dev_request-generator | jq); echo $(docker logs --since=1m rems_dev_request-generator); echo $(docker ps | grep rems_dev_request-generator); echo $(docker ps); sleep 1m; done'
+        run: echo $(docker ps | grep rems_dev_request-generator); timeout 15m sh -c 'until docker ps | grep rems_dev_request-generator | grep -qw "(healthy)"; do echo "Waiting for container to be healthy..."; echo $(docker inspect --format "{{json .State.Health }}" rems_dev_request-generator | jq); echo $(docker logs --since=1m rems_dev_request-generator); echo $(docker ps | grep rems_dev_request-generator); echo $(docker ps); sleep 1m; done'
       
       - name: Wait for rems-smart-on-fhir healthcheck
-        run: echo $(docker ps | grep rems_dev_smart-on-fhir); timeout 15m sh -c 'until docker ps | grep rems_dev_rems-smart-on-fhir | grep -qw (healthy); do echo "Waiting for container to be healthy..."; echo $(docker inspect --format "{{json .State.Health }}" rems_dev_rems-smart-on-fhir | jq); echo $(docker logs --since=1m rems_dev_rems-smart-on-fhir); $(docker ps | grep rems_dev_smart-on-fhir); echo $(docker ps); sleep 1m; done'
+        run: echo $(docker ps | grep rems_dev_smart-on-fhir); timeout 15m sh -c 'until docker ps | grep rems_dev_rems-smart-on-fhir | grep -qw "(healthy)"; do echo "Waiting for container to be healthy..."; echo $(docker inspect --format "{{json .State.Health }}" rems_dev_rems-smart-on-fhir | jq); echo $(docker logs --since=1m rems_dev_rems-smart-on-fhir); $(docker ps | grep rems_dev_smart-on-fhir); echo $(docker ps); sleep 1m; done'
 
       - name: Wait for pims healthcheck
-        run: $(docker ps | grep rems_dev_pims; timeout 15m sh -c 'until docker ps | grep rems_dev_pims | grep -qw (healthy); do echo "Waiting for container to be healthy..."; echo $(docker inspect --format "{{json .State.Health }}" rems_dev_pims | jq); echo $(docker logs --since=1m rems_dev_pims); $(docker ps | grep rems_dev_pims]; echo $(docker ps); sleep 1m; done'
+        run: $(docker ps | grep rems_dev_pims; timeout 15m sh -c 'until docker ps | grep rems_dev_pims | grep -qw "(healthy)"; do echo "Waiting for container to be healthy..."; echo $(docker inspect --format "{{json .State.Health }}" rems_dev_pims | jq); echo $(docker logs --since=1m rems_dev_pims); $(docker ps | grep rems_dev_pims]; echo $(docker ps); sleep 1m; done'
       
       - name: Wait for test-ehr healthcheck
-        run: $(docker ps | grep rems_dev_test-ehr; timeout 15m sh -c 'until docker ps | grep rems_dev_test-ehr | grep -qw (healthy); do echo "Waiting for container to be healthy..."; $(docker inspect --format "{{json .State.Health }}" rems_dev_test-ehr | jq); echo $(docker logs --since=1m rems_dev_test-ehr); $(docker ps | grep rems_dev_test-ehr); echo $(docker ps); sleep 1m; done'
+        run: $(docker ps | grep rems_dev_test-ehr; timeout 15m sh -c 'until docker ps | grep rems_dev_test-ehr | grep -qw "(healthy)"; do echo "Waiting for container to be healthy..."; $(docker inspect --format "{{json .State.Health }}" rems_dev_test-ehr | jq); echo $(docker logs --since=1m rems_dev_test-ehr); $(docker ps | grep rems_dev_test-ehr); echo $(docker ps); sleep 1m; done'
 
       - uses: actions/setup-node@v3
         with:
