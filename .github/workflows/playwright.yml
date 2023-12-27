@@ -89,7 +89,7 @@ jobs:
 
       - name: Build Containers
         working-directory: ./rems-setup
-        run: docker-compose --parallel -f docker-compose-local-build.yml build
+        run: docker-compose -parallel -f docker-compose-local-build.yml build
 
 
       - name: Start containers
