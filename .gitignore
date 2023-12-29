@@ -4,3 +4,4 @@
 /playwright/.cache/
 /test-results/
 node_modules/
+.docker-sync/
