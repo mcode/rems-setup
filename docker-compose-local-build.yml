@@ -23,7 +23,6 @@ services:
       - "8081:8081"
     build:
       context: ../test-ehr
-      # dockerfile: Dockerfile.dev
     environment:
       - oauth_token=http://host.docker.internal:8180/realms/ClientFhirServer/protocol/openid-connect/token
     extra_hosts:
@@ -44,7 +43,6 @@ services:
   request-generator:
     build:
       context: ../request-generator
-      # dockerfile: Dockerfile.dev
     container_name: rems_dev_request-generator
     environment:
       - REACT_APP_EHR_SERVER_TO_BE_SENT_TO_REMS_ADMIN_FOR_PREFETCH=http://host.docker.internal:8080/test-ehr/r4
@@ -57,7 +55,6 @@ services:
   rems-smart-on-fhir:
     build:
       context: ../rems-smart-on-fhir
-      # dockerfile: Dockerfile.dev
     container_name: rems_dev_rems-smart-on-fhir
     ports:
       - "4040:4040"
@@ -66,7 +63,6 @@ services:
   rems-administrator:
     build:
       context: '../rems-admin'
-      # dockerfile: Dockerfile.dev
     container_name: rems_dev_rems-administrator
     ports:
       - "8090:8090"
@@ -78,7 +74,6 @@ services:
   pims:
     build:
       context: ../pims
-      # dockerfile: Dockerfile.dev
     container_name: rems_dev_pims
     ports:
       - "5050:5050"
