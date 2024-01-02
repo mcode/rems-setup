@@ -1,6 +1,6 @@
 # Prototype Repositories and Capabilities
 
-## (As of April 27, 2023. Prototype version 0.9)
+## (As of January 2, 2024. Prototype version 0.14)
 
 ![](./prototype-images/layout.png)
 
@@ -13,7 +13,7 @@
   - REMS Administrator `(4)`
     - Node/TypeScript
     - `(1.1)(3)` CDS Hooks (server) end points
-    - `(1.4)` FHIR Server to support DTR
+    - `(1.4)` FHIR Server to support REMS SMART on FHIR App
       - Contains Questionnaire, Library (w/ CQL), ValueSets
       - Retrieves and caches ValueSets from VSAC
     - `(5)` Interface to check status of REMS
@@ -25,7 +25,7 @@
   - Test EHR `(2)`
     - Java HAPI FHIR Server
     - Contains test patient data
-    - Supports launching DTR SMART on FHIR app
+    - Supports launching REMS SMART on FHIR app
 
 - mcode/request-generator
 
@@ -34,7 +34,7 @@
     - Web Application mimicking the EHR frontend
     - Requests
       - `(1.1)(3)` Generates CDS Hooks order-sign (client) that is sent to the REMS Admin
-      - `(1.2)(3)` Handles CARDS returned from REMS Admin to launch DTR
+      - `(1.2)(3)` Handles CARDS returned from REMS Admin to launch REMS SMART on FHIR App
       - Sends Rx to PIMS using NCPDP Script NewRx
 
 - mcode/pims
