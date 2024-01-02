@@ -1,21 +1,24 @@
 # Local Developer Setup Guide (No Docker)
 
-> Follow this guide if you would like to start each application locally **without** using Docker. Each must be launched in a sperate terminal window.
+Follow this guide if you would like to start each application locally **without** using Docker. Each must be launched in a separate terminal window.
 
 ## Prerequisites
 
 - Java, gradle
   - test-ehr
-- node
+- Node
   - rems-admin, pims, rems-smart-on-fhir, request-generator
+- [nvm (Node Version Manager)](https://github.com/nvm-sh/nvm) (optional)
 - git
   - On Windows 'Git Bash' was used for the command line interface
 
 ## Installation Order
 
-1. Clone each Repo
-2. Start Utility Applications
-3. Start Test and Core Applications
+1. [Clone each repository](#clone-repos)
+2. [Install nvm (optional)](#install-nvm-node-version-manager)
+3. [Start utility applications](#utilities)
+4. [Start test applications](#test-applications)
+5. [Start core applications](#core-applications)
 
 ## Clone Repos
 
@@ -24,7 +27,7 @@
    down the line.
 
    ```bash
-   mkdir <REMSroot>
+   mkdir <rems-root>
    ```
 
    `<rems-root>` will be the base directory into which all the other components will be installed. For example, test-ehr will
@@ -33,27 +36,27 @@
    Note: If you are using a different project structure from the above description, you will need to change the
    corresponding repo paths in docker-compose-dev.yml, docker-sync.yml, and docker-compose.yml
 
-2. Now clone the REMS Integration Prototype component repositories from Github:
+2. Now clone the REMS Integration Prototype component repositories from GitHub:
 
    ```bash
    cd <rems-root>
 
-   git clone https://github.com/mcode/test-ehr.git test-ehr
-   git clone https://github.com/mcode/request-generator.git request-generator
-   git clone https://github.com/mcode/rems-admin.git rems-admin
-   git clone https://github.com/mcode/pims.git pims
-   git clone https://github.com/mcode/rems-smart-on-fhir.git rems-smart-on-fhir
-   git clone https://github.com/mcode/rems-setup.git rems-setup
-
-   # Update the Submodules
-   cd rems-admin
-   git submodule update --init
-
-   cd ..
-
-   cd rems-smart-on-fhir
-   git submodule update --init
+   git clone https://github.com/mcode/test-ehr.git
+   git clone https://github.com/mcode/request-generator.git
+   git clone https://github.com/mcode/rems-admin.git
+   git clone https://github.com/mcode/pims.git
+   git clone https://github.com/mcode/rems-smart-on-fhir.git
+   git clone https://github.com/mcode/rems-setup.git
    ```
+
+## Install nvm (Node Version Manager)
+
+- Using nvm makes switching Node versions easier. Install [nvm](https://github.com/nvm-sh/nvm) since request-generator fails to run without node 14 compared to the other repos.
+
+  ```bash
+  nvm install 20 # example of a default version
+  nvm install 14 # another option
+  ```
 
 ## Utilities
 
@@ -137,104 +140,100 @@
 
 ### test-ehr
 
-- Navigate into directory already cloned from GitHub [www.github.com/mcode/test-ehr](https://www.github.com/mcode/test-ehr)
+- Terminal window 1
 
   ```bash
+  # Navigate into directory already cloned from GitHub
   cd test-ehr
 
   # Run
   gradle bootRun
   ```
 
+- Terminal window 2 (in the same directory)
+
   ```bash
-  # Load Data (in separate window, also in repo folder)
+  # Load Data
   gradle loadData
   ```
 
 ### request-generator
 
-- Navigate into directory already cloned from GitHub [www.github.com/mcode/request-generator](https://www.github.com/mcode/request-generator)
+```bash
+# Navigate into directory already cloned from GitHub
+cd request-generator
 
-  ```bash
-  cd request-generator
+# Install dependencies
+npm install
 
-  # Setup
-  npm install
+# Use the correct version of Node
+nvm use 14
 
-  # Run
-  npm start
-  ```
+# Start the application
+npm start
+```
 
 ## Core Applications
 
 ### rems-admin
 
-- Navigate into directory already cloned from GitHub [www.github.com/mcode/rems-admin](https://www.github.com/mcode/rems-admin)
-- Update env.json
+```bash
+# Navigate into directory already cloned from GitHub
+cd rems-admin
 
-  - Add your VSAC key to env.json as the default value for `VSAC_API_KEY`
+# Create a .env.local and set the VSAC_API_KEY variable to your VSAC key.
+echo "VSAC_API_KEY=<your VSAC API key>" > .env.local
 
-  ```bash
-  cd rems-admin
+# Initialize Git submodules (REMS CDS Hooks)
+git submodule update --init
 
-  # Submodule Initialization
-  git submodule update --init
+# Install dependencies
+npm install
 
-  # Setup
-  `npm install`
-
-  # Run
-  npm start
-  ```
+# Start the application
+npm start
+```
 
 ### pims
 
-- Navigate into directory already cloned from GitHub [www.github.com/mcode/pims](https://www.github.com/mcode/pims)
+Terminal window 1: Backend
 
-  ```bash
-  cd pims
-  ```
+```bash
+# Navigate to the backend directory
+cd pims/backend
 
-  Backend
+# Install dependencies
+npm install
 
-  ```bash
-  # Navigate to the backend directory
-  cd backend
+# Start the application
+npm start
+```
 
-  # Setup
-  npm install
+Terminal window 2: Frontend
 
-  #Run
-  npm start
-  ```
+```bash
+# Navigate to the frontend directory
+cd pims/backend
 
-  Frontend
+# Install dependencies
+npm install
 
-  ```bash
-  # Navigate to the frontend directory
-  cd frontend
-
-  # Setup
-  npm install
-
-  # Run
-  PORT=5050 npm start
-  ```
+# Start the application
+npm start
+```
 
 ### rems-smart-on-fhir
 
-- Navigate into directory already cloned from GitHub [https://www.github.com/mcode/rems-smart-on-fhir](https://www.github.com/mcode/rems-smart-on-fhir)
+```bash
+# Navigate into directory already cloned from GitHub
+cd rems-smart-on-fhir
 
-  ```bash
-  # Navigate into directory already cloned from GitHub
-  cd rems-smart-on-fhir
+# Initialize Git submodules (REMS CDS Hooks)
+git submodule update --init
 
-  # Submodule Initialization
-  git submodule update --init
+# Install dependencies
+npm install
 
-  # Setup
-  npm install
-
-  # Run
-  PORT=4040 npm start
-  ```
+# Start the application
+npm start
+```
