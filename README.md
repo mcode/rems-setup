@@ -21,3 +21,10 @@ You can find complete end-to-end full-stack set up guides for the REMS Proof of 
 [Local Developer Setup Guide (No Docker)](EndToEndSetupGuide.md) - Follow this guide if you would like to start each application locally **without** using Docker for development.
 
 [HTTPS / SSL Setup Guide](SSLSetupGuide.md) - Follow this guide to launch each application in the prototype workflow with SSL enabled.
+
+## Running end-to-end tests
+
+We use Playwright for end-to-end testing, which automates running the full prototype environment.
+
+1. Install dependencies: `npm install`
+2. Run all tests: `npm playwright test` or with the `-ui` flag to view them in the Chromium browser.
