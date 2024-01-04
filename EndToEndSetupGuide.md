@@ -237,3 +237,7 @@ npm install
 # Start the application
 npm start
 ```
+
+# Verify the REMS Integration Prototype is working
+
+See [this guide](Verify-REMS-Integration-Prototype-Works.md) to generate a test request.

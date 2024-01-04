@@ -23,16 +23,14 @@ _Note:_ If you are looking to just have more control or configuration options wi
 
 ## Components
 
-The following DRLS components will be deployed in Docker locally:
+The following REMS components will be deployed in Docker locally:
 
-1. [Coverage Requirements Discovery (CRD)](https://github.com/mcode/CRD)
-2. [(Test) EHR FHIR Service](https://github.com/HL7-DaVinci/test-ehr)
-3. [Documents, Templates, and Rules (DTR) SMART on FHIR app](https://github.com/mcode/dtr)
-4. [Clinical Decision Support (CDS) Library](https://github.com/mcode/CDS-Library)
-5. [Request Generator](https://github.com/mcode/request-generator)
-6. [rems-admin](https://github.com/mcode/rems-admin)
-7. [Pharmacy Information System](https://github.com/mcode/pharmacy-information-system)
-8. [Keycloak](https://www.keycloak.org/)
+1. [test-ehr](https://github.com/mcode/test-ehr)
+2. [request-generator](https://github.com/mcode/request-generator)
+3. [rems-admin](https://github.com/mcode/rems-admin.git)
+4. [rems-setup](https://github.com/mcode/rems-setup.git)
+5. [pims (Pharmacy Information Management System)](https://github.com/mcode/pims)
+6. [rems-smart-on-fhir](https://github.com/mcode/rems-smart-on-fhir)
 
 ## Quick Setup
 
@@ -57,7 +55,7 @@ Your computer must have these minimum requirements:
 ### 2. Obtain [Value Set Authority Center (VSAC)](https://vsac.nlm.nih.gov/) API key
 
 1. [Click here](https://www.nlm.nih.gov/research/umls/index.html) to read about UMLS
-2. Click 'request a license' under 'Get Started'
+2. Click 'Request a license' under 'Get Started'
 3. If you already have a key you can click 'Visit Your Profile' in the right hand side-bar. The API key will be listed
    under your username.
 4. If you do not have a key, click 'Generate an API Key'
@@ -90,7 +88,7 @@ Your computer must have these minimum requirements:
   You can see a list of your pre-existing environment variables on your machine by running `env` in your Terminal. To
   add to `env`:
 
-  1. Set "VSAC_API_KEY" in the .env file in the rems-setup Repository
+  1. Set "VSAC_API_KEY" in a .env.local (to overwrite the default values in the .env) file in the rems-setup Repository
 
      or
 
@@ -118,7 +116,7 @@ Your computer must have these minimum requirements:
   You can see a list of your pre-existing environment variables on your machine by running `env` in your Terminal. To
   add to `env`:
 
-  1. Set "COMPOSE_PROJECT_NAME" as "rems_prod" in the .env file in the rems-setup Repository
+  1. Set "COMPOSE_PROJECT_NAME" as "rems_prod" in the .env.local file in the rems-setup Repository
 
      or
 
@@ -142,11 +140,11 @@ Your computer must have these minimum requirements:
   identifier. If you are following both options mentioned in this guide, it is recommended to change the compose project
   name for each so that they differ.
 
-- Start docker compose application
+- Start Docker Compose application
 
   ```bash
       cd rems-setup # Need to execute commands in directory with corresponding docker-compose.yml file located in the REMS repository
-      docker-compose up
+      docker compose up
   ```
 
   Note, if you are using an M1/M2 mac, you'll need to prepend `docker-compose` commands with
@@ -154,77 +152,25 @@ Your computer must have these minimum requirements:
 
   ```bash
       cd rems-setup # Need to execute commands in directory with corresponding docker-compose.yml file located in the REMS repository
-      COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 DOCKER_DEFAULT_PLATFORM=linux/arm64 docker-compose up
+      COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 DOCKER_DEFAULT_PLATFORM=linux/arm64 docker compose up
   ```
 
 ### 4. Verify everything is working
 
-#### The fun part: Generate a test request
-
-1. Go to the EHR UI at <http://localhost:3000> and play the role of a prescriber.
-2. Click **Patient Select** button in upper left.
-3. Find **Jon Snow** in the list of patients and click the first dropdown menu next to his name.
-4. Select **2183126 (MedicationRequest) Turalio 200 MG Oral Capsule** in the dropdown menu.
-5. Click anywhere in the row to select Jon Snow.
-6. Click **Send Rx to PIMS** at the bottom of the page to send a prescription to the Pharmacist.
-7. Click **Submit to REMS-Admin** at the bottom of the page, which demonstrates the case where an EHR has CDS Hooks
-   implemented natively.
-8. After several seconds you should receive a response in the form of two **CDS cards**:
-9. Select **Patient Enrollment Form** on the returned CDS card with summary **Drug Has REMS: Documentation Required**.
-10. If you are asked for login credentials, use **alice** for username and **alice** for password.
-11. A webpage should open in a new tab, and after a few seconds, a questionnaire should appear.
-12. Fill out the questionnaire and hit **Submit REMS Bundle**.
-    - 12a. Alternatively fill out only some of the questionnaire for an asynchronous workflow and hit **Save to EHR**.
-    - 12b. Visit the Patient Portal at <http://localhost:3000/patient-portal> and lay the role of the patient.
-    - 12c. Login to the Patient Portal, use **JonSnow** for the username and **jon** for the password.
-    - 12d. Select the saved Questionnaire and fill out the rest of the questionnaire as well as the patient signature in
-      the questionnaire and hit **Save to EHR** again.
-    - 12e. Go back to the EHR UI at <http://localhost:3000> and select the latest saved questionnaire from the second
-      dropdown next to Jon Snow's name and continue in the role of the prescriber.
-    - 12f. Click **Relaunch DTR** and fill out the remainder of the questionnaire, including the prescriber signature,
-      then click **Submit REMS Bundle**.
-13. A new UI will appear with REMS Admin Status and Pharmacy Status.
-14. Go to <http://localhost:5050> and play the role of a pharmacist.
-    <!-- 15. Click on **Log in as Admin** in the top right of the page -->
-    <!-- 16. Sign in with the pre-configured user Suzy:
-    	* Email: spharmichael@example.com
-    	* Password: suzy -->
-15. Click **Doctor Orders** in the top hand navigation menu on the screen
-16. See the Doctor Order that was sent to the pharmacist from the prescriber and use the **Verify ETASU** button to get
-    a status update of the REMS requirements submitted
-17. Go Back to the EHR UI at <http://localhost:3000> and play the role of the prescriber again, select patient Jon Snow
-    from the patient select UI and click **Launch SMART on FHIR App**, which will open the SMART on FHIR App in its own
-    view and demonstrate the case where an EHR does not have CDS Hooks implemented natively.
-18. From the medications dropdown select **Turalio 200 MG Oral Capsule**, which should populate the screen with cards
-    similar to those seen in step 7.
-19. Use the **Check ETASU** and **Check Pharmacy** buttons to get status updates on the prescription and REMS request
-20. Use the links for the **Prescriber Enrollment Form** and **Prescriber Knowledge Assessment** Questionnaires and
-    repeat steps 9-12 to submit those ETASU requirements and see how the ETASU status changes in both the Pharmacist UI
-    and Prescriber UI.
-21. Once all the REMS ETASU are met, go back to <http://localhost:5050> and play the role of the Pharmacist, using the
-    **Verify Order** button to move the prescription over to the **Verified Orders** Tab. Click on the **Verified
-    Orders** Tab and from there use the **Mark as Picked Up** button to move the prescription over to the **Picked Up
-    Orders** Tab.
-22. Go back to the SMART on FHIR App launched in step 17 and play the role of the prescriber using the **Check
-    Pharmacy** button to see the status change of the prescription.
-23. Lastly, repeat step 20 to open the **Patient Status Update Form** in the returned cards to submit follow
-    up/monitoring requests on an as need basis. These forms can be submitted as many times as need be in the prototype
-    and will show up as separate ETASU elements each time.
-
-Congratulations! The REMS Integration Prototype is fully installed and ready for you to use!
+See [this guide](Verify-REMS-Integration-Prototype-Works.md) to generate a test request.
 
 ## Cleanup and Useful Options
 
 ### Uninstall the docker-compose application
 
 ```bash
-docker-compose down # Removes application servers
+docker compose down # Removes application servers
 ```
 
-or if on M1/M2 mac use
+or if on M1/M2 Mac use
 
 ```bash
-docker-compose -f docker-compose-m1.yml down # Removes application servers
+docker compose -f docker-compose-m1.yml down # Removes application servers
 ```
 
 ### Cleanup docker resources
@@ -240,8 +186,8 @@ docker network prune
 ### Updating docker-compose application images
 
 ```bash
-docker-compose build --no-cache --pull [<service_name1> <service_name2> ...]
-docker-compose --force-recreate  [<service_name1> <service_name2> ...]
+docker compose build --no-cache --pull [<service_name1> <service_name2> ...]
+docker compose --force-recreate  [<service_name1> <service_name2> ...]
 # Options:
 #   --force-recreate                        Recreate containers even if their configuration and image haven't changed.
 #   --build                                 Build images before starting containers.
