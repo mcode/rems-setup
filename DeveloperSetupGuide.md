@@ -81,6 +81,23 @@ This guide will take you through the development environment setup for each of t
 
 ### Setting Environment Variables and System Path
 
+The following instructions are for Mac and Linux.
+
+You can see a list of your pre-existing environment variables on your machine by running `env` in your Terminal. To add to `env`:
+
+1. `cd ~/`
+2. Open your `.zshrc` (Mac) or `.bash_profile` (Linux) and add the following line at the very bottom:
+
+   ```bash
+   export VSAC_API_KEY=vsac_api_key
+   ```
+
+3. Save `.bash_profile` and complete the update to `env`:
+
+   ```bash
+   source .bash_profile
+   ```
+
 How you set environment and path variables may vary depending on your operating system and terminal used. For instance, for zsh on MacOS you typically need to modify .zshrc instead of .bash_profile. To figure out how to set environment variables for your system, consult the guides below or google
 `how to permanently set environment/path variables on [insert operating system] [insert terminal type]`.
 

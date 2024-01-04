@@ -1,13 +1,22 @@
-# REMS Local Demo Setup Guide
+# Local Demo Setup Guide
 
-## Guide Contents
+## Table of Contents
 
-- [Purpose](#purpose-of-this-guide)
-- [Components](#components)
-- [Quick Setup](#quick-setup)
-- [Cleanup and Useful Options](#cleanup-and-useful-options)
-  - [Setting Environment Variables](#setting-environment-variables)
-  - [Configurable install](#docker-compose-without-porter)
+- [Local Demo Setup Guide](#local-demo-setup-guide)
+  - [Table of Contents](#table-of-contents)
+  - [Purpose of this guide](#purpose-of-this-guide)
+  - [Components](#components)
+  - [Quick Setup](#quick-setup)
+    - [1. System Requirements](#1-system-requirements)
+    - [2. Obtain Value Set Authority Center (VSAC) API key](#2-obtain-value-set-authority-center-vsac-api-key)
+    - [3. Run](#3-run)
+    - [4. Verify everything is working](#4-verify-everything-is-working)
+  - [Cleanup and Useful Options](#cleanup-and-useful-options)
+    - [Remove the Docker Compose containers to free up resources](#remove-the-docker-compose-containers-to-free-up-resources)
+    - [Cleanup Docker resources](#cleanup-docker-resources)
+    - [Updating Docker Compose application images](#updating-docker-compose-application-images)
+    - [Setting Environment Variables](#setting-environment-variables)
+    - [Running with SSL](#running-with-ssl)
 
 ## Purpose of this guide
 
@@ -34,126 +43,40 @@ The following REMS components will be deployed in Docker locally:
 
 ## Quick Setup
 
-### 1. Verify or Install Prerequisites
+### 1. System Requirements
 
-#### System Requirements
-
-Your computer must have these minimum requirements:
-
-- x86_64 (64-bit) or equivalent processor
-- At least 12 GB of RAM
-- At least 256 GB of storage
-- Internet access
-- [Chrome browser](https://www.google.com/chrome/)
-- [Docker Desktop](https://www.docker.com/products/docker-desktop)
-  - Make sure you install Docker Desktop version 18.03 or later.
-  - After installing ensure it is running using their setup guide.
-  - For resources, the system requires more than the default:
-    - Click the settings cog and go to resources.
-    - Allocate 8GB+ of RAM (16GB is ideal), and 4+ CPUs.
+See [this section](DeveloperSetupGuide.md/#minimum-system-requirements) from the developer setup guide for more information.
 
 ### 2. Obtain [Value Set Authority Center (VSAC)](https://vsac.nlm.nih.gov/) API key
 
-1. [Click here](https://www.nlm.nih.gov/research/umls/index.html) to read about UMLS
-2. Click 'Request a license' under 'Get Started'
-3. If you already have a key you can click 'Visit Your Profile' in the right hand side-bar. The API key will be listed
-   under your username.
-4. If you do not have a key, click 'Generate an API Key'
-5. Sign in using one of the providers (Login.gov recommended)
-6. Generating the key is an automated process, you should be approved via e-mail fairly quickly. If not, use the contact
-   information in the first link to reach out to the office (this is not managed by our team / system).
-7. Once approved, loop back to step 2
+See [this section](DeveloperSetupGuide.md/#obtain-value-set-authority-center-vsac-api-key) from the developer setup guide for more information.
 
 ### 3. Run
 
-- [Install git](https://www.atlassian.com/git/tutorials/install-git)
-- Use git to clone or download and extract the zip of the
-  [rems-setup repository](https://github.com/mcode/rems-setup.git)
-- In your terminal navigate to the rems-setup repo folder.
-- Set up your local environment with your VSAC credentials (see
-  [setting environment variables section](#setting-environment-variables) for help)
+1. [Install git](https://www.atlassian.com/git/tutorials/install-git).
+2. Use git to clone or download and extract the zip of the [rems-setup repository](https://github.com/mcode/rems-setup.git).
+3. In your terminal, navigate to the rems-setup directory.
 
-  > At this point, you should have credentials to access VSAC. If not, please refer to [Prerequisites](#prerequisites)
-  > for how to create these credentials and return here after you have confirmed you can access VSAC. To download the
-  > full ValueSets, your VSAC account will need to be added to the CMS-DRLS author group on <https://vsac.nlm.nih.gov/>.
-  > You will need to request membership access from an admin. Please reach out to Sahil Malhotra at
-  > <smalhotra@mitre.org> in order to request access to the CMS-DRLS author group. If this is not configured, you will
-  > get
-  > `org.hl7.davinci.endpoint.vsac.errors.VSACValueSetNotFoundException: ValueSet 2.16.840.1.113762.1.4.1219.62 Not Found`
-  > errors.
+   ```bash
+   cd rems-setup
+   ```
 
-  > While this step is optional, we **highly recommend** that you do it so that DRLS will have the ability to
-  > dynamically load value sets from VSAC.
+4. Set up your local environment with your VSAC credentials (`VSAC_API_KEY`) and Docker Compose project name (`COMPOSE_PROJECT_NAME`). See the [setting environment variables section](#setting-environment-variables) for more information.
 
-  You can see a list of your pre-existing environment variables on your machine by running `env` in your Terminal. To
-  add to `env`:
+5. Start Docker Compose application
 
-  1. Set "VSAC_API_KEY" in a .env.local (to overwrite the default values in the .env) file in the rems-setup Repository
+   ```bash
+   cd rems-setup # Need to execute commands in directory with corresponding docker-compose.yml file located in the REMS repository
+   docker compose up
+   ```
 
-     or
+   Note, if you are using an M1/M2 mac, you'll need to prepend `docker compose` commands with
+   `COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 DOCKER_DEFAULT_PLATFORM=linux/arm64`.
 
-  2. `cd ~/`
-  3. Open `.bash_profile` and add the following lines at the very bottom:
-
-     ```bash
-     export VSAC_API_KEY=vsac_api_key
-     ```
-
-  4. Save `.bash_profile` and complete the update to `env`:
-
-     ```bash
-     source .bash_profile
-     ```
-
-  > Be aware that if you have chosen to skip this step, you will be required to manually provide your VSAC credentials
-  > at <http://localhost:8090/data> and hit **Reload Data** every time you want DRLS to use new or updated value sets.
-
-  Note: How you set environment and path variables may vary depending on your operating system and terminal used. See
-  [setting environment variables section](#setting-environment-variables) for more information.
-
-- Add Compose Project Name to environment
-
-  You can see a list of your pre-existing environment variables on your machine by running `env` in your Terminal. To
-  add to `env`:
-
-  1. Set "COMPOSE_PROJECT_NAME" as "rems_prod" in the .env.local file in the rems-setup Repository
-
-     or
-
-  1. `cd ~/`
-  1. Open `.bash_profile` and add the following lines at the very bottom:
-
-     ```bash
-     export COMPOSE_PROJECT_NAME=rems_prod
-     ```
-
-  1. Save `.bash_profile` and complete the update to `env`:
-
-     ```bash
-     source .bash_profile
-     ```
-
-  Note: How you set environment and path variables may vary depending on your operating system and terminal used. See
-  [setting environment variables section](#setting-environment-variables) for more information.
-
-  Note: The compose project name is to disambiguate between different set ups on the same machine and can be set to any
-  identifier. If you are following both options mentioned in this guide, it is recommended to change the compose project
-  name for each so that they differ.
-
-- Start Docker Compose application
-
-  ```bash
-      cd rems-setup # Need to execute commands in directory with corresponding docker-compose.yml file located in the REMS repository
-      docker compose up
-  ```
-
-  Note, if you are using an M1/M2 mac, you'll need to prepend `docker-compose` commands with
-  `COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 DOCKER_DEFAULT_PLATFORM=linux/arm64`.
-
-  ```bash
-      cd rems-setup # Need to execute commands in directory with corresponding docker-compose.yml file located in the REMS repository
-      COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 DOCKER_DEFAULT_PLATFORM=linux/arm64 docker compose up
-  ```
+   ```bash
+   cd rems-setup # Need to execute commands in directory with corresponding docker-compose.yml file located in the REMS repository
+   COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 DOCKER_DEFAULT_PLATFORM=linux/arm64 docker compose up
+   ```
 
 ### 4. Verify everything is working
 
@@ -161,19 +84,19 @@ See [this guide](Verify-REMS-Integration-Prototype-Works.md) to generate a test 
 
 ## Cleanup and Useful Options
 
-### Uninstall the docker-compose application
+### Remove the Docker Compose containers to free up resources
 
 ```bash
-docker compose down # Removes application servers
+docker compose down
 ```
 
 or if on M1/M2 Mac use
 
 ```bash
-docker compose -f docker-compose-m1.yml down # Removes application servers
+docker compose -f docker-compose-m1.yml down
 ```
 
-### Cleanup docker resources
+### Cleanup Docker resources
 
 To remove all images, volumes, and artifacts set up during the install, run the following commands
 
@@ -183,7 +106,7 @@ docker volume prune
 docker network prune
 ```
 
-### Updating docker-compose application images
+### Updating Docker Compose application images
 
 ```bash
 docker compose build --no-cache --pull [<service_name1> <service_name2> ...]
@@ -198,27 +121,16 @@ docker compose --force-recreate  [<service_name1> <service_name2> ...]
 
 ### Setting Environment Variables
 
-How you set environment and path variables may vary depending on your operating system and terminal used. For instance,
-for zsh on MacOS you typically need to modify .zshrc instead of .bash_profile. To figure out how to set environment
-variables for your system, consult the guides below or google
-`how to permanently set environment/path variables on [insert operating system] [insert terminal type]`.
+See [this section](DeveloperSetupGuide.md/#setting-environment-variables-and-system-path) from the developer setup guide for more information.
 
-    For more information on how to set environment variables consult these following guides:
+> At this point, you should have credentials to access VSAC. If not, please refer to step 2 of [quick setup](#quick-setup) for how to create these credentials and return here after you have confirmed you can access VSAC. If this is not configured, you will get `org.hl7.davinci.endpoint.vsac.errors.VSACValueSetNotFoundException: ValueSet 2.16.840.1.113762.1.4.1219.62 Not Found` errors.
 
-    - https://chlee.co/how-to-setup-environment-variables-for-windows-mac-and-linux/
-    - https://www3.ntu.edu.sg/home/ehchua/programming/howto/Environment_Variables.html
-    - https://unix.stackexchange.com/questions/117467/how-to-permanently-set-environmental-variables
+> While this step is optional, we **highly recommend** that you do it so that REMS will have the ability to dynamically load value sets from VSAC.
 
-    > At this point, you should have credentials to access VSAC. If not, please refer to step 2 of [quick setup](#quick-setup) for how to create these credentials and return here after you have confirmed you can access VSAC. If this is not configured, you will get `org.hl7.davinci.endpoint.vsac.errors.VSACValueSetNotFoundException: ValueSet 2.16.840.1.113762.1.4.1219.62 Not Found` errors.
+> Be aware that if you have chosen to skip this step, you will be required to manually provide your VSAC credentials
+> at <http://localhost:8090/data> and hit **Reload Data** every time you want REMS to use new or updated value sets.
 
-    > While this step is optional, we **highly recommend** that you do it so that DRLS will have the ability to dynamically load value sets from VSAC.
-
-Set `VSAC_API_KEY` in your terminal environment to the API key obtained from your
-[UMLS profile page](https://uts.nlm.nih.gov/uts/edit-profile) - for more info on getting your VSAC key see
-[step 2 of quick setup section](#quick-setup). For setting up your environment, see the
-[Setting Environment Variables](#setting-environment-variables) section.
-
-Bash example: ```bash export VSAC_API_KEY=vsac_api_key ````
+Note: How you set environment and path variables may vary depending on your operating system and terminal used.
 
 ### Running with SSL
 

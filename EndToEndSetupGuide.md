@@ -2,6 +2,25 @@
 
 Follow this guide if you would like to start each application locally **without** using Docker. Each must be launched in a separate terminal window.
 
+## Table of Contents
+
+- [Local Developer Setup Guide (No Docker)](#local-developer-setup-guide-no-docker)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Clone each repository](#clone-each-repository)
+  - [Install nvm (Node Version Manager)](#install-nvm-node-version-manager)
+  - [Utilities](#utilities)
+    - [keycloak](#keycloak)
+    - [mongodb](#mongodb)
+  - [Test Applications](#test-applications)
+    - [test-ehr](#test-ehr)
+    - [request-generator](#request-generator)
+  - [Core Applications](#core-applications)
+    - [rems-admin](#rems-admin)
+    - [pims](#pims)
+    - [rems-smart-on-fhir](#rems-smart-on-fhir)
+- [Verify the REMS Integration Prototype is working](#verify-the-rems-integration-prototype-is-working)
+
 ## Prerequisites
 
 - Java, gradle
@@ -12,15 +31,7 @@ Follow this guide if you would like to start each application locally **without*
 - git
   - On Windows 'Git Bash' was used for the command line interface
 
-## Installation Order
-
-1. [Clone each repository](#clone-repos)
-2. [Install nvm (optional)](#install-nvm-node-version-manager)
-3. [Start utility applications](#utilities)
-4. [Start test applications](#test-applications)
-5. [Start core applications](#core-applications)
-
-## Clone Repos
+## Clone each repository
 
 1. Create a root directory for the REMS development work (we will call this `<rems-root>` for the remainder of this setup
    guide). While this step is not required, having a common root for the REMS Integration Prototype components will make things a lot easier
