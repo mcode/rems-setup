@@ -22,7 +22,7 @@ keytool -genkeypair -alias localhost -keyalg RSA -keysize 2048 -validity 365 -ke
 docker run --volume=/tmp/certs:/certs -p 8543:8543 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin codexrems/keycloak:REMSvCurrent start --import-realm --http-enabled=false --hostname=localhost --https-key-store-file=/certs/server.keystore --https-key-store-password=secret --https-port=8543
 ```
 
-### Docker-compose
+### Docker Compose
 
 ```docker-compose
 keycloak:
