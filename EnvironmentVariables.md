@@ -9,7 +9,7 @@
   - .env
     - `VSAC_API_KEY`
     - `COMPOSE_PROJECT_NAME`
-  - docker-compose.yml, docker-compose-dev.yml
+  - docker-compose.yml, docker-compose-dev.yml, docker-compose-local-build.yml
     - keycloak
       - `KEYCLOAK_ADMIN`
       - `KEYCLOAK_ADMIN_PASSWORD`
