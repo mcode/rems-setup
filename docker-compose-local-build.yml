@@ -78,7 +78,7 @@ services:
   pims:
     build:
       context: ../pims
-      # dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.dev
     container_name: rems_dev_pims
     ports:
       - "5050:5050"
