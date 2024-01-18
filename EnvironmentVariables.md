@@ -230,7 +230,7 @@
     - `REACT_APP_LAUNCH_URL`
   - src/containers/Launch.jsx
     - `REACT_APP_CLIENT`
-    - `REACT_APP_CLIENT_SCOPES`
+    - `REACT_APP_EHR_BASE`
   - src/containers/PatientPortal.jsx
     - `REACT_APP_EHR_BASE`
 
