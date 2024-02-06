@@ -119,6 +119,7 @@
     - `ALLOWED_ORIGIN`
     - `AUTH_SOURCE`
     - `BACKEND_PORT`
+    - `EHR_RXFILL_URL`
     - `HTTPS_CERT_PATH`
     - `HTTPS_KEY_PATH`
     - `MONGO_PASSWORD`
@@ -247,6 +248,7 @@
     - `USE_HTTPS`
   - backend/src/routes/doctorOrders.js
     - `REMS_ADMIN_BASE`
+    - `EHR_RXFILL_URL`
   - frontend/src/App.tsx
     - `REACT_APP_PIMS_BACKEND_PORT`
     - `REACT_APP_PIMS_BACKEND_URL`
