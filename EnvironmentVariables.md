@@ -59,7 +59,6 @@
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`
     - `REACT_APP_REMS_HOOKS_PATH`
     - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
-    - `REACT_APP_SEND_RX_ENABLED`
 
 - mcode/test-ehr
 
@@ -258,7 +257,6 @@
     - `REACT_APP_ETASU_STATUS_ENABLED`
     - `REACT_APP_PHARMACY_STATUS_ENABLED`
     - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
-    - `REACT_APP_SEND_RX_ENABLED`
   - src/views/Patient/MedReqDropDown/rxSend/rxSend.ts
     - `REACT_APP_PHARMACY_SERVER_BASE`
   - src/views/Patient/MedReqDropDown/pharmacyStatus/PharmacyStatus.tsx
