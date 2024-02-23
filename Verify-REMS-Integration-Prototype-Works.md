@@ -19,7 +19,7 @@
     - 12e. Return to the EHR UI at <http://localhost:3000>, select the latest saved questionnaire from the second
       dropdown next to Jon Snow's name, and continue as the prescriber.
     - 12f. Click **Launch SMART on FHIR App** and fill out the remainder of the questionnaire, including the prescriber signature, then click **Submit REMS Bundle**.
-13. A new UI will appear with REMS Admin Status and Pharmacy Status.
+13. A new UI will appear with REMS Admin Status and Medication Status.
 14. Visit the Pharmacy Information Management System at <http://localhost:5050> to play the role of a pharmacist.
 15. Click **Doctor Orders** in the top navigation.
 16. View the Doctor Order that was sent to the pharmacist from the prescriber and use the **Verify ETASU** button to get
