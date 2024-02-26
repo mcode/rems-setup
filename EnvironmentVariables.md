@@ -59,7 +59,6 @@
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`
     - `REACT_APP_REMS_HOOKS_PATH`
     - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
-    - `REACT_APP_SEND_RX_ENABLED`
 
 - mcode/test-ehr
 
@@ -119,6 +118,7 @@
     - `ALLOWED_ORIGIN`
     - `AUTH_SOURCE`
     - `BACKEND_PORT`
+    - `EHR_RXFILL_URL`
     - `HTTPS_CERT_PATH`
     - `HTTPS_KEY_PATH`
     - `MONGO_PASSWORD`
@@ -230,7 +230,7 @@
     - `REACT_APP_LAUNCH_URL`
   - src/containers/Launch.jsx
     - `REACT_APP_CLIENT`
-    - `REACT_APP_CLIENT_SCOPES`
+    - `REACT_APP_EHR_BASE`
   - src/containers/PatientPortal.jsx
     - `REACT_APP_EHR_BASE`
 
@@ -247,6 +247,7 @@
     - `USE_HTTPS`
   - backend/src/routes/doctorOrders.js
     - `REMS_ADMIN_BASE`
+    - `EHR_RXFILL_URL`
   - frontend/src/App.tsx
     - `REACT_APP_PIMS_BACKEND_PORT`
     - `REACT_APP_PIMS_BACKEND_URL`
@@ -256,7 +257,6 @@
     - `REACT_APP_ETASU_STATUS_ENABLED`
     - `REACT_APP_PHARMACY_STATUS_ENABLED`
     - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
-    - `REACT_APP_SEND_RX_ENABLED`
   - src/views/Patient/MedReqDropDown/rxSend/rxSend.ts
     - `REACT_APP_PHARMACY_SERVER_BASE`
   - src/views/Patient/MedReqDropDown/pharmacyStatus/PharmacyStatus.tsx
