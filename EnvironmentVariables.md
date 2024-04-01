@@ -98,11 +98,8 @@
     - `VITE_GH_PAGES`
     - `VITE_HOMEPAGE`
     - `VITE_LAUNCH_URL`
-    - `VITE_ORDER_SELECT`
-    - `VITE_ORDER_SIGN`
     - `VITE_PASSWORD`
     - `VITE_PATIENT_FHIR_QUERY`
-    - `VITE_PATIENT_VIEW`
     - `VITE_PIMS_SERVER`
     - `VITE_PUBLIC_KEYS`
     - `VITE_REALM`
@@ -191,7 +188,7 @@
   - src/registerServiceWorker.js
     - `NODE_ENV`
     - `PUBLIC_URL`
-  - src/containers/RequestBuilder.js
+  - src/util/data.js
     - `VITE_ALT_DRUG`
     - `VITE_CDS_SERVICE`
     - `VITE_CLIENT`
@@ -202,10 +199,7 @@
     - `VITE_EHR_SERVER_TO_BE_SENT_TO_REMS_ADMIN_FOR_PREFETCH`
     - `VITE_GENERATE_JWT`
     - `VITE_LAUNCH_URL`
-    - `VITE_ORDER_SELECT`
-    - `VITE_ORDER_SIGN`
     - `VITE_PATIENT_FHIR_QUERY`
-    - `VITE_PATIENT_VIEW`
     - `VITE_PIMS_SERVER`
     - `VITE_RESPONSE_EXPIRATION_DAYS`
     - `VITE_CLIENT_SCOPES`
