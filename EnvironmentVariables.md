@@ -240,7 +240,7 @@
     - `MONGO_USERNAME`
     - `USE_HTTPS`
   - backend/src/routes/doctorOrders.js
-    - `REMS_ADMIN_BASE`
+    - `REMS_ADMIN_FHIR_URL`
     - `EHR_RXFILL_URL`
   - frontend/src/App.tsx
     - `REACT_APP_PIMS_BACKEND_PORT`
