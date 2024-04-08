@@ -24,7 +24,7 @@
       - `MONGO_INITDB_ROOT_USERNAME`
       - `MONGO_INITDB_ROOT_PASSWORD`
     - pims
-      - `REMS_ADMIN_BASE`
+      - `REMS_ADMIN_FHIR_URL`
       - `MONGO_URL`
 
 - mcode/rems-admin
@@ -121,7 +121,7 @@
     - `MONGO_PASSWORD`
     - `MONGO_URL`
     - `MONGO_USERNAME`
-    - `REMS_ADMIN_BASE`
+    - `REMS_ADMIN_FHIR_URL`
     - `USE_HTTPS`
   - frontend/.env
     - `PORT`
