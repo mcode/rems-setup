@@ -71,7 +71,7 @@ services:
     image: codexrems/pims:0.16
     container_name: rems_prod_pims
     environment:
-      REMS_ADMIN_BASE: http://rems-administrator:8090
+      REMS_ADMIN_FHIR_URL: http://rems-administrator:8090/4_0_0
       MONGO_URL: mongodb://pims_remsadmin_mongo:27017/pims
       EHR_RXFILL_URL: http://host.docker.internal:8080/test-ehr/script/rxfill
     ports:
