@@ -11,14 +11,14 @@ services:
       - DB_VENDOR=h2
     volumes:
       - rems_prod_keycloak-data:/opt/keycloak/data/
-    image: codexrems/keycloak:0.16
+    image: codexrems/keycloak:0.17
 
   # Create test-ehr container
   test-ehr: # Name of our service
     container_name: rems_prod_test-ehr
     ports: # Port binding to host from docker container
       - '8080:8080' # Bind port 3000 of host to 3000 of container
-    image: codexrems/test-ehr:0.16
+    image: codexrems/test-ehr:0.17
     environment:
       - oauth_token=http://host.docker.internal:8180/realms/ClientFhirServer/protocol/openid-connect/token
     extra_hosts:
@@ -26,7 +26,7 @@ services:
 
   # Create crd request generator container
   request-generator: # Name of our service
-    image: codexrems/request-generator:0.16
+    image: codexrems/request-generator:0.17
     container_name: rems_prod_request-generator
     environment:
       - REACT_APP_EHR_SERVER_TO_BE_SENT_TO_REMS_ADMIN_FOR_PREFETCH=http://host.docker.internal:8080/test-ehr/r4
@@ -38,14 +38,14 @@ services:
 
   # Create rems-smart-on-fhir container
   rems-smart-on-fhir:
-    image: codexrems/rems-smart-on-fhir:0.16
+    image: codexrems/rems-smart-on-fhir:0.17
     container_name: rems_prod_rems-smart-on-fhir
     ports:
       - "4040:4040"
 
   # Create rems container
   rems-administrator: # Name of our service
-    image: codexrems/rems-administrator:0.16
+    image: codexrems/rems-administrator:0.17
     container_name: rems_prod_rems
     ports: # Port binding to host from docker container
       - "8090:8090"
@@ -68,10 +68,10 @@ services:
 
   # Create pims container
   pims:
-    image: codexrems/pims:0.16
+    image: codexrems/pims:0.17
     container_name: rems_prod_pims
     environment:
-      REMS_ADMIN_BASE: http://rems-administrator:8090
+      REMS_ADMIN_FHIR_URL: http://rems-administrator:8090/4_0_0
       MONGO_URL: mongodb://pims_remsadmin_mongo:27017/pims
       EHR_RXFILL_URL: http://host.docker.internal:8080/test-ehr/script/rxfill
     ports:
