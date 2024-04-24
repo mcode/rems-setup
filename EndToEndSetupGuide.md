@@ -62,11 +62,11 @@ Follow this guide if you would like to start each application locally **without*
 
 ## Install nvm (Node Version Manager)
 
-- Using nvm makes switching Node versions easier. Install [nvm](https://github.com/nvm-sh/nvm) since request-generator fails to run without node 14 compared to the other repos.
+- Using [nvm](https://github.com/nvm-sh/nvm) makes switching Node versions easier, especially when working with projects that use other Node versions on your system.
 
   ```bash
   nvm install 20 # example of a default version
-  nvm install 14 # another option
+  nvm install 21 # another option
   ```
 
 ## Utilities
