@@ -24,7 +24,6 @@
       - `MONGO_INITDB_ROOT_USERNAME`
       - `MONGO_INITDB_ROOT_PASSWORD`
     - pims
-      - `REMS_ADMIN_FHIR_URL`
       - `MONGO_URL`
 
 - mcode/rems-admin
@@ -121,7 +120,6 @@
     - `MONGO_PASSWORD`
     - `MONGO_URL`
     - `MONGO_USERNAME`
-    - `REMS_ADMIN_FHIR_URL`
     - `USE_HTTPS`
   - frontend/.env
     - `PORT`
@@ -240,8 +238,9 @@
     - `MONGO_USERNAME`
     - `USE_HTTPS`
   - backend/src/routes/doctorOrders.js
-    - `REMS_ADMIN_FHIR_URL`
     - `EHR_RXFILL_URL`
+  - backend/src/database/data.js
+    - `REMS_ADMIN_FHIR_URL`
   - frontend/src/App.tsx
     - `REACT_APP_PIMS_BACKEND_PORT`
     - `REACT_APP_PIMS_BACKEND_URL`
