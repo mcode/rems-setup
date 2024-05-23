@@ -28,3 +28,9 @@ We use Playwright for end-to-end testing, which automates running the full proto
 
 1. Install dependencies: `npm install`
 2. Run all tests: `npm playwright test` or with the `-ui` flag to view them in the Chromium browser.
+
+## Sequence Diagram 
+
+The following diagram outlines the interactions and communications between each of the components that make up the REMS prototype environment.
+
+![SequenceDiagram](https://github.com/mcode/rems-setup/assets/28585306/769eaa76-3963-4058-a665-f368564146c2)
