@@ -1,4 +1,6 @@
-# Test Environment Documentation
+# Test Environment Usage
+
+See [Test Environment Setup](TestEnvironmentSetup.md) for details on setting up the test environment.
 
 ### Using Meld
 
