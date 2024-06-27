@@ -22,3 +22,7 @@ syncs:
   rems_dev_pims-sync:  
     src: '../pims'
     sync_excludes: ['./frontend/node_modules', './backend/node_modules', './backend/dist']
+
+  rems_dev_rems-intermediary-sync:
+    src: '../rems-intermediary'
+    sync_excludes: ['node_modules']
