@@ -1,6 +1,6 @@
 # How to generate a test request
 
-1. Access the EHR client registration page at <http://localhost:3000>. Click Launch with the default FHIR Server Endpoint, Client ID, and Scope values.
+1. Access the EHR gateway at <http://localhost:3000>. Click Launch with the default FHIR Server Endpoint, Client ID, and Scope values.
 2. You'll be redirected to <http://localhost:8180>. Authenticate with `alice` as the username and password. You'll then be redirected back to the EHR UI at <http://localhost:3000> to play the role of a prescriber.
 3. Click **Select a Patient** in the middle of the page.
 4. Locate **Jon Snow** in the list of patients and click the "Select a medication request" dropdown.

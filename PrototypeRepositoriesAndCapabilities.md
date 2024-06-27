@@ -36,6 +36,9 @@
       - `(1.1)(3)` Generates CDS Hooks order-sign (client) that is sent to the REMS Admin
       - `(1.2)(3)` Handles CARDS returned from REMS Admin to launch REMS SMART on FHIR App
       - Sends Rx to PIMS using NCPDP Script NewRx
+      - Communicates with REMS Admin and EHR to retrieve ETASU and prescription status
+    - Patient Portal allowing patient access to in progress forms and information about their prescriptions
+    - Manages Tasks for deferring and relaunching in progress forms
 
 - mcode/pims
 
@@ -53,6 +56,7 @@
   - REMS SMART on FHIR Application
     - SMART on FHIR application to generate CDS Hooks interaction with REMS Admin for any EHR that does not support CDS Hooks
       - Node/TypeScript
+    - Displays Questionnaire forms and allows filling them out
 
 - mcode/rems-cds-hooks
   - Git submodule used by REMS SMART on FHIR Application and REMS Admin

@@ -75,6 +75,12 @@
     - `redirect_post_token`
     - `introspection_url`
     - `redirect_base`
+    - `EHR_SSL_ENABLED`
+    - `EHR_KEY_STORE_TYPE`
+    - `EHR_KEY_STORE_PATH`
+    - `EHR_KEY_STORE_PASSWORD`
+    - `EHR_KEY_PASSWORD`
+    - `EHR_KEY_ALIAS`
 
 - mcode/request-generator
 
@@ -148,7 +154,6 @@
     - `MONGO_URL`
     - `PORT`
     - `RESOURCE_SERVER`
-    - `SERVER_PORT`
     - `SMART_ENDPOINT`
     - `VSAC_API_KEY`
     - `WHITELIST`
@@ -159,17 +164,6 @@
 
 - mcode/test-ehr
 
-  - src/main/java/ca/uhn/fhir/jpa/starter/EnvironmentHelper.java
-    - `elasticsearch.required_index_status`
-    - `elasticsearch.schema_management_strategy`
-    - `elasticsearch.debug.refresh_after_write`
-    - `elasticsearch.debug.pretty_print_json_log`
-    - `elasticsearch.rest_url`
-    - `elasticsearch.protocol`
-    - `elasticsearch.username`
-    - `elasticsearch.password`
-    - `elasticsearch.enabled`
-    - `elasticsearch.enabled`
   - src/main/java/org/hl7/davinci/ehrserver/ClientAuthorizationInterceptor.java
     - `use_oauth`
     - `client_secret`
@@ -179,6 +173,9 @@
     - `oauth_authorize`
     - `oauth_token`
     - `redirect_base`
+  - src/main/java/org/hl7/davinci/ehrserver/ServerConformanceR4.java
+    - `proxy_authorize`
+    - `proxy_token`
 
 - mcode/request-generator
 
