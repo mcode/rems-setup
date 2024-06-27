@@ -11,6 +11,7 @@ The notes here describe one method for launching the Request Generator and REMS 
 1. Create a MELD Sandbox
 
     - Log into MELD
+
     ![](./test-environment-images/meld_login.png)
 
     - Select 'NEW SANDBOX'
