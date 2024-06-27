@@ -38,11 +38,11 @@ Follow this guide if you would like to start each application locally **without*
    down the line.
 
    ```bash
-   mkdir <rems-root>
+   mkdir rems-root
    ```
 
-   `<rems-root>` will be the base directory into which all the other components will be installed. For example, test-ehr will
-   be cloned to `<rems-root>/test-ehr`.
+   `rems-root` will be the base directory into which all the other components will be installed. For example, test-ehr will
+   be cloned to `rems-root/test-ehr`.
 
    Note: If you are using a different project structure from the above description, you will need to change the
    corresponding repo paths in docker-compose-dev.yml, docker-sync.yml, and docker-compose.yml
@@ -50,7 +50,7 @@ Follow this guide if you would like to start each application locally **without*
 2. Now clone the REMS Integration Prototype component repositories from GitHub:
 
    ```bash
-   cd <rems-root>
+   cd rems-root
 
    git clone https://github.com/mcode/test-ehr.git
    git clone https://github.com/mcode/request-generator.git
@@ -176,9 +176,6 @@ cd request-generator
 
 # Install dependencies
 npm install
-
-# Use the correct version of Node
-nvm use 14
 
 # Start the application
 npm start

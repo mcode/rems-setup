@@ -20,9 +20,9 @@
 
 ## Purpose of this guide
 
-This document details instructions on how to quickly get up and running with a local demo deployment of the full-stack
+This document details instructions on how to quickly get up and running with a local demo deployment of the
 REMS Integration Prototype environment. This is primarily meant for non-technical users interested in exploring the
-prototype on their own machine.
+prototype on their own machine with minimal setup.
 
 _Note:_ If you are looking to contribute or make code changes, please see the full
 [Developer Environment Setup](DeveloperSetupGuide.md).
@@ -45,13 +45,9 @@ The following REMS components will be deployed in Docker locally:
 
 ### 1. System Requirements
 
-See [this section](DeveloperSetupGuide.md/#minimum-system-requirements) from the developer setup guide for more information.
+See [this section](DeveloperSetupGuide.md/#minimum-system-requirements) from the developer setup guide for more information. Most computers will meet the minimum requirements.
 
-### 2. Obtain [Value Set Authority Center (VSAC)](https://vsac.nlm.nih.gov/) API key
-
-See [this section](DeveloperSetupGuide.md/#obtain-value-set-authority-center-vsac-api-key) from the developer setup guide for more information.
-
-### 3. Run
+### 2. Run
 
 1. [Install git](https://www.atlassian.com/git/tutorials/install-git).
 2. Use git to clone or download and extract the zip of the [rems-setup repository](https://github.com/mcode/rems-setup.git).
@@ -61,9 +57,7 @@ See [this section](DeveloperSetupGuide.md/#obtain-value-set-authority-center-vsa
    cd rems-setup
    ```
 
-4. Set up your local environment with your VSAC credentials (`VSAC_API_KEY`) and Docker Compose project name (`COMPOSE_PROJECT_NAME`). See the [setting environment variables section](#setting-environment-variables) for more information.
-
-5. Start Docker Compose application
+4. Start Docker Compose application
 
    ```bash
    cd rems-setup # Need to execute commands in directory with corresponding docker-compose.yml file located in the REMS repository
@@ -78,11 +72,28 @@ See [this section](DeveloperSetupGuide.md/#obtain-value-set-authority-center-vsa
    COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 DOCKER_DEFAULT_PLATFORM=linux/arm64 docker compose up
    ```
 
-### 4. Verify everything is working
+### 3. Verify everything is working
 
 See [this guide](Verify-REMS-Integration-Prototype-Works.md) to generate a test request.
 
 ## Cleanup and Useful Options
+
+### Obtain [Value Set Authority Center (VSAC)](https://vsac.nlm.nih.gov/) API key
+
+The UMLS Value Set Authority Center provides several value sets that the REMS SMART app uses to automatically fill out forms using information from the patient record. Providing a VSAC API key is optional, but will enable this feature. 
+
+See [this section](DeveloperSetupGuide.md/#obtain-value-set-authority-center-vsac-api-key) from the developer setup guide for more information on obtaining an API key.
+
+Once an API key is obtained, see the following section for information on how to use it.
+
+### Set Environment Variables
+
+Set up your local environment with your VSAC credentials (`VSAC_API_KEY`) and Docker Compose project name (`COMPOSE_PROJECT_NAME`). You can accomplish this easily by modifying the `.env` file in this repository.
+
+See the [setting environment variables section](#setting-environment-variables) for more information.
+
+Note: How you set environment and path variables may vary depending on your operating system and terminal used.
+
 
 ### Remove the Docker Compose containers to free up resources
 
@@ -118,19 +129,6 @@ docker compose --force-recreate  [<service_name1> <service_name2> ...]
 #   --no-cache                              Do not use cache when building the image.
 #   [<service_name1> <service_name2> ...]   Services to recreate, not specifying any service will rebuild and recreate all services
 ```
-
-### Setting Environment Variables
-
-See [this section](DeveloperSetupGuide.md/#setting-environment-variables-and-system-path) from the developer setup guide for more information.
-
-> At this point, you should have credentials to access VSAC. If not, please refer to step 2 of [quick setup](#quick-setup) for how to create these credentials and return here after you have confirmed you can access VSAC. If this is not configured, you will get `org.hl7.davinci.endpoint.vsac.errors.VSACValueSetNotFoundException: ValueSet 2.16.840.1.113762.1.4.1219.62 Not Found` errors.
-
-> While this step is optional, we **highly recommend** that you do it so that REMS will have the ability to dynamically load value sets from VSAC.
-
-> Be aware that if you have chosen to skip this step, you will be required to manually provide your VSAC credentials
-> at <http://localhost:8090/data> and hit **Reload Data** every time you want REMS to use new or updated value sets.
-
-Note: How you set environment and path variables may vary depending on your operating system and terminal used.
 
 ### Running with SSL
 
