@@ -15,9 +15,13 @@ The notes here describe one method for launching the Request Generator and REMS 
     ![](./test-environment-images/meld_login.png)
 
     - Select 'NEW SANDBOX'
+
     ![](./test-environment-images/meld_sandboxes.png)
+
     - Fill out the 'Create Sandbox' Form
+
     ![](./test-environment-images/meld_create_sandbox.png)
+
         - Give the Sandbox a Name and an Id (Id will be automatically generated)
         - Select FHIR Version 'FHIR R4 (v4.0.1)
         - Select all of the checkboxes
