@@ -9,14 +9,16 @@ The notes here describe one method for launching the Request Generator and REMS 
     - Select 'Register'
     - Enter your information and select 'Register' again
 1. Create a MELD Sandbox
+
     - Log into MELD
     ![](./test-environment-images/meld_login.png)
+
     - Select 'NEW SANDBOX'
     ![](./test-environment-images/meld_sandboxes.png)
     - Fill out the 'Create Sandbox' Form
     ![](./test-environment-images/meld_create_sandbox.png)
-        - Give the Sandbox a Name and Id (Id will be automatically generated)
-        - Select FHIR Version 'FHIR Rv (v4.0.1)
+        - Give the Sandbox a Name and an Id (Id will be automatically generated)
+        - Select FHIR Version 'FHIR R4 (v4.0.1)
         - Select all of the checkboxes
             - Allow Open FHIR Endpoint
             - Import sample patients and practitioners
@@ -25,7 +27,7 @@ The notes here describe one method for launching the Request Generator and REMS 
     - Click settings in MELD in your desired sandbox and select 'Data Manager'
     - Select the 'IMPORT' tab from the top then select 'LOAD FROM FILE'
     ![](./test-environment-images/meld_import_resource.png)
-    - Navigate to the folder tha the test-ehr is downloaded to and choose the fhirResourcesToLoad folder
+    - Navigate to the folder that the test-ehr is downloaded to and choose the fhirResourcesToLoad folder
     - Individually select and upload each FHIR resource
         - Note: you can skip the rems_smith* files if you only want the Jon Snow Patient
     ![](./test-environment-images/meld_import_resource_done.png)
@@ -41,7 +43,7 @@ The notes here describe one method for launching the Request Generator and REMS 
         - App Launch URI: http://localhost:4040/launch
         - App Redirect URIs: http://localhost:4040/index
         - Scopes: patient/Patient.read openid profile user/Patient.read offline_access launch user/Practitioner.read
-    - Select save and note the Client ID that is generated and displayed in a pop-up
+    - Select save and store the Client ID that is generated and displayed in a pop-up, this will be needed later
     ![](./test-environment-images/meld_smart_app_registered.png)
 1. Register the Request Generator
     - Complete the steps from the previous section with the following information for the request generator instead
@@ -82,5 +84,5 @@ The notes here describe one method for launching the Request Generator and REMS 
     ![](./test-environment-images/request_generator.png)
     - The register page will load asking for the Client ID. This is the Client ID that was generated when registering the REMS SMART on FHIR application with the MELD Sandbox.
     ![](./test-environment-images/smart_on_fhir_register.png)
-    - Enter the Client ID and select 'SUBMIT AN RETRY'
+    - Enter the Client ID and select 'SUBMIT AND RETRY'
     - The REMS SMART on FHIR app will now load

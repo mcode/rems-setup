@@ -11,7 +11,8 @@ Navigate to https://meld.interop.community/REMS/apps to access the Meld  sandbox
 These are the registered apps.  A registered app consists of:
 -	A launch URI, which is the actual SMART app
 -	A redirect URI, which is a valid location for the SMART app to redirect
--	Scopes, which is the resources we have access to
+-	Scopes, which are the resources we have access to
+
 After registering an app, we get a client id, which is the client id of the SMART app.
 
 The SMART app must be made aware of the client id in order to launch correctly. In the case of the REMS SMART app, registration is handled at the time of launch if the app doesn’t already know which client id to use, which should make the process seamless.  
