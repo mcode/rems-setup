@@ -37,8 +37,8 @@
       - `(1.2)(3)` Handles CARDS returned from REMS Admin to launch REMS SMART on FHIR App
       - Sends Rx to PIMS using NCPDP Script NewRx
       - Communicates with REMS Admin and EHR to retrieve ETASU and prescription status
-    - Patient Portal allowing patient access to in progress forms and information about their prescriptions
-    - Manages Tasks for deferring and relaunching in progress forms
+    - Patient Portal allowing patient access to in-progress forms and information about their prescriptions
+    - Manages Tasks for deferring and relaunching in-progress forms
 
 - mcode/pims
 

@@ -14,7 +14,7 @@ This repository contains all of the Docker, setup scripts, and documentation for
 
 Complete end-to-end set up guides for the REMS Proof of Concept prototype are listed below:
 
-[Simple Set Up](SimpleSetupGuide.md) - Follow this guid to quickly setup a demo environment for local testing. If you want to make changes or contribute to the codebase, see the detailed developer guide below.
+[Simple Set Up](SimpleSetupGuide.md) - Follow this guide to quickly setup a demo environment for local testing. If you want to make changes or contribute to the codebase, see the detailed developer guide below.
 
 [Docker Developer Setup Guide](DeveloperSetupGuide.md) - Follow this guide to use [Docker](https://docs.docker.com/get-started/overview/) for running REMS Integration Prototype for Local Development.
 

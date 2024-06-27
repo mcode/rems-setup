@@ -72,7 +72,7 @@ See [this section](DeveloperSetupGuide.md/#minimum-system-requirements) from the
    COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 DOCKER_DEFAULT_PLATFORM=linux/arm64 docker compose up
    ```
 
-### 4. Verify everything is working
+### 3. Verify everything is working
 
 See [this guide](Verify-REMS-Integration-Prototype-Works.md) to generate a test request.
 
