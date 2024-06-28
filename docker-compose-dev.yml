@@ -77,6 +77,7 @@ services:
     volumes:
       - rems_dev_rems-smart-on-fhir-sync:/home/node/app/rems-smart-on-fhir:nocopy #  nocopy is important
       - rems_dev_rems-smart-on-fhir-nodeModules:/home/node/app/rems-smart-on-fhir/node_modules
+    platform: linux/amd64
 
   rems-administrator:
     build:
@@ -143,4 +144,5 @@ volumes:
   rems_dev_rems-admin-logs:
   rems_dev_rems-smart-on-fhir-nodeModules:
   rems_dev_rems-smart-on-fhir-logs:
+
 
