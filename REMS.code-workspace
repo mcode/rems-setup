@@ -17,6 +17,9 @@
     },
     {
       "path": "../test-ehr"
+    },
+    {
+      "path": "../rems-intermediary"
     }
   ],
   "launch": {
