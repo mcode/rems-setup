@@ -56,7 +56,7 @@ The notes here describe one method for launching the Request Generator and REMS 
         - App Name: Request Generator (Local)
         - App Launch URI: http://localhost:3000/launch
         - App Redirect URIs: http://localhost:3000/#/index, http://localhost:4040/register,http://localhost:3000/index, http://localhost:4040/index
-        - Scopes: launch openid user/*.* offline_access profile
+        - Scopes: launch openid user/\*.\* offline_access profile
     - Note that the full list of registered applications now includes the Request Generator and the REMS SMART on FHIR app
     ![](./test-environment-images/meld_apps_2.png)
 1. Start the REMS Prototype applications:
