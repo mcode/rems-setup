@@ -18,12 +18,7 @@ After registering an app, we get a client id, which is the client id of the SMAR
 The SMART app must be made aware of the client id in order to launch correctly. In the case of the REMS SMART app, registration is handled at the time of launch if the app doesn’t already know which client id to use, which should make the process seamless.  
 
 When launching an app, you are connecting it to Meld’s EHR system.
-I’ve already uploaded our default patient, Jon Snow, and all of his related resources.  But to upload more resources to Meld, follow these steps:
-
--	All references to other resources must be correctly made with regard to assigned ID by the EHR.  
-    - In other words, if you want to upload a resource A that references another resource B, you will first have to upload B, at which point the EHR will assign it an ID.  Then you can take that ID and use it in A as a reference.
--	Get an access token
-    - There are several ways to do this.  The easiest method is to just launch a smart app and use the access token it creates.
+The data can be uploaded manually using the data manager as described in the [Test Environment Usage Document](TestEnvironmentSetup.md). Our default patient, Jon Snow, and all of his related resources should be loaded
 
 ![](./test-environment-images/meld_patients.png)
 
