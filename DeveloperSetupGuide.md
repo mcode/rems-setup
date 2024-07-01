@@ -156,7 +156,7 @@ Note: The default ruby that comes with Mac may not install the right package ver
 5. Install Ruby
 
    ```bash
-   rbenv install 2.7.2
+   rbenv install 3.2.2
    ```
 
 6. Verify that the system is using the correct ruby versions
@@ -176,19 +176,19 @@ Note: The default ruby that comes with Mac may not install the right package ver
 1. Download and Install docker-sync using the following command:
 
    ```bash
-   gem install docker-sync -v 0.7.0
+   gem install docker-sync -v 1.0.5
    ```
 
 2. Test that the right version is installed
 
    ```bash
    docker-sync -v
-   0.7.0  # Correct
+   1.0.5  # Correct
 
     ...
 
    docker-sync -v
-   0.1.1  # Incorrect, make sure you have ruby installed and are not using the default system ruby
+   0.1.1  # Incorrect, make sure you have the correct ruby installed and are not using the default system ruby
    ```
 
    Note: The versioning is important, as the system default Ruby sometimes installs version 0.1.1 if the -v tag is not set. The
