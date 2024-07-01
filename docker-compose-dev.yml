@@ -112,6 +112,18 @@ services:
       - rems_dev_pims-backend-nodeModules:/home/node/app/backend/node_modules
       - rems_dev_pims-backend-dist:/home/node/app/backend/dist
 
+  rems-intermediary:
+    build:
+      context: '../rems-intermediary'
+      dockerfile: Dockerfile.dev
+    container_name: rems_dev_rems-intermediary
+    ports:
+      - "3003:3003"
+    volumes:
+      - rems_dev_rems-intermediary-sync:/rems-intermediary:nocopy #  nocopy is important
+      - rems_dev_rems-intermediary-nodeModules:/rems-intermediary/node_modules
+      - rems_dev_rems-intermediary-logs:/rems-intermediary/logs
+
 volumes:
   rems_dev_test-ehr-sync:
     external: true
@@ -122,6 +134,8 @@ volumes:
   rems_dev_pims-sync:
     external: true
   rems_dev_rems-smart-on-fhir-sync:
+    external: true
+  rems_dev_rems-intermediary-sync:
     external: true
 
   rems_dev_keycloak-data:
@@ -143,4 +157,6 @@ volumes:
   rems_dev_rems-admin-logs:
   rems_dev_rems-smart-on-fhir-nodeModules:
   rems_dev_rems-smart-on-fhir-logs:
+  rems_dev_rems-intermediary-nodeModules:
+  rems_dev_rems-intermediary-logs:
 

@@ -83,6 +83,13 @@ services:
       MONGO_URL: mongodb://pims_remsadmin_mongo:27017/pims
       EHR_RXFILL_URL: http://host.docker.internal:8080/test-ehr/script/rxfill
 
+  rems-intermediary:
+    build:
+      context: '../rems-intermediary'
+    container_name: rems_dev_rems-intermediary
+    ports:
+      - "3003:3003"
+
 volumes:
   rems_dev_keycloak-data:
   rems_dev_pims_remsadmin_mongo:

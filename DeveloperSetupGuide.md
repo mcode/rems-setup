@@ -33,10 +33,10 @@ Follow this guide if you would like to use [Docker](https://docs.docker.com/get-
 ## Purpose of this guide
 
 This document details the installation process for the Dockerized version of the **REMS Integration Prototype**
-workflow for Local Development. Be aware that each component has its own README where you will find
+environment for Local Development. Be aware that each component has its own README where you will find
 more detailed documentation. This document **is not designed to replace those individual READMEs**.
 
-This document is designed to take you through the entire set up process for the **REMS Integration Prototype** using [Docker containers](https://www.docker.com/resources/what-container/).
+This document is designed to take you through the entire setup process for the **REMS Integration Prototype** using [Docker containers](https://www.docker.com/resources/what-container/).
 
 This guide will take you through the development environment setup for each of the following REMS components:
 
@@ -156,7 +156,7 @@ Note: The default ruby that comes with Mac may not install the right package ver
 5. Install Ruby
 
    ```bash
-   rbenv install 2.7.2
+   rbenv install 3.2.2
    ```
 
 6. Verify that the system is using the correct ruby versions
@@ -176,19 +176,19 @@ Note: The default ruby that comes with Mac may not install the right package ver
 1. Download and Install docker-sync using the following command:
 
    ```bash
-   gem install docker-sync -v 0.7.0
+   gem install docker-sync -v 1.0.5
    ```
 
 2. Test that the right version is installed
 
    ```bash
    docker-sync -v
-   0.7.0  # Correct
+   1.0.5  # Correct
 
     ...
 
    docker-sync -v
-   0.1.1  # Incorrect, make sure you have ruby installed and are not using the default system ruby
+   0.1.1  # Incorrect, make sure you have the correct ruby installed and are not using the default system ruby
    ```
 
    Note: The versioning is important, as the system default Ruby sometimes installs version 0.1.1 if the -v tag is not set. The
@@ -251,8 +251,8 @@ changes during the development process and perform git actions, with each root o
 control header.
 
 The [**Docker Extension for VS Code**](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-has useful functionality to aid in the development process using this set up guide. This extension lets you easily
-visualize the containers, images, networks, and volumes created by this set up. Clicking on a running container will
+has useful functionality to aid in the development process using this setup guide. This extension lets you easily
+visualize the containers, images, networks, and volumes created by this setup. Clicking on a running container will
 open up the file structure of the container.
 
 Right clicking on a running container will give the option to view container logs (useful to see output from select
@@ -295,7 +295,7 @@ If this is not configured, you will get errors like this:
 The project uses docker-sync to start up and connect all the various Docker containers and networks. The single command
 below should build all images and start up all containers.
 
-_Note:_ Initial set up will take several minutes and spin up fans with high resource use. Be patient, future boots will
+_Note:_ Initial setup will take several minutes and spin up fans with high resource use. Be patient, future boots will
 be much quicker, quieter, and less resource intensive.
 
 ```bash

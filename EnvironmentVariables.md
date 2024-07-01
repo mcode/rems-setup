@@ -56,7 +56,6 @@
     - `REACT_APP_PHARMACY_SERVER_BASE`
     - `REACT_APP_PHARMACY_STATUS_ENABLED`
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`
-    - `REACT_APP_REMS_HOOKS_PATH`
     - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
 
 - mcode/test-ehr
@@ -76,6 +75,12 @@
     - `redirect_post_token`
     - `introspection_url`
     - `redirect_base`
+    - `EHR_SSL_ENABLED`
+    - `EHR_KEY_STORE_TYPE`
+    - `EHR_KEY_STORE_PATH`
+    - `EHR_KEY_STORE_PASSWORD`
+    - `EHR_KEY_PASSWORD`
+    - `EHR_KEY_ALIAS`
 
 - mcode/request-generator
 
@@ -149,7 +154,6 @@
     - `MONGO_URL`
     - `PORT`
     - `RESOURCE_SERVER`
-    - `SERVER_PORT`
     - `SMART_ENDPOINT`
     - `VSAC_API_KEY`
     - `WHITELIST`
@@ -160,17 +164,6 @@
 
 - mcode/test-ehr
 
-  - src/main/java/ca/uhn/fhir/jpa/starter/EnvironmentHelper.java
-    - `elasticsearch.required_index_status`
-    - `elasticsearch.schema_management_strategy`
-    - `elasticsearch.debug.refresh_after_write`
-    - `elasticsearch.debug.pretty_print_json_log`
-    - `elasticsearch.rest_url`
-    - `elasticsearch.protocol`
-    - `elasticsearch.username`
-    - `elasticsearch.password`
-    - `elasticsearch.enabled`
-    - `elasticsearch.enabled`
   - src/main/java/org/hl7/davinci/ehrserver/ClientAuthorizationInterceptor.java
     - `use_oauth`
     - `client_secret`
@@ -180,6 +173,9 @@
     - `oauth_authorize`
     - `oauth_token`
     - `redirect_base`
+  - src/main/java/org/hl7/davinci/ehrserver/ServerConformanceR4.java
+    - `proxy_authorize`
+    - `proxy_token`
 
 - mcode/request-generator
 
@@ -252,11 +248,8 @@
     - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
   - src/views/Patient/MedReqDropDown/rxSend/rxSend.ts
     - `REACT_APP_PHARMACY_SERVER_BASE`
-  - src/views/Patient/MedReqDropDown/pharmacyStatus/PharmacyStatus.tsx
-    - `REACT_APP_REMS_ADMIN_SERVER_BASE`
   - src/views/Patient/PatientView.tsx
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`
-    - `REACT_APP_REMS_HOOKS_PATH`
   - src/views/Smart/Launch.tsx
     - `REACT_APP_CLIENT_SCOPES`
     - `REACT_APP_DEFAULT_CLIENT_ID`
