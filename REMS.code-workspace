@@ -463,7 +463,8 @@
       "Winterfell",
       "Wiseman",
       "zoneinfo"
-    ]
+    ],
+    "java.compile.nullAnalysis.mode": "automatic"
   },
   "extensions": {
     "recommendations": [

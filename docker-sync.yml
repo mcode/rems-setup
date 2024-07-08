@@ -19,6 +19,11 @@ syncs:
     src: '../rems-admin'
     sync_excludes: ['node_modules']
 
+  rems_dev_rems-admin2-sync:
+    src: '../rems-admin'
+    sync_excludes: ['node_modules']
+
+
   rems_dev_pims-sync:  
     src: '../pims'
     sync_excludes: ['./frontend/node_modules', './backend/node_modules', './backend/dist']

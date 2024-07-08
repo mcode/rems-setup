@@ -46,12 +46,22 @@ services:
   # Create rems container
   rems-administrator: # Name of our service
     image: codexrems/rems-administrator:1.1
-    container_name: rems_prod_rems
+    container_name: rems_prod_rems-administrator
     ports: # Port binding to host from docker container
       - "8090:8090"
     environment:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
+
+  rems-administrator2: # Name of our service
+    image: codexrems/rems-administrator:1.1
+    container_name: rems_prod_rems-administrator2
+    ports: # Port binding to host from docker container
+      - "8095:8095"
+    environment:
+      VSAC_API_KEY: ${VSAC_API_KEY}
+      MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
+      PORT: 8095
 
   # Create pims admin container
   pims_remsadmin_mongo:

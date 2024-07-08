@@ -71,6 +71,18 @@ services:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
 
+  rems-administrator2:
+    build:
+      context: '../rems-admin'
+    container_name: rems_dev_rems-administrator2
+    ports:
+      - "8095:8095"
+      - "8096:8096"
+    environment:
+      VSAC_API_KEY: ${VSAC_API_KEY}
+      MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
+      PORT: 8095
+
   pims:
     build:
       context: ../pims
