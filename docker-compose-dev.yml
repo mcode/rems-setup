@@ -94,6 +94,23 @@ services:
       - rems_dev_rems-admin-nodeModules:/rems-admin/node_modules
       - rems_dev_rems-admin-logs:/rems-admin/logs
 
+  rems-administrator2:
+    build:
+      context: '../rems-admin'
+      dockerfile: Dockerfile.dev
+    container_name: rems_dev_rems-administrator2
+    ports:
+      - "8095:8095"
+      - "8096:8096"
+    environment:
+      VSAC_API_KEY: ${VSAC_API_KEY}
+      MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
+      PORT: 8095
+    volumes:
+      - rems_dev_rems-admin2-sync:/rems-admin2:nocopy #  nocopy is important
+      - rems_dev_rems-admin2-nodeModules:/rems-admin2/node_modules
+      - rems_dev_rems-admin2-logs:/rems-admin2/logs
+
   pims:
     build:
       context: ../pims
@@ -131,6 +148,8 @@ volumes:
     external: true
   rems_dev_rems-admin-sync:
     external: true
+  rems_dev_rems-admin2-sync:
+    external: true
   rems_dev_pims-sync:
     external: true
   rems_dev_rems-smart-on-fhir-sync:
@@ -155,6 +174,8 @@ volumes:
   rems_dev_pims-backend-dist:
   rems_dev_rems-admin-nodeModules:
   rems_dev_rems-admin-logs:
+  rems_dev_rems-admin2-nodeModules:
+  rems_dev_rems-admin2-logs:
   rems_dev_rems-smart-on-fhir-nodeModules:
   rems_dev_rems-smart-on-fhir-logs:
   rems_dev_rems-intermediary-nodeModules:
