@@ -57,6 +57,9 @@
     - `REACT_APP_PHARMACY_STATUS_ENABLED`
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`
     - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
+    - `USE_INTERMEDIARY`
+    - `INTERMEDIARY_ETASU_MET`
+    - `INTERMEDIARY_CDS_HOOKS`
 
 - mcode/test-ehr
 
@@ -246,10 +249,14 @@
     - `REACT_APP_ETASU_STATUS_ENABLED`
     - `REACT_APP_PHARMACY_STATUS_ENABLED`
     - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
+    - `REACT_APP_DEFAULT_ISS`
+    - `INTERMEDIARY_ETASU_MET`
+    - `USE_INTERMEDIARY`
   - src/views/Patient/MedReqDropDown/rxSend/rxSend.ts
     - `REACT_APP_PHARMACY_SERVER_BASE`
   - src/views/Patient/PatientView.tsx
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`
+    - `USE_INTERMEDIARY`
   - src/views/Smart/Launch.tsx
     - `REACT_APP_CLIENT_SCOPES`
     - `REACT_APP_DEFAULT_CLIENT_ID`
@@ -258,3 +265,5 @@
     - `REACT_APP_DEVELOPER_MODE`
   - src/views/Questionnaire/elm/buildPopulatedResourceBundle.ts
     - `REACT_APP_EPIC_SUPPORTED_QUERIES`
+  - src/util/util.ts
+    - `INTERMEDIARY_CDS_HOOKS`
