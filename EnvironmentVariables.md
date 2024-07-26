@@ -108,11 +108,12 @@
     - `VITE_PUBLIC_KEYS`
     - `VITE_REALM`
     - `VITE_RESPONSE_EXPIRATION_DAYS`
-    - `VITE_SERVER`
     - `VITE_SMART_LAUNCH_URL`
     - `VITE_URL`
     - `VITE_URL_FILTER`
     - `VITE_USER`
+    - `VITE_USE_INTERMEDIARY`
+    - `VITE_INTERMEDIARY`
 
 - mcode/pims
   - backend/env.json
