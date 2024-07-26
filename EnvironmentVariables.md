@@ -125,10 +125,12 @@
     - `EHR_RXFILL_URL`
     - `HTTPS_CERT_PATH`
     - `HTTPS_KEY_PATH`
+    - `INTERMEDIARY_ETASU_MET`
     - `MONGO_PASSWORD`
     - `MONGO_URL`
     - `MONGO_USERNAME`
     - `USE_HTTPS`
+    - `USE_INTERMEDIARY`
   - frontend/.env
     - `PORT`
     - `REACT_APP_PIMS_BACKEND_PORT`
@@ -238,6 +240,8 @@
     - `USE_HTTPS`
   - backend/src/routes/doctorOrders.js
     - `EHR_RXFILL_URL`
+    - `USE_INTERMEDIARY`
+    - `INTERMEDIARY_ETASU_MET`
   - backend/src/database/data.js
     - `REMS_ADMIN_FHIR_URL`
   - frontend/src/App.tsx
