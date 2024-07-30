@@ -134,7 +134,7 @@ Follow this guide if you would like to start each application locally **without*
 
     # Initialize the database
     # NOTE: Database must already be running
-    ./bin/mongosh mongodb://localhost:27017 <REMS_PATH>/mongo-init.js
+    ./bin/mongosh mongodb://localhost:27017 <rems-root>/rems-setup/mongo-init.js
     ```
 
   - Alternate Install Instructions: [www.mongodb.com/docs/mongodb-shell/install/#std-label-mdb-shell-install](https://www.mongodb.com/docs/mongodb-shell/install/#std-label-mdb-shell-install)
