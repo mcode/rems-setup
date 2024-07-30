@@ -60,6 +60,7 @@ services:
       - "8095:8095"
     environment:
       VSAC_API_KEY: ${VSAC_API_KEY}
+      MONGO_DB_NAME: remsadmin2
       MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
       PORT: 8095
 
