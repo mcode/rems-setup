@@ -134,6 +134,9 @@ services:
       context: '../rems-intermediary'
       dockerfile: Dockerfile.dev
     container_name: rems_dev_rems-intermediary
+    environment:
+      MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
+      VITE_AUTH: http://keycloak:8080
     ports:
       - "3003:3003"
     volumes:
