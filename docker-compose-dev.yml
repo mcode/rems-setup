@@ -47,18 +47,6 @@ services:
       - rems_dev_pims_remsadmin_mongo:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
 
-  rems-intermediary-mongo:
-    image: mongo
-    container_name: rems_dev_rems-intermediary-mongo
-    ports:
-      - '19000:27017'
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: intermediary-admin-pims-root
-      MONGO_INITDB_ROOT_PASSWORD: intermediary-admin-pims-password
-    volumes:
-      - rems_dev_rems-intermediary-mongo:/data/db
-      - ../rems-intermediary/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
-
   request-generator:
     build:
       context: ../request-generator
