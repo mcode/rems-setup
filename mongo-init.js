@@ -20,6 +20,3 @@ dbAdmin.createUser({ user: "rems-admin-pims-root",
     ]
 })
 
-// // Insert document to ensure db/collection is created
-// dbPims.pimscollection.insertOne({name: 'Hello World!'})
-// dbRemsAdmin.remsadmincollection.insertOne({name: 'Hello World Again!'})
