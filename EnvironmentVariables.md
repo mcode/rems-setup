@@ -58,7 +58,7 @@
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`
     - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
     - `USE_INTERMEDIARY`
-    - `INTERMEDIARY_ETASU_MET`
+    - `INTERMEDIARY_SERVER_BASE`
     - `INTERMEDIARY_CDS_HOOKS`
 
 - mcode/test-ehr
@@ -125,7 +125,7 @@
     - `EHR_RXFILL_URL`
     - `HTTPS_CERT_PATH`
     - `HTTPS_KEY_PATH`
-    - `INTERMEDIARY_ETASU_MET`
+    - `INTERMEDIARY_FHIR_URL`
     - `MONGO_PASSWORD`
     - `MONGO_URL`
     - `MONGO_USERNAME`
@@ -241,7 +241,7 @@
   - backend/src/routes/doctorOrders.js
     - `EHR_RXFILL_URL`
     - `USE_INTERMEDIARY`
-    - `INTERMEDIARY_ETASU_MET`
+    - `INTERMEDIARY_FHIR_URL`
   - backend/src/database/data.js
     - `REMS_ADMIN_FHIR_URL`
   - frontend/src/App.tsx
@@ -254,7 +254,7 @@
     - `REACT_APP_PHARMACY_STATUS_ENABLED`
     - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
     - `REACT_APP_DEFAULT_ISS`
-    - `INTERMEDIARY_ETASU_MET`
+    - `INTERMEDIARY_SERVER_BASE`
     - `USE_INTERMEDIARY`
   - src/views/Patient/MedReqDropDown/rxSend/rxSend.ts
     - `REACT_APP_PHARMACY_SERVER_BASE`
