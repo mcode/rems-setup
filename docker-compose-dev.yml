@@ -135,6 +135,9 @@ services:
       context: '../rems-intermediary'
       dockerfile: Dockerfile.dev
     container_name: rems_dev_rems-intermediary
+    environment:
+      MONGO_URL: mongodb://intermediary-user:pass@pims_remsadmin_mongo:27017
+      VITE_AUTH: http://keycloak:8080
     ports:
       - "3003:3003"
     volumes:
@@ -160,7 +163,6 @@ volumes:
 
   rems_dev_keycloak-data:
   rems_dev_pims_remsadmin_mongo:
-  rems_dev_rems-intermediary-mongo:
   rems_dev_test-ehr-gradle:
   rems_dev_test-ehr-bin:
   rems_dev_test-ehr-build:
@@ -182,5 +184,4 @@ volumes:
   rems_dev_rems-smart-on-fhir-logs:
   rems_dev_rems-intermediary-nodeModules:
   rems_dev_rems-intermediary-logs:
-
 

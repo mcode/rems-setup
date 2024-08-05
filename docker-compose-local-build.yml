@@ -101,6 +101,7 @@ services:
       context: '../rems-intermediary'
     container_name: rems_dev_rems-intermediary
     environment:
+      VITE_AUTH: http://keycloak:8080
       MONGO_URL: mongodb://intermediary-user:pass@pims_remsadmin_mongo:27017
     ports:
       - "3003:3003"
