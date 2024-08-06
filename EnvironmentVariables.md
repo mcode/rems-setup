@@ -57,6 +57,9 @@
     - `REACT_APP_PHARMACY_STATUS_ENABLED`
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`
     - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
+    - `USE_INTERMEDIARY`
+    - `INTERMEDIARY_SERVER_BASE`
+    - `INTERMEDIARY_CDS_HOOKS`
 
 - mcode/test-ehr
 
@@ -123,10 +126,12 @@
     - `EHR_RXFILL_URL`
     - `HTTPS_CERT_PATH`
     - `HTTPS_KEY_PATH`
+    - `INTERMEDIARY_FHIR_URL`
     - `MONGO_PASSWORD`
     - `MONGO_URL`
     - `MONGO_USERNAME`
     - `USE_HTTPS`
+    - `USE_INTERMEDIARY`
   - frontend/.env
     - `PORT`
     - `REACT_APP_PIMS_BACKEND_PORT`
@@ -236,6 +241,8 @@
     - `USE_HTTPS`
   - backend/src/routes/doctorOrders.js
     - `EHR_RXFILL_URL`
+    - `USE_INTERMEDIARY`
+    - `INTERMEDIARY_FHIR_URL`
   - backend/src/database/data.js
     - `REMS_ADMIN_FHIR_URL`
   - frontend/src/App.tsx
@@ -247,10 +254,14 @@
     - `REACT_APP_ETASU_STATUS_ENABLED`
     - `REACT_APP_PHARMACY_STATUS_ENABLED`
     - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
+    - `REACT_APP_DEFAULT_ISS`
+    - `INTERMEDIARY_SERVER_BASE`
+    - `USE_INTERMEDIARY`
   - src/views/Patient/MedReqDropDown/rxSend/rxSend.ts
     - `REACT_APP_PHARMACY_SERVER_BASE`
   - src/views/Patient/PatientView.tsx
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`
+    - `USE_INTERMEDIARY`
   - src/views/Smart/Launch.tsx
     - `REACT_APP_CLIENT_SCOPES`
     - `REACT_APP_DEFAULT_CLIENT_ID`
@@ -259,3 +270,5 @@
     - `REACT_APP_DEVELOPER_MODE`
   - src/views/Questionnaire/elm/buildPopulatedResourceBundle.ts
     - `REACT_APP_EPIC_SUPPORTED_QUERIES`
+  - src/util/util.ts
+    - `INTERMEDIARY_CDS_HOOKS`

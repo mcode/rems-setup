@@ -80,6 +80,7 @@ services:
       - "8096:8096"
     environment:
       VSAC_API_KEY: ${VSAC_API_KEY}
+      MONGO_DB_NAME: remsadmin2
       MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
       PORT: 8095
 
@@ -99,6 +100,9 @@ services:
     build:
       context: '../rems-intermediary'
     container_name: rems_dev_rems-intermediary
+    environment:
+      VITE_AUTH: http://keycloak:8080
+      MONGO_URL: mongodb://intermediary-user:pass@pims_remsadmin_mongo:27017
     ports:
       - "3003:3003"
 

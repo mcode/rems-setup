@@ -60,6 +60,7 @@ services:
       - "8095:8095"
     environment:
       VSAC_API_KEY: ${VSAC_API_KEY}
+      MONGO_DB_NAME: remsadmin2
       MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
       PORT: 8095
 
@@ -87,6 +88,16 @@ services:
     ports:
       - "5050:5050"
       - "5051:5051"
+
+  # add in once intermediary once ci/cd pipeline task is completed and published images exist 
+  # rems-intermediary:
+  #   image: codexrems/rems-intermediary:1.1
+  #   container_name: rems_prod_rems-intermediary
+  #   environment:
+  #     MONGO_URL: mongodb://intermediary-user:pass@pims_remsadmin_mongo:27017
+  #   ports:
+  #     - "3003:3003"
+
 
 volumes:
   rems_prod_keycloak-data:
