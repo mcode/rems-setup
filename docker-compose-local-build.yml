@@ -103,6 +103,7 @@ services:
     environment:
       VITE_AUTH: http://keycloak:8080
       MONGO_URL: mongodb://intermediary-user:pass@pims_remsadmin_mongo:27017
+      REMS_ADMIN_HOOK_PATH: http://rems-administrator:8090/cds-services/rems-
     ports:
       - "3003:3003"
 
