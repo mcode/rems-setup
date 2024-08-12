@@ -78,9 +78,11 @@ jobs:
           path: rems-smart-on-fhir
           submodule: true
           ref: ${{ github.event.inputs.rems-smart-on-fhir-branch }}
+      
+      
 
       - name: Start containers
-        run: docker compose -f docker-compose-local-build.yml up -d --wait 
+        run: cd rems-setup; docker compose -f docker-compose-local-build.yml up -d --wait 
 
       - uses: actions/setup-node@v3
         with:
