@@ -40,6 +40,7 @@ The following REMS components will be deployed in Docker locally:
 4. [rems-setup](https://github.com/mcode/rems-setup.git)
 5. [pims (Pharmacy Information Management System)](https://github.com/mcode/pims)
 6. [rems-smart-on-fhir](https://github.com/mcode/rems-smart-on-fhir)
+7. [rems-intermediary](https://github.com/mcode/rems-intermediary.git)
 
 ## Quick Setup
 
