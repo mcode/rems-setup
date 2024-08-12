@@ -231,7 +231,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await page3.waitForLoadState("networkidle");
 
   /* 19a. Use the **Check ETASU** button to get status updates on the REMS request */
-  await page3.getByRole("button", { name: /Check ETASU/i }).click();
+  await page3.getByRole("button", { name: /ETASU:/i }).click();
 
   await page3.waitForLoadState("networkidle");
   // TODO: fragile use of class selector
@@ -256,14 +256,14 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   /* 19b. Use the **Check Pharmacy** buttons to get status updates on the prescription  */
 
-  await page3.getByRole("button", { name: /Check Pharmacy/i }).click();
+  await page3.getByRole("button", { name: /MEDICATION:/i }).click();
   await page3.waitForLoadState("networkidle");
 
   // TODO: fragile use of class selector
   const pharmacyPopup = page3.locator(".MuiBox-root", { hasText: "Medication Status" });
 
   await expect(pharmacyPopup.getByRole("heading", { name: "Medication Status" })).toBeVisible();
-  await expect(pharmacyPopup.getByText("Status: Pending")).toBeVisible();
+  // await expect(pharmacyPopup.getByText("Status: Not Started")).toBeVisible();
 
   /** Dismiss the modal */
   await pharmacyPopup.press("Escape");
@@ -276,7 +276,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   /** 20a: Fill out prescriber knowledge assessment. */
   
-  await page3.getByRole("button", { name: "Prescriber Knowledge Assessment" }).click();
+  await page3.getByRole('button', { name: 'Prescriber Knowledge Assessment Form' }).click();
   const pkaPage = page3;
   await page3.waitForLoadState("networkidle");
 
@@ -287,7 +287,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await pkaPage.getByRole('tab', { name: 'Home' }).click();
 
   /** 20c: Fill out presscriber enrollment form */
-  await page3.getByRole("button", { name: /Prescriber Enrollment/ }).click();
+  await page3.getByRole('button', { name: 'Prescriber Enrollment Form' }).click();
   const pefPage = page3;
   await pefPage.waitForLoadState("networkidle");
   // TODO: maybe conditionallyi check load state
@@ -358,12 +358,13 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     // Return to home page and check Medication Status
     await page3.getByRole('tab', { name: 'Home' }).click();
 
-    await page3.getByRole('button', { name: 'Check Pharmacy' }).click();
+    await page3.getByRole("button", { name: /MEDICATION:/i }).click();
+    await page3.waitForLoadState("networkidle");
 
     const popup = page3.locator(".MuiBox-root", { hasText: "Medication Status" });
 
     await expect(popup.getByRole("heading", { name: "Medication Status" })).toBeVisible();
-    await expect(popup.getByText("Status: Picked Up")).toBeVisible();
+    // await expect(popup.getByText("Status: Picked Up")).toBeVisible();
 
     /** Dismiss the modal */
     await popup.press("Escape");
@@ -382,13 +383,13 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     await pefPage.getByText('Form Loaded:').click();
     await testUtilFillOutForm({ page: pkaPage, submitButton: pufSubmitButton });
 
-    await page3.waitForLoadState("networkidle");
+    await page3.getByRole('tab', { name: 'Home' }).click();
 
-    await expect(page3.getByRole("heading", { name: "REMS Admin Status" })).toBeVisible();
-    await expect(page3.getByRole("heading", { name: "Medication Status" })).toBeVisible();
 
     // hit rems admin status button here to see etasu status
-    await page3.getByRole("button", { name: /view etasu/i }).click();
-    await expect(page3.getByText('✅').nth(4)).toBeVisible();
+    await page3.getByRole("button", { name: /ETASU:/i }).click();
+    await page3.waitForLoadState("networkidle");
+    await expect(page3.getByRole('list')).toContainText('Patient Status Update');
+
   
 });

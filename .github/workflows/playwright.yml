@@ -1,39 +1,39 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main, dev, tagging-docker-compose ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ main, dev, tagging-docker-compose ]
+    branches: [ main, dev ]
   workflow_dispatch:
     inputs:
       rems-setup-branch:
         description: 'rems set up branch'     
         required: true
-        default: 'main'
+        default: 'dev'
       rems-intermediary-branch:
           description: 'rems intermediary branch'     
           required: true
-          default: 'main'      
+          default: 'dev'      
       request-generator-branch:
         description: 'request generator branch'     
         required: true
-        default: 'main'  
+        default: 'dev'  
       pims-branch:
         description: 'pims branch'     
         required: true
-        default: 'main'      
+        default: 'dev'      
       rems-admin-branch:
         description: 'rems admin branch'     
         required: true
-        default: 'main'    
+        default: 'dev'    
       rems-smart-on-fhir-branch:
         description: 'rems smart on fhir branch'     
         required: true
-        default: 'main'   
+        default: 'dev'   
       rems-test-ehr-branch:
         description: 'rems test-ehr branch'     
         required: true
-        default: 'main'   
+        default: 'dev'   
 
 jobs:
   test:
