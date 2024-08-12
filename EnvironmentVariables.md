@@ -138,6 +138,26 @@
   - pm2.config.js
     - `NODE_ENV`
 
+- mcode/rems-intermediary
+  - .env
+    - `AUTH_SERVER_URI`
+    - `HTTPS_CERT_PATH`
+    - `HTTPS_KEY_PATH`
+    - `LOGGING_LEVEL`
+    - `MONGO_DB_NAME`
+    - `MONGO_URL`
+    - `PORT`
+    - `SMART_ENDPOINT`
+    - `USE_HTTPS`
+    - `WHITELIST`
+    - `VITE_REALM`
+    - `VITE_AUTH`
+    - `VITE_USER`
+    - `VITE_PASSWORD`
+    - `VITE_CLIENT`
+    - `REMS_ADMIN_HOOK_PATH`
+    - `REMS_ADMIN_FHIR_PATH`
+
 ## Repositories that use environment variables
 
 - mcode/rems-setup
@@ -272,3 +292,25 @@
     - `REACT_APP_EPIC_SUPPORTED_QUERIES`
   - src/util/util.ts
     - `INTERMEDIARY_CDS_HOOKS`
+
+- mcode/rems-intermediary
+
+  - src/config.ts
+    - `AUTH_SERVER_URI`
+    - `LOGGING_LEVEL`
+    - `MONGO_DB_NAME`
+    - `MONGO_URL`
+    - `PORT`
+    - `SMART_ENDPOINT`
+    - `WHITELIST`
+    - `REMS_ADMIN_HOOK_PATH`
+    - `REMS_ADMIN_FHIR_PATH`  
+  - src/server.ts
+    - `HTTPS_CERT_PATH`
+    - `HTTPS_KEY_PATH`
+    - `USE_HTTPS`
+    - `VITE_REALM`
+    - `VITE_AUTH`
+    - `VITE_USER`
+    - `VITE_PASSWORD`
+    - `VITE_CLIENT`

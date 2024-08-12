@@ -64,6 +64,17 @@
     - Prefetch implementation
     - Type definitions for CDS Hooks needed by TypeScript
 
+- mcode/rems-intermediary
+
+  - REMS Intermediary `alternate (4)`
+    - Node/TypeScript
+    - `aternate (1.1)(3)` CDS Hooks (server) end points
+      - Forwards request to REMS Admin
+    - `aternate (5)` Interface to check status of REMS
+      - Forwards request to REMS Admin
+    - Stores data in MongoDB
+  - Docker scripts to launch the entire stack
+
 ### Other Components
 
 - KeyCloak
