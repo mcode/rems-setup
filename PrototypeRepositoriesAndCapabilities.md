@@ -1,6 +1,6 @@
 # Prototype Repositories and Capabilities
 
-## (As of April 27, 2023. Prototype version 0.9)
+## (As of January 2, 2024. Prototype version 0.14)
 
 ![](./prototype-images/layout.png)
 
@@ -9,10 +9,11 @@
 ### Repositories
 
 - mcode/rems-admin
+
   - REMS Administrator `(4)`
     - Node/TypeScript
     - `(1.1)(3)` CDS Hooks (server) end points
-    - `(1.4)` FHIR Server to support DTR
+    - `(1.4)` FHIR Server to support REMS SMART on FHIR App
       - Contains Questionnaire, Library (w/ CQL), ValueSets
       - Retrieves and caches ValueSets from VSAC
     - `(5)` Interface to check status of REMS
@@ -20,21 +21,27 @@
   - Docker scripts to launch the entire stack
 
 - mcode/test-ehr
+
   - Test EHR `(2)`
     - Java HAPI FHIR Server
     - Contains test patient data
-    - Supports launching DTR SMART on FHIR app
+    - Supports launching REMS SMART on FHIR app
 
 - mcode/request-generator
+
   - Request Generator `(2)`
     - Node/JavaScript
     - Web Application mimicking the EHR frontend
     - Requests
       - `(1.1)(3)` Generates CDS Hooks order-sign (client) that is sent to the REMS Admin
-      - `(1.2)(3)` Handles CARDS returned from REMS Admin to launch DTR
+      - `(1.2)(3)` Handles CARDS returned from REMS Admin to launch REMS SMART on FHIR App
       - Sends Rx to PIMS using NCPDP Script NewRx
+      - Communicates with REMS Admin and EHR to retrieve ETASU and prescription status
+    - Patient Portal allowing patient access to in-progress forms and information about their prescriptions
+    - Manages Tasks for deferring and relaunching in-progress forms
 
 - mcode/pims
+
   - Pharmacy Information System `(6)`
     - Node/TypeScript
     - Receives Rx from Request Generator
@@ -45,9 +52,11 @@
   - Stores data in MongoDB
 
 - mcode/rems-smart-on-fhir
+
   - REMS SMART on FHIR Application
     - SMART on FHIR application to generate CDS Hooks interaction with REMS Admin for any EHR that does not support CDS Hooks
       - Node/TypeScript
+    - Displays Questionnaire forms and allows filling them out
 
 - mcode/rems-cds-hooks
   - Git submodule used by REMS SMART on FHIR Application and REMS Admin
@@ -58,6 +67,7 @@
 ### Other Components
 
 - KeyCloak
+
   - Authentication of users
   - Docker config hosted in mcode/test-ehr
 

@@ -45,7 +45,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   // 3. Find **Jon Snow** in the list of patients and click the first dropdown menu next to his name.
   await expect(page.getByText("ID").first()).toBeVisible();
   const patientBox = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
-  await page.getByRole("combobox").first().click();
+  await page.getByRole("combobox").nth(1).click();
 
   // 4. Select **2183126 (MedicationRequest) Turalio 200 MG Oral Capsule** in the dropdown menu.
   await page.getByText(medication).click();
@@ -141,9 +141,9 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     - 12f. Click **Relaunch DTR** and fill out the remainder of the questionnaire, including the prescriber signature,
       then click **Submit REMS Bundle**. */
 
-  /* 13. A new UI will appear with REMS Admin Status and Pharmacy Status. */
+  /* 13. A new UI will appear with REMS Admin Status and Medication Status. */
   await expect(smartPage.getByRole("heading", { name: "REMS Admin Status" })).toBeVisible();
-  await expect(smartPage.getByRole("heading", { name: "Pharmacy Status" })).toBeVisible();
+  await expect(smartPage.getByRole("heading", { name: "Medication Status" })).toBeVisible();
 
   // hit rems admin status button here to see etasu status
   await smartPage.getByRole("button", { name: /view etasu/i }).click();
@@ -193,7 +193,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   // const patientBox2 = page.locator(".patient-selection-box", { hasText: patientName }); // FIXME: Fragile use of class selector
   // await patientBox2.getByTestId("dropdown-box").first().click();
-  await page.getByRole("combobox").first().click();
+  await page.getByRole("combobox").nth(1).click();
   await page.getByText(medication).click();
   const selectBtn2 = page.locator('.select-btn').nth(1);
   await expect(selectBtn2).toBeVisible();
@@ -243,9 +243,9 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await page3.waitForLoadState("networkidle");
 
   // TODO: fragile use of class selector
-  const pharmacyPopup = page3.locator(".MuiBox-root", { hasText: "Pharmacy Status" });
+  const pharmacyPopup = page3.locator(".MuiBox-root", { hasText: "Medication Status" });
 
-  await expect(pharmacyPopup.getByRole("heading", { name: "Pharmacy Status" })).toBeVisible();
+  await expect(pharmacyPopup.getByRole("heading", { name: "Medication Status" })).toBeVisible();
   await expect(pharmacyPopup.getByText("Status: Pending")).toBeVisible();
 
   /** Dismiss the modal */
@@ -338,14 +338,14 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   
   /* 22. Go back to the SMART on FHIR App launched in step 17 and play the role of the prescriber using the **Check
     Pharmacy** button to see the status change of the prescription. */
-    // Return to home page and check pharmacy status
+    // Return to home page and check Medication Status
     await page3.getByRole('tab', { name: 'Home' }).click();
 
     await page3.getByRole('button', { name: 'Check Pharmacy' }).click();
 
-    const popup = page3.locator(".MuiBox-root", { hasText: "Pharmacy Status" });
+    const popup = page3.locator(".MuiBox-root", { hasText: "Medication Status" });
 
-    await expect(popup.getByRole("heading", { name: "Pharmacy Status" })).toBeVisible();
+    await expect(popup.getByRole("heading", { name: "Medication Status" })).toBeVisible();
     await expect(popup.getByText("Status: Picked Up")).toBeVisible();
 
     /** Dismiss the modal */
@@ -368,7 +368,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     await page3.waitForLoadState("networkidle");
 
     await expect(page3.getByRole("heading", { name: "REMS Admin Status" })).toBeVisible();
-    await expect(page3.getByRole("heading", { name: "Pharmacy Status" })).toBeVisible();
+    await expect(page3.getByRole("heading", { name: "Medication Status" })).toBeVisible();
 
     // hit rems admin status button here to see etasu status
     await page3.getByRole("button", { name: /view etasu/i }).click();
