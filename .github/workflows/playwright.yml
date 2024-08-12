@@ -82,6 +82,9 @@ jobs:
       - name: setup docker buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: Check docker-compose
+        run: docker-compose --version 
+
       - name: Start containers
         run: docker-compose -f docker-compose-local-build.yml up -d --wait 
 
