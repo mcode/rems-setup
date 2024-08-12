@@ -1,35 +1,39 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main, dev, tagging-docker-compose ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ main, dev, tagging-docker-compose ]
+    branches: [ main, dev ]
   workflow_dispatch:
     inputs:
       rems-setup-branch:
         description: 'rems set up branch'     
         required: true
-        default: 'main'
+        default: 'dev'
+      rems-intermediary-branch:
+          description: 'rems intermediary branch'     
+          required: true
+          default: 'dev'      
       request-generator-branch:
         description: 'request generator branch'     
         required: true
-        default: 'main'  
+        default: 'dev'  
       pims-branch:
         description: 'pims branch'     
         required: true
-        default: 'main'      
+        default: 'dev'      
       rems-admin-branch:
         description: 'rems admin branch'     
         required: true
-        default: 'main'    
+        default: 'dev'    
       rems-smart-on-fhir-branch:
         description: 'rems smart on fhir branch'     
         required: true
-        default: 'main'   
+        default: 'dev'   
       rems-test-ehr-branch:
         description: 'rems test-ehr branch'     
         required: true
-        default: 'main'   
+        default: 'dev'   
 
 jobs:
   test:
@@ -41,6 +45,14 @@ jobs:
           repository: mcode/rems-setup
           path: rems-setup
           ref: ${{ github.event.inputs.rems-setup-branch }}
+
+      - name: Checkout rems-intermediary repo
+        uses: actions/checkout@v4
+        with:
+          repository: mcode/rems-intermediary
+          path: rems-intermediary
+          ref: ${{ github.event.inputs.rems-intermediary-branch }}
+  
 
       - name: Checkout test-ehr repo
         uses: actions/checkout@v4
@@ -78,19 +90,29 @@ jobs:
           path: rems-smart-on-fhir
           submodule: true
           ref: ${{ github.event.inputs.rems-smart-on-fhir-branch }}
+      
+      
 
       - name: Start containers
-        run: docker-compose -f docker-compose-local-build.yml up -d --wait 
+        run: docker compose -f docker-compose-local-build.yml up -d --wait 
+        working-directory: ./rems-setup
 
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - name: Install dependencies
         run: npm ci
+        working-directory: ./rems-setup
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+        working-directory: ./rems-setup
+
       - name: Run Playwright tests
         run: npx playwright test
+        working-directory: ./rems-setup
+
       - uses: actions/upload-artifact@v3
         if: always()
         with:

@@ -94,6 +94,24 @@ services:
       - rems_dev_rems-admin-nodeModules:/rems-admin/node_modules
       - rems_dev_rems-admin-logs:/rems-admin/logs
 
+  rems-administrator2:
+    build:
+      context: '../rems-admin'
+      dockerfile: Dockerfile.dev
+    container_name: rems_dev_rems-administrator2
+    ports:
+      - "8095:8095"
+      - "8096:8096"
+    environment:
+      VSAC_API_KEY: ${VSAC_API_KEY}
+      MONGO_DB_NAME: remsadmin2
+      MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
+      PORT: 8095
+    volumes:
+      - rems_dev_rems-admin2-sync:/rems-admin2:nocopy #  nocopy is important
+      - rems_dev_rems-admin2-nodeModules:/rems-admin2/node_modules
+      - rems_dev_rems-admin2-logs:/rems-admin2/logs
+
   pims:
     build:
       context: ../pims
@@ -106,6 +124,7 @@ services:
       REMS_ADMIN_FHIR_URL: http://rems-administrator:8090/4_0_0
       MONGO_URL: mongodb://pims_remsadmin_mongo:27017/pims
       EHR_RXFILL_URL: http://host.docker.internal:8080/test-ehr/script/rxfill
+      INTERMEDIARY_FHIR_URL: http://rems-intermediary:3003/4_0_0
     volumes:
       - rems_dev_pims-sync:/home/node/app:nocopy
       - rems_dev_pims-nodeModules:/home/node/app/frontend/node_modules
@@ -117,6 +136,11 @@ services:
       context: '../rems-intermediary'
       dockerfile: Dockerfile.dev
     container_name: rems_dev_rems-intermediary
+    environment:
+      VITE_AUTH: http://keycloak:8080
+      MONGO_URL: mongodb://intermediary-user:pass@pims_remsadmin_mongo:27017
+      REMS_ADMIN_HOOK_PATH: http://rems-administrator:8090/cds-services/rems-
+      REMS_ADMIN_FHIR_PATH: http://rems-administrator:8090/4_0_0
     ports:
       - "3003:3003"
     volumes:
@@ -130,6 +154,8 @@ volumes:
   rems_dev_request-generator-sync:
     external: true
   rems_dev_rems-admin-sync:
+    external: true
+  rems_dev_rems-admin2-sync:
     external: true
   rems_dev_pims-sync:
     external: true
@@ -155,6 +181,8 @@ volumes:
   rems_dev_pims-backend-dist:
   rems_dev_rems-admin-nodeModules:
   rems_dev_rems-admin-logs:
+  rems_dev_rems-admin2-nodeModules:
+  rems_dev_rems-admin2-logs:
   rems_dev_rems-smart-on-fhir-nodeModules:
   rems_dev_rems-smart-on-fhir-logs:
   rems_dev_rems-intermediary-nodeModules:

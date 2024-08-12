@@ -71,6 +71,19 @@ services:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
 
+  rems-administrator2:
+    build:
+      context: '../rems-admin'
+    container_name: rems_dev_rems-administrator2
+    ports:
+      - "8095:8095"
+      - "8096:8096"
+    environment:
+      VSAC_API_KEY: ${VSAC_API_KEY}
+      MONGO_DB_NAME: remsadmin2
+      MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
+      PORT: 8095
+
   pims:
     build:
       context: ../pims
@@ -82,11 +95,17 @@ services:
       REMS_ADMIN_FHIR_URL: http://rems-administrator:8090/4_0_0
       MONGO_URL: mongodb://pims_remsadmin_mongo:27017/pims
       EHR_RXFILL_URL: http://host.docker.internal:8080/test-ehr/script/rxfill
+      INTERMEDIARY_FHIR_URL: http://rems-intermediary:3003/4_0_0
 
   rems-intermediary:
     build:
       context: '../rems-intermediary'
     container_name: rems_dev_rems-intermediary
+    environment:
+      VITE_AUTH: http://keycloak:8080
+      MONGO_URL: mongodb://intermediary-user:pass@pims_remsadmin_mongo:27017
+      REMS_ADMIN_HOOK_PATH: http://rems-administrator:8090/cds-services/rems-
+      REMS_ADMIN_FHIR_PATH: http://rems-administrator:8090/4_0_0
     ports:
       - "3003:3003"
 

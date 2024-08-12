@@ -57,6 +57,9 @@
     - `REACT_APP_PHARMACY_STATUS_ENABLED`
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`
     - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
+    - `USE_INTERMEDIARY`
+    - `INTERMEDIARY_SERVER_BASE`
+    - `INTERMEDIARY_CDS_HOOKS`
 
 - mcode/test-ehr
 
@@ -108,11 +111,12 @@
     - `VITE_PUBLIC_KEYS`
     - `VITE_REALM`
     - `VITE_RESPONSE_EXPIRATION_DAYS`
-    - `VITE_SERVER`
     - `VITE_SMART_LAUNCH_URL`
     - `VITE_URL`
     - `VITE_URL_FILTER`
     - `VITE_USER`
+    - `VITE_USE_INTERMEDIARY`
+    - `VITE_INTERMEDIARY`
 
 - mcode/pims
   - backend/env.json
@@ -122,15 +126,37 @@
     - `EHR_RXFILL_URL`
     - `HTTPS_CERT_PATH`
     - `HTTPS_KEY_PATH`
+    - `INTERMEDIARY_FHIR_URL`
     - `MONGO_PASSWORD`
     - `MONGO_URL`
     - `MONGO_USERNAME`
     - `USE_HTTPS`
+    - `USE_INTERMEDIARY`
   - frontend/.env
     - `PORT`
     - `REACT_APP_PIMS_BACKEND_PORT`
   - pm2.config.js
     - `NODE_ENV`
+
+- mcode/rems-intermediary
+  - .env
+    - `AUTH_SERVER_URI`
+    - `HTTPS_CERT_PATH`
+    - `HTTPS_KEY_PATH`
+    - `LOGGING_LEVEL`
+    - `MONGO_DB_NAME`
+    - `MONGO_URL`
+    - `PORT`
+    - `SMART_ENDPOINT`
+    - `USE_HTTPS`
+    - `WHITELIST`
+    - `VITE_REALM`
+    - `VITE_AUTH`
+    - `VITE_USER`
+    - `VITE_PASSWORD`
+    - `VITE_CLIENT`
+    - `REMS_ADMIN_HOOK_PATH`
+    - `REMS_ADMIN_FHIR_PATH`
 
 ## Repositories that use environment variables
 
@@ -235,6 +261,8 @@
     - `USE_HTTPS`
   - backend/src/routes/doctorOrders.js
     - `EHR_RXFILL_URL`
+    - `USE_INTERMEDIARY`
+    - `INTERMEDIARY_FHIR_URL`
   - backend/src/database/data.js
     - `REMS_ADMIN_FHIR_URL`
   - frontend/src/App.tsx
@@ -246,10 +274,14 @@
     - `REACT_APP_ETASU_STATUS_ENABLED`
     - `REACT_APP_PHARMACY_STATUS_ENABLED`
     - `REACT_APP_SEND_FHIR_AUTH_ENABLED`
+    - `REACT_APP_DEFAULT_ISS`
+    - `INTERMEDIARY_SERVER_BASE`
+    - `USE_INTERMEDIARY`
   - src/views/Patient/MedReqDropDown/rxSend/rxSend.ts
     - `REACT_APP_PHARMACY_SERVER_BASE`
   - src/views/Patient/PatientView.tsx
     - `REACT_APP_REMS_ADMIN_SERVER_BASE`
+    - `USE_INTERMEDIARY`
   - src/views/Smart/Launch.tsx
     - `REACT_APP_CLIENT_SCOPES`
     - `REACT_APP_DEFAULT_CLIENT_ID`
@@ -258,3 +290,27 @@
     - `REACT_APP_DEVELOPER_MODE`
   - src/views/Questionnaire/elm/buildPopulatedResourceBundle.ts
     - `REACT_APP_EPIC_SUPPORTED_QUERIES`
+  - src/util/util.ts
+    - `INTERMEDIARY_CDS_HOOKS`
+
+- mcode/rems-intermediary
+
+  - src/config.ts
+    - `AUTH_SERVER_URI`
+    - `LOGGING_LEVEL`
+    - `MONGO_DB_NAME`
+    - `MONGO_URL`
+    - `PORT`
+    - `SMART_ENDPOINT`
+    - `WHITELIST`
+    - `REMS_ADMIN_HOOK_PATH`
+    - `REMS_ADMIN_FHIR_PATH`  
+  - src/server.ts
+    - `HTTPS_CERT_PATH`
+    - `HTTPS_KEY_PATH`
+    - `USE_HTTPS`
+    - `VITE_REALM`
+    - `VITE_AUTH`
+    - `VITE_USER`
+    - `VITE_PASSWORD`
+    - `VITE_CLIENT`

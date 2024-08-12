@@ -27,7 +27,7 @@ Complete end-to-end set up guides for the REMS Proof of Concept prototype are li
 We use Playwright for end-to-end testing, which automates running the full prototype environment.
 
 1. Install dependencies: `npm install`
-2. Run all tests: `npm playwright test` or with the `-ui` flag to view them in the Chromium browser.
+2. Run all tests: `npx playwright test` or with the `-ui` flag to view them in the Chromium browser.
 
 ## Sequence Diagram 
 

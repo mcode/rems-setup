@@ -19,6 +19,7 @@ Follow this guide if you would like to start each application locally **without*
     - [rems-admin](#rems-admin)
     - [pims](#pims)
     - [rems-smart-on-fhir](#rems-smart-on-fhir)
+    - [rems-intermediary](#rems-intermediary)
 - [Verify the REMS Integration Prototype is working](#verify-the-rems-integration-prototype-is-working)
 
 ## Prerequisites
@@ -58,6 +59,7 @@ Follow this guide if you would like to start each application locally **without*
    git clone https://github.com/mcode/pims.git
    git clone https://github.com/mcode/rems-smart-on-fhir.git
    git clone https://github.com/mcode/rems-setup.git
+   git clone https://github.com/mcode/rems-intermediary.git
    ```
 
 ## Install nvm (Node Version Manager)
@@ -134,7 +136,7 @@ Follow this guide if you would like to start each application locally **without*
 
     # Initialize the database
     # NOTE: Database must already be running
-    ./bin/mongosh mongodb://localhost:27017 <REMS_PATH>/mongo-init.js
+    ./bin/mongosh mongodb://localhost:27017 <rems-root>/rems-setup/mongo-init.js
     ```
 
   - Alternate Install Instructions: [www.mongodb.com/docs/mongodb-shell/install/#std-label-mdb-shell-install](https://www.mongodb.com/docs/mongodb-shell/install/#std-label-mdb-shell-install)
@@ -235,6 +237,22 @@ npm start
 ```bash
 # Navigate into directory already cloned from GitHub
 cd rems-smart-on-fhir
+
+# Initialize Git submodules (REMS CDS Hooks)
+git submodule update --init
+
+# Install dependencies
+npm install
+
+# Start the application
+npm start
+```
+
+### rems-intermediary
+
+```bash
+# Navigate into directory already cloned from GitHub
+cd rems-intermediary
 
 # Initialize Git submodules (REMS CDS Hooks)
 git submodule update --init
