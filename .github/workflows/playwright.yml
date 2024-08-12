@@ -10,6 +10,10 @@ on:
         description: 'rems set up branch'     
         required: true
         default: 'main'
+      rems-intermediary-branch:
+          description: 'rems intermediary branch'     
+          required: true
+          default: 'main'      
       request-generator-branch:
         description: 'request generator branch'     
         required: true
@@ -41,6 +45,14 @@ jobs:
           repository: mcode/rems-setup
           path: rems-setup
           ref: ${{ github.event.inputs.rems-setup-branch }}
+
+      - name: Checkout intermediary repo
+        uses: actions/checkout@v4
+        with:
+          repository: mcode/rems-intermediary
+          path: pims
+          ref: ${{ github.event.inputs.intermediary-branch }}
+  
 
       - name: Checkout test-ehr repo
         uses: actions/checkout@v4
