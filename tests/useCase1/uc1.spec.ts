@@ -382,7 +382,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   
     await testUtilFillOutForm({ page: pkaPage, submitButton: pufSubmitButton });
 
-    await page3.getByRole('tab', { name: 'Home' }).click();
+    await page3.getByRole('tab', { name: /HOME/i }).click();
 
 
     // hit rems admin status button here to see etasu status
