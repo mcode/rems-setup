@@ -79,6 +79,9 @@ jobs:
           submodule: true
           ref: ${{ github.event.inputs.rems-smart-on-fhir-branch }}
 
+      - name: setup docker buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: Start containers
         run: docker-compose -f docker-compose-local-build.yml up -d --wait 
 
