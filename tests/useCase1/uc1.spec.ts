@@ -380,7 +380,6 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     const firstField4 = pefPage.getByLabel('Signature *');
     await firstField4.fill('Jane Doe');
   
-    await pefPage.getByText('Form Loaded:').click();
     await testUtilFillOutForm({ page: pkaPage, submitButton: pufSubmitButton });
 
     await page3.getByRole('tab', { name: 'Home' }).click();
@@ -391,5 +390,4 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     await page3.waitForLoadState("networkidle");
     await expect(page3.getByRole('list')).toContainText('Patient Status Update');
 
-  
 });
