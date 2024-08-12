@@ -94,17 +94,25 @@ jobs:
       
 
       - name: Start containers
-        run: cd rems-setup; docker compose -f docker-compose-local-build.yml up -d --wait 
+        run: docker compose -f docker-compose-local-build.yml up -d --wait 
+        working-directory: ./rems-setup
 
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - name: Install dependencies
         run: npm ci
+        working-directory: ./rems-setup
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+        working-directory: ./rems-setup
+
       - name: Run Playwright tests
         run: npx playwright test
+        working-directory: ./rems-setup
+
       - uses: actions/upload-artifact@v3
         if: always()
         with:
