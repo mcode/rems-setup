@@ -46,12 +46,12 @@ jobs:
           path: rems-setup
           ref: ${{ github.event.inputs.rems-setup-branch }}
 
-      - name: Checkout intermediary repo
+      - name: Checkout rems-intermediary repo
         uses: actions/checkout@v4
         with:
           repository: mcode/rems-intermediary
-          path: pims
-          ref: ${{ github.event.inputs.intermediary-branch }}
+          path: rems-intermediary
+          ref: ${{ github.event.inputs.rems-intermediary-branch }}
   
 
       - name: Checkout test-ehr repo
