@@ -156,6 +156,7 @@
     - `VITE_PASSWORD`
     - `VITE_CLIENT`
     - `REMS_ADMIN_HOOK_PATH`
+    - `REMS_ADMIN_FHIR_PATH`
 
 ## Repositories that use environment variables
 
@@ -303,6 +304,7 @@
     - `SMART_ENDPOINT`
     - `WHITELIST`
     - `REMS_ADMIN_HOOK_PATH`
+    - `REMS_ADMIN_FHIR_PATH`  
   - src/server.ts
     - `HTTPS_CERT_PATH`
     - `HTTPS_KEY_PATH`
