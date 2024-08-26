@@ -51,6 +51,8 @@ services:
     build:
       context: ../request-generator
       dockerfile: Dockerfile.dev
+      args:
+        - VITE_URL=http://localhost:3000
     container_name: rems_dev_request-generator
     environment:
       - REACT_APP_EHR_SERVER_TO_BE_SENT_TO_REMS_ADMIN_FOR_PREFETCH=http://host.docker.internal:8080/test-ehr/r4
@@ -82,6 +84,8 @@ services:
     build:
       context: '../rems-admin'
       dockerfile: Dockerfile.dev
+      args:
+        - PORT=8090
     container_name: rems_dev_rems-administrator
     ports:
       - "8090:8090"
@@ -98,6 +102,8 @@ services:
     build:
       context: '../rems-admin'
       dockerfile: Dockerfile.dev
+      args:
+        - PORT=8095
     container_name: rems_dev_rems-administrator2
     ports:
       - "8095:8095"
