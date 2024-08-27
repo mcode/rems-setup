@@ -94,7 +94,7 @@ jobs:
 
 
       - name: Start containers
-        run: docker compose -f docker-compose-local-build.yml up -d --wait
+        run: docker compose -f docker-compose-local-build.yml up
         working-directory: ./rems-setup
         env:
           VSAC_API_KEY: ${{secrets.VSAC_API_KEY}}
