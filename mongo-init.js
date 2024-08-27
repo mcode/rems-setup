@@ -1,12 +1,21 @@
 // Create Databases
 const dbPims = db.getSiblingDB('pims');
 const dbRemsAdmin = db.getSiblingDB('remsadmin');
+const dbRemsAdmin2 = db.getSiblingDB('remsadmin2');
+
 const dbRemsIntermediary = db.getSiblingDB('remsintermediary');
 
 dbRemsAdmin.createUser({ user: "rems-user",
   pwd: "pass",
   roles: [
     { role: "readWrite", db: "remsadmin" } 
+  ]
+})
+
+dbRemsAdmin2.createUser({ user: "rems-user2",
+  pwd: "pass",
+  roles: [
+    { role: "readWrite", db: "remsadmin2" } 
   ]
 })
 
@@ -17,9 +26,17 @@ dbRemsIntermediary.createUser({ user: "intermediary-user",
   ]
 })
 
+dbPims.createUser({ user: "pims-user",
+  pwd: "pims-pass",
+  roles: [
+    { role: "readWrite", db: "pims" } 
+  ]
+})
+
 // Create Collections
 dbPims.createCollection('pims-tmp');
 dbRemsAdmin.createCollection('remsadmin-tmp');
+dbRemsAdmin2.createCollection('remsadmin2-tmp');
 dbRemsIntermediary.createCollection('remsintermediary-tmp');
 
 // add the administrator user

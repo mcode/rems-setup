@@ -34,11 +34,17 @@ services:
     ports:
       - '27017:27017'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: rems-admin-pims-root
-      MONGO_INITDB_ROOT_PASSWORD: rems-admin-pims-password
+      MONGO_INITDB_ROOT_USERNAME: mongo-root
+      MONGO_INITDB_ROOT_PASSWORD: mongo-password
     volumes:
       - rems_dev_pims_remsadmin_mongo:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
 
   request-generator:
     build:
@@ -74,6 +80,9 @@ services:
     environment:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
+    depends_on:
+      pims_remsadmin_mongo:
+        condition: service_healthy
 
   rems-administrator2:
     build:
@@ -87,8 +96,11 @@ services:
     environment:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_DB_NAME: remsadmin2
-      MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
+      MONGO_URL: mongodb://rems-user2:pass@pims_remsadmin_mongo:27017
       PORT: 8095
+    depends_on:
+      pims_remsadmin_mongo:
+        condition: service_healthy
 
   pims:
     build:
@@ -102,6 +114,9 @@ services:
       MONGO_URL: mongodb://pims_remsadmin_mongo:27017/pims
       EHR_RXFILL_URL: http://host.docker.internal:8080/test-ehr/script/rxfill
       INTERMEDIARY_FHIR_URL: http://rems-intermediary:3003/4_0_0
+    depends_on:
+      pims_remsadmin_mongo:
+        condition: service_healthy
 
   rems-intermediary:
     build:
@@ -114,6 +129,9 @@ services:
       REMS_ADMIN_FHIR_PATH: http://rems-administrator:8090/4_0_0
     ports:
       - "3003:3003"
+    depends_on:
+      pims_remsadmin_mongo:
+        condition: service_healthy
 
 volumes:
   rems_dev_keycloak-data:
