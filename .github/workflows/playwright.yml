@@ -51,6 +51,7 @@ jobs:
         with:
           repository: mcode/rems-intermediary
           path: rems-intermediary
+          submodules: true
           ref: ${{ github.event.inputs.rems-intermediary-branch }}
   
 
@@ -73,7 +74,7 @@ jobs:
         with:
           repository: mcode/rems-admin
           path: rems-admin
-          submodule: true
+          submodules: true
           ref: ${{ github.event.inputs.rems-admin-branch }}
 
       - name: Checkout pims repo
@@ -88,12 +89,12 @@ jobs:
         with:
           repository: mcode/rems-smart-on-fhir
           path: rems-smart-on-fhir
-          submodule: true
+          submodules: true
           ref: ${{ github.event.inputs.rems-smart-on-fhir-branch }}
 
 
       - name: Start containers
-        run: docker compose -f docker-compose-local-build.yml up 
+        run: docker compose -f docker-compose-local-build.yml up -d --wait
         working-directory: ./rems-setup
         env:
           VSAC_API_KEY: ${{secrets.VSAC_API_KEY}}
