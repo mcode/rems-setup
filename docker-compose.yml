@@ -77,16 +77,16 @@ services:
     ports:
       - '27017:27017'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: rems-admin-pims-root
-      MONGO_INITDB_ROOT_PASSWORD: rems-admin-pims-password
+      MONGO_INITDB_ROOT_USERNAME: mongo-user
+      MONGO_INITDB_ROOT_PASSWORD: mongo-password
     volumes:
       - rems_prod_pims_remsadmin_mongo:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
-      interval: 10s
+      interval: 40s
       timeout: 10s
-      retries: 5
+      retries: 10
       start_period: 40s
 
   # Create pims container

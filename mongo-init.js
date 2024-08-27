@@ -33,6 +33,7 @@ dbPims.createUser({ user: "pims-user",
   ]
 })
 
+
 // Create Collections
 dbPims.createCollection('pims-tmp');
 dbRemsAdmin.createCollection('remsadmin-tmp');
@@ -41,6 +42,7 @@ dbRemsIntermediary.createCollection('remsintermediary-tmp');
 
 // add the administrator user
 const dbAdmin = db.getSiblingDB('admin');
+
 dbAdmin.createUser({ user: "rems-admin-pims-root",
     pwd: "rems-admin-pims-password",
     roles: [
