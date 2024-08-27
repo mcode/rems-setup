@@ -90,12 +90,13 @@ jobs:
           path: rems-smart-on-fhir
           submodule: true
           ref: ${{ github.event.inputs.rems-smart-on-fhir-branch }}
-      
-      
+
 
       - name: Start containers
         run: docker compose -f docker-compose-local-build.yml up -d --wait 
         working-directory: ./rems-setup
+        env:
+          VSAC_API_KEY: ${{secrets.VSAC_API_KEY}}
 
       - uses: actions/setup-node@v3
         with:
