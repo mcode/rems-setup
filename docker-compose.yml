@@ -52,6 +52,9 @@ services:
     environment:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
+    depends_on:
+      pims_remsadmin_mongo:
+        condition: service_healthy
 
   rems-administrator2: # Name of our service
     image: codexrems/rems-administrator:1.2
@@ -61,8 +64,11 @@ services:
     environment:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_DB_NAME: remsadmin2
-      MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
+      MONGO_URL: mongodb://rems-user2:pass@pims_remsadmin_mongo:27017
       PORT: 8095
+    depends_on:
+      pims_remsadmin_mongo:
+        condition: service_healthy
 
   # Create pims admin container
   pims_remsadmin_mongo:
@@ -76,6 +82,12 @@ services:
     volumes:
       - rems_prod_pims_remsadmin_mongo:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
 
   # Create pims container
   pims:
@@ -89,6 +101,9 @@ services:
     ports:
       - "5050:5050"
       - "5051:5051"
+    depends_on:
+      pims_remsadmin_mongo:
+        condition: service_healthy
 
   # add in once intermediary once ci/cd pipeline task is completed and published images exist 
   rems-intermediary:
@@ -101,6 +116,9 @@ services:
       REMS_ADMIN_FHIR_PATH: http://rems-administrator:8090/4_0_0
     ports:
       - "3003:3003"
+    depends_on:
+      pims_remsadmin_mongo:
+        condition: service_healthy
 
 volumes:
   rems_prod_keycloak-data:

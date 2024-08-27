@@ -41,11 +41,17 @@ services:
     ports:
       - '27017:27017'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: rems-admin-pims-root
-      MONGO_INITDB_ROOT_PASSWORD: rems-admin-pims-password
+      MONGO_INITDB_ROOT_USERNAME: mongo-user
+      MONGO_INITDB_ROOT_PASSWORD: mongo-password
     volumes:
       - rems_dev_pims_remsadmin_mongo:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
 
   request-generator:
     build:
@@ -97,6 +103,9 @@ services:
       - rems_dev_rems-admin-sync:/rems-admin:nocopy #  nocopy is important
       - rems_dev_rems-admin-nodeModules:/rems-admin/node_modules
       - rems_dev_rems-admin-logs:/rems-admin/logs
+    depends_on:
+      pims_remsadmin_mongo:
+        condition: service_healthy
 
   rems-administrator2:
     build:
@@ -111,12 +120,16 @@ services:
     environment:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_DB_NAME: remsadmin2
-      MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
+      MONGO_URL: mongodb://rems-user2:pass@pims_remsadmin_mongo:27017
       PORT: 8095
     volumes:
       - rems_dev_rems-admin2-sync:/rems-admin2:nocopy #  nocopy is important
       - rems_dev_rems-admin2-nodeModules:/rems-admin2/node_modules
       - rems_dev_rems-admin2-logs:/rems-admin2/logs
+    depends_on:
+      pims_remsadmin_mongo:
+        condition: service_healthy
+
 
   pims:
     build:
@@ -136,6 +149,10 @@ services:
       - rems_dev_pims-nodeModules:/home/node/app/frontend/node_modules
       - rems_dev_pims-backend-nodeModules:/home/node/app/backend/node_modules
       - rems_dev_pims-backend-dist:/home/node/app/backend/dist
+    depends_on:
+      pims_remsadmin_mongo:
+        condition: service_healthy
+
 
   rems-intermediary:
     build:
@@ -153,6 +170,9 @@ services:
       - rems_dev_rems-intermediary-sync:/rems-intermediary:nocopy #  nocopy is important
       - rems_dev_rems-intermediary-nodeModules:/rems-intermediary/node_modules
       - rems_dev_rems-intermediary-logs:/rems-intermediary/logs
+    depends_on:
+      pims_remsadmin_mongo:
+        condition: service_healthy
 
 volumes:
   rems_dev_test-ehr-sync:
