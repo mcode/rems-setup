@@ -99,6 +99,7 @@ services:
     environment:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
+      SERVER_NAME: 'CodeX REMS Administrator Prototype #1'
     volumes:
       - rems_dev_rems-admin-sync:/rems-admin:nocopy #  nocopy is important
       - rems_dev_rems-admin-nodeModules:/rems-admin/node_modules
@@ -121,6 +122,7 @@ services:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_DB_NAME: remsadmin2
       MONGO_URL: mongodb://rems-user2:pass@pims_remsadmin_mongo:27017
+      SERVER_NAME: 'CodeX REMS Administrator Prototype #2'
       PORT: 8095
     volumes:
       - rems_dev_rems-admin2-sync:/rems-admin2:nocopy #  nocopy is important
