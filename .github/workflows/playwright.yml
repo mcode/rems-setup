@@ -90,11 +90,16 @@ jobs:
           repository: mcode/rems-smart-on-fhir
           path: rems-smart-on-fhir
           submodules: true
-          ref: ${{ github.event.inputs.rems-smart-on-fhir-branch }}
+          ref: ${{ github.event.inputs.rems-smart-on-fhir-branch }} 
 
+      - name: Build containers
+        run: docker compose -f docker-compose-local-build.yml build --no-cache --pull	
+        working-directory: ./rems-setup
+        env:
+          VSAC_API_KEY: ${{secrets.VSAC_API_KEY}}
 
       - name: Start containers
-        run: docker compose -f docker-compose-local-build.yml up -d --wait
+        run: docker compose -f docker-compose-local-build.yml up -d --wait --force-recreate
         working-directory: ./rems-setup
         env:
           VSAC_API_KEY: ${{secrets.VSAC_API_KEY}}

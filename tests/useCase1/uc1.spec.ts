@@ -374,13 +374,17 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     and will show up as separate ETASU elements each time.*/
 
     await page3.getByRole('button', { name: 'Patient Status Update Form' }).click();
-    await page3.waitForLoadState("networkidle");
-
-    const pufSubmitButton = pkaPage.getByRole("button", { name: "Submit REMS Bundle" });
-    const firstField4 = pefPage.getByLabel('Signature *');
+    const psfPage = page3;
+    await psfPage.waitForLoadState("networkidle");
+    // TODO: maybe conditionallyi check load state
+    // await testUtilKeycloakLogin({ page: pefPage });
+  
+    const psfSubmitButton = psfPage.getByRole("button", { name: "Submit REMS Bundle" });
+    const firstField4 = psfPage.getByLabel('Signature *');
     await firstField4.fill('Jane Doe');
   
-    await testUtilFillOutForm({ page: pkaPage, submitButton: pufSubmitButton });
+    await psfPage.getByText('Form Loaded:').click();
+    await testUtilFillOutForm({ page: pefPage, submitButton: pefSubmitButton });
 
     await page3.getByRole('tab', { name: /HOME/i }).click();
 
