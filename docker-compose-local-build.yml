@@ -114,7 +114,7 @@ services:
     environment:
       REMS_ADMIN_FHIR_URL: http://rems-administrator:8090/4_0_0
       MONGO_URL: mongodb://pims_remsadmin_mongo:27017/pims
-      EHR_RXFILL_URL: http://host.docker.internal:8080/test-ehr/script/rxfill
+      EHR_RXFILL_URL: http://host.docker.internal:8080/test-ehr/ncpdp/script
       INTERMEDIARY_FHIR_URL: http://rems-intermediary:3003/4_0_0
       REMS_ADMIN_NCPDP: http://rems-administrator:8090/ncpdp/script
     depends_on:
