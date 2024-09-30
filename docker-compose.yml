@@ -52,6 +52,7 @@ services:
     environment:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
+      SERVER_NAME: 'CodeX REMS Administrator Prototype #1'
     depends_on:
       pims_remsadmin_mongo:
         condition: service_healthy
@@ -65,6 +66,7 @@ services:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_DB_NAME: remsadmin2
       MONGO_URL: mongodb://rems-user2:pass@pims_remsadmin_mongo:27017
+      SERVER_NAME: 'CodeX REMS Administrator Prototype #2'
       PORT: 8095
     depends_on:
       pims_remsadmin_mongo:
@@ -79,6 +81,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongo-user
       MONGO_INITDB_ROOT_PASSWORD: mongo-password
+      REMS_ADMIN_NCPDP: http://rems-administrator:8090/ncpdp/script
     volumes:
       - rems_prod_pims_remsadmin_mongo:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
@@ -96,7 +99,7 @@ services:
     environment:
       REMS_ADMIN_FHIR_URL: http://rems-administrator:8090/4_0_0
       MONGO_URL: mongodb://pims_remsadmin_mongo:27017/pims
-      EHR_RXFILL_URL: http://host.docker.internal:8080/test-ehr/script/rxfill
+      EHR_RXFILL_URL: http://host.docker.internal:8080/test-ehr/ncpdp/script
       INTERMEDIARY_FHIR_URL: http://rems-intermediary:3003/4_0_0
     ports:
       - "5050:5050"

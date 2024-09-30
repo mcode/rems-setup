@@ -19,7 +19,11 @@
     - request-generator
       - `VITE_EHR_SERVER_TO_BE_SENT_TO_REMS_ADMIN_FOR_PREFETCH`
     - rems-administrator
+      - `VSAC_API_KEY`
+      - `MONGO_DB_NAME`
       - `MONGO_URL`
+      - `SERVER_NAME`
+      - `PORT`
     - pims_remsadmin_mongo
       - `MONGO_INITDB_ROOT_USERNAME`
       - `MONGO_INITDB_ROOT_PASSWORD`
@@ -41,6 +45,7 @@
     - `USE_HTTPS`
     - `VSAC_API_KEY`
     - `WHITELIST`
+    - `SERVER_NAME`
 
 - mcode/rems-smart-on-fhir
 
@@ -183,6 +188,7 @@
     - `SMART_ENDPOINT`
     - `VSAC_API_KEY`
     - `WHITELIST`
+    - `SERVER_NAME`
   - src/server.ts
     - `HTTPS_CERT_PATH`
     - `HTTPS_KEY_PATH`
