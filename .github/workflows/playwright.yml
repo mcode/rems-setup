@@ -40,7 +40,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Output Workflow Inputs 
-        run: echo "${{ toJSON(github.event.inputs) }}"
+        run: |
+          "echo '## Input Variables' >> $GITHUB_STEP_SUMMARY"
+          "echo '### rems set up branch: ${{ github.event.inputs.rems-setup-branch }}' >> $GITHUB_STEP_SUMMARY"
+          "echo '### rems intermediary branch: ${{ github.event.inputs.rems-intermediary-branch }}' >> $GITHUB_STEP_SUMMARY"
+          "echo '### test ehr branch: ${{ github.event.inputs.rems-test-ehr-branch }}' >> $GITHUB_STEP_SUMMARY"
+          "echo '### request generator branch: ${{ github.event.inputs.request-generator-branch }}' >> $GITHUB_STEP_SUMMARY"
+          "echo '### rems admin branch: ${{ github.event.inputs.rems-admin-branch }}' >> $GITHUB_STEP_SUMMARY"
+          "echo '### pims branch: ${{ github.event.inputs.pims-branch }}' >> $GITHUB_STEP_SUMMARY"
+          "echo '### rems smart on fhir branch: ${{ github.event.inputs.rems-smart-on-fhir-branch }}' >> $GITHUB_STEP_SUMMARY"
+
 
       - name: Checkout rems-setup
         uses: actions/checkout@v4
