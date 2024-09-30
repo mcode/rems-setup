@@ -41,7 +41,7 @@ jobs:
     steps:
       - name: Output Workflow Inputs 
         run: | 
-          printf Input Variables:' \
+          printf 'Input Variables:' \
             printf 'rems set up branch: ${{ github.event.inputs.rems-setup-branch }}' \
             printf 'rems intermediary branch: ${{ github.event.inputs.rems-intermediary-branch }}' \
             printf 'test ehr branch: ${{ github.event.inputs.rems-test-ehr-branch }}' \
