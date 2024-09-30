@@ -39,7 +39,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Output Workflow Inputs 
+        run: echo "${{ toJSON(github.event.inputs) }}"
+
+      - name: Checkout rems-setup
         uses: actions/checkout@v4
         with:
           repository: mcode/rems-setup
