@@ -40,15 +40,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Output Workflow Inputs 
-        run: |
-          "printf Input Variables:' 
-          "printf 'rems set up branch: ${{ github.event.inputs.rems-setup-branch }}' 
-          "printf 'rems intermediary branch: ${{ github.event.inputs.rems-intermediary-branch }}' 
-          "printf 'test ehr branch: ${{ github.event.inputs.rems-test-ehr-branch }}' 
-          "printf 'request generator branch: ${{ github.event.inputs.request-generator-branch }}' 
-          "printf 'rems admin branch: ${{ github.event.inputs.rems-admin-branch }}' 
-          "printf 'pims branch: ${{ github.event.inputs.pims-branch }}' 
-          "printf 'rems smart on fhir branch: ${{ github.event.inputs.rems-smart-on-fhir-branch }}' 
+        run: | 
+          printf Input Variables:' \
+            printf 'rems set up branch: ${{ github.event.inputs.rems-setup-branch }}' \
+            printf 'rems intermediary branch: ${{ github.event.inputs.rems-intermediary-branch }}' \
+            printf 'test ehr branch: ${{ github.event.inputs.rems-test-ehr-branch }}' \
+            printf 'request generator branch: ${{ github.event.inputs.request-generator-branch }}' \
+            printf 'rems admin branch: ${{ github.event.inputs.rems-admin-branch }}' \
+            printf 'pims branch: ${{ github.event.inputs.pims-branch }}' \
+            printf 'rems smart on fhir branch: ${{ github.event.inputs.rems-smart-on-fhir-branch }}' 
 
 
       - name: Checkout rems-setup
