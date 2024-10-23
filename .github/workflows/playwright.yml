@@ -115,10 +115,7 @@ jobs:
         working-directory: ./rems-setup
         env:
           VSAC_API_KEY: ${{secrets.VSAC_API_KEY}}
-
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
-
+          
       - uses: actions/setup-node@v3
         with:
           node-version: 18
