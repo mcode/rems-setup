@@ -17,11 +17,11 @@ syncs:
 
   rems_dev_rems-admin-sync:
     src: '../rems-admin'
-    sync_excludes: ['node_modules']
+    sync_excludes: ['node_modules', './frontend/node_modules']
 
   rems_dev_rems-admin2-sync:
     src: '../rems-admin'
-    sync_excludes: ['node_modules']
+    sync_excludes: ['node_modules', './frontend/node_modules']
 
 
   rems_dev_pims-sync:  
@@ -30,4 +30,4 @@ syncs:
 
   rems_dev_rems-intermediary-sync:
     src: '../rems-intermediary'
-    sync_excludes: ['node_modules']
+    sync_excludes: ['node_modules', './frontend/node_modules']
