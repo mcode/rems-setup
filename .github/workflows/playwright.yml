@@ -111,7 +111,7 @@ jobs:
           VSAC_API_KEY: ${{secrets.VSAC_API_KEY}}
 
       - name: Start containers
-        run: docker compose -f docker-compose-local-build.yml up -d --force-recreate
+        run: docker compose -f docker-compose-local-build.yml up -d --wait --force-recreate
         working-directory: ./rems-setup
         env:
           VSAC_API_KEY: ${{secrets.VSAC_API_KEY}}
