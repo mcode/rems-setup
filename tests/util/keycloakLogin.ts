@@ -1,8 +1,8 @@
 import { Page, expect } from "@playwright/test";
 
 /* Ideally these would be sourced from the testing environment, but constants are fine too. */
-const USERNAME = "alice";
-const PASSWORD = "alice";
+const USERNAME = "janedoe";
+const PASSWORD = "jane";
 
 /** Attempts to log into a fresh Keycloak page using a hard-coded username/password, or the one specified in the call. */
 export async function testUtilKeycloakLogin(props: { page: Page; username?: string; password?: string }) {
