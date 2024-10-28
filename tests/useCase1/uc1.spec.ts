@@ -34,7 +34,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   // 1b. Clear any lingering state in the database.
   await page.getByRole('button', { name: 'Settings' }).click();
   await page.getByRole('button', { name: 'Reset PIMS Database' }).click();
-  await page.getByRole('button', { name: 'Clear In-Progress Forms' }).click();
+  await page.getByRole('button', { name: 'Clear EHR In-Progress Forms' }).click();
   await page.getByRole('button', { name: 'Reset REMS-Admin Database' }).click();
   await page.getByRole('button', { name: 'Clear EHR Dispense Statuses' }).click();
   await page.getByRole('button', { name: 'Clear EHR Tasks' }).click();
