@@ -109,7 +109,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
 
   // 11. A webpage should open in a new tab, and after a few seconds, a questionnaire should appear.
   await smartPage.waitForLoadState("networkidle");
-  await expect(smartPage).toHaveTitle("REMS SMART on FHIR app launch page");
+  await expect(smartPage).toHaveTitle("REMS SMART on FHIR app");
 
   /*
     // This is somehow passing right now?
