@@ -1,4 +1,4 @@
-# rems-setup
+# rems-setup 
 
 This repository contains all of the Docker, setup scripts, and documentation for running the entire **REMS Integration Prototype** environment. Use of this repository is recommended for users trying to set up the REMS environment for the first time. 
 
