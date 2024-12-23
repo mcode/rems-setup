@@ -1,0 +1,19 @@
+name: Mongo Docker Image CI
+
+on:
+  pull_request:
+    branches: [ main, dev ]
+  workflow_dispatch:
+
+jobs:
+  docker-ci: 
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      with:
+        submodules: true
+      
+    - name: Test Server Docker image Builds
+      run: docker build -f Dockerfile.mongo .
