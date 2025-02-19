@@ -130,7 +130,7 @@ services:
       PORT: 8095
       FRONTEND_PORT: 9095
       AUTH_SERVER_URI: 'http://localhost:8095'
-      RESOURCE_SERVER: 'http://localhost:8095'
+      RESOURCE_SERVER: 'http://localhost:8095/'
     volumes:
       - rems_dev_rems-admin2-sync:/rems-admin2:nocopy #  nocopy is important
       - rems_dev_rems-admin2-nodeModules:/rems-admin2/node_modules

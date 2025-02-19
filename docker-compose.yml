@@ -72,7 +72,7 @@ services:
       PORT: 8095
       FRONTEND_PORT: 9095
       AUTH_SERVER_URI: 'http://localhost:8095'
-      RESOURCE_SERVER: 'http://localhost:8095'
+      RESOURCE_SERVER: 'http://localhost:8095/'
     depends_on:
       pims_remsadmin_mongo:
         condition: service_healthy
