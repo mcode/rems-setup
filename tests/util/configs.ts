@@ -95,7 +95,7 @@ export const DRUG_CONFIGS: DrugConfig[] = [
 export const TEST_USERS = {
   PRESCRIBER: { username: "janedoe", password: "jane" },
   NURSE: { username: "alice", password: "alice" },
-  PATIENT: { username: "jonsnow", password: "jon" }
+  PATIENT: { JON_SNOW: { username: "jonsnow", password: "jon" }, ALICE_SMITH: { username: "alicesmith", password: "alice" }}
 };
 
 // Common patient data
