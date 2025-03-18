@@ -325,6 +325,7 @@ test.describe('REMS Workflows', () => {
           // Patient continues the enrollment form
           // go to the tasks page
           await patientPortalPage.goToTasks();
+          await patientPortalPage.refreshTasks();
 
           // validate the task 
           await patientPortalPage.verifyTaskPresent(patientForm.taskDescription);
