@@ -77,6 +77,8 @@ services:
     ports:
       - "8090:8090"
       - "8091:8091"
+      - "9090:9090"
+      - "9091:9091"
     environment:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
@@ -94,12 +96,17 @@ services:
     ports:
       - "8095:8095"
       - "8096:8096"
+      - "9095:9095"
+      - "9096:9096"
     environment:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_DB_NAME: remsadmin2
       MONGO_URL: mongodb://rems-user2:pass@pims_remsadmin_mongo:27017
       SERVER_NAME: 'CodeX REMS Administrator Prototype #2'
       PORT: 8095
+      FRONTEND_PORT: 9095
+      AUTH_SERVER_URI: 'http://localhost:8095'
+      RESOURCE_SERVER: 'http://localhost:8095/'
     depends_on:
       pims_remsadmin_mongo:
         condition: service_healthy
@@ -132,6 +139,7 @@ services:
       REMS_ADMIN_FHIR_PATH: http://rems-administrator:8090/4_0_0
     ports:
       - "3003:3003"
+      - "9080:9080"
     depends_on:
       pims_remsadmin_mongo:
         condition: service_healthy
