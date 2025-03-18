@@ -222,7 +222,7 @@ test.describe('REMS Workflows', () => {
 
         // Set up patient portal
         await patientPortalPage.navigate();
-        await patientPortalPage.login(TEST_USERS.PATIENT.username, TEST_USERS.PATIENT.password);
+        await patientPortalPage.login(TEST_USERS.PATIENT[patient_key].username, TEST_USERS.PATIENT[patient_key].password);
 
         // Handle Prescriber Enrollment
         const peForm = taskForms.find(f => f.name === "Prescriber Enrollment");
@@ -337,8 +337,8 @@ test.describe('REMS Workflows', () => {
           // Login to keycloak as patient if needed
           await testUtilKeycloakLogin({
             page: enrollmentPage,
-            username: TEST_USERS.PATIENT.username,
-            password: TEST_USERS.PATIENT.password
+            username: TEST_USERS.PATIENT[patient_key].username,
+            password: TEST_USERS.PATIENT[patient_key].password
           });
 
           // Fill out form
