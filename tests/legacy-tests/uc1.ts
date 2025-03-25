@@ -17,14 +17,14 @@ const medication = "Turalio";
 
 // test.slow();
 
-test("UC1: content appears in SMART on FHIR, fill out patient enroll form", async ({ context, page }) => {
+test("UC1: Basic Workflow Happy Path", async ({ context, page }) => {
   // 1. Go to the EHR UI at <http://localhost:3000>
   await page.goto("localhost:3000");
   await page.waitForLoadState("networkidle");
 
   // 1a. Sign in 
   await page.getByRole('button', { name: /Launch/ }).click();
-  await testUtilKeycloakLogin({ page: page });
+  await testUtilKeycloakLogin({ page: page, username: "janedoe", password: "jane" });
 
   // 1c1. Expect blank state.
   await expect(page).toHaveTitle(/EHR/);
@@ -34,9 +34,10 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   // 1b. Clear any lingering state in the database.
   await page.getByRole('button', { name: 'Settings' }).click();
   await page.getByRole('button', { name: 'Reset PIMS Database' }).click();
-  await page.getByRole('button', { name: 'Clear In-Progress Forms' }).click();
+  await page.getByRole('button', { name: 'Clear EHR In-Progress Forms' }).click();
   await page.getByRole('button', { name: 'Reset REMS-Admin Database' }).click();
-  await page.getByRole('button', { name: 'Clear EHR MedicationDispenses' }).click();
+  await page.getByRole('button', { name: 'Clear EHR Dispense Statuses' }).click();
+  await page.getByRole('button', { name: 'Clear EHR Tasks' }).click();
   await page.getByRole('button', { name: 'Reconnect EHR' }).click();
 
 
@@ -68,7 +69,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   // 6. Click **Send Rx to PIMS** at the bottom of the page to send a prescription to the Pharmacist.
   await page.getByRole('button', { name: 'Send Rx to Pharmacy' }).click();
 
-  // TODO: Expect feedback! but GUI doesn't show any yet.
+  await page.getByText('Success! NewRx Received By').click();
 
   // 7. Click **Submit to REMS-Admin** at the bottom of the page, which demonstrates the case where an EHR has CDS Hooks
   //    implemented natively.
@@ -110,14 +111,8 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await smartPage.waitForLoadState("networkidle");
   await expect(smartPage).toHaveTitle("REMS SMART on FHIR app");
 
-  /*
-    // This is somehow passing right now?
-    // 12c1: Error if form not completely filled out.
-    await submitButton.click();
-    await expect(smartPage.getByText(/Error: Partially completed form/)).toBeVisible();
-    // 12c1.2: dismiss error dialog to continue
-    await smartPage.getByRole("button", { name: "OK" }).click();
-  */
+  await expect(smartPage.getByRole('button', { name: '*You must include a value for' })).toBeVisible();
+  await expect(smartPage.getByRole('button', { name: 'Submit REMS Bundle' })).toBeDisabled();
 
   //////////// 12. Fill out the questionnaire and hit **Submit REMS Bundle**. ////////////////
   expect(smartPage.getByText("Patient Enrollment")).toBeVisible();
@@ -126,7 +121,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await firstField.fill('Jane Doe');
 
   const field = smartPage.getByRole('row', { name: 'Signature * Name (Printed) * Date * Show date picker', exact: true }).getByLabel('Signature *');
-  await field.fill('John Doe');
+  await field.fill('John Snow');
 
   await smartPage.getByText('Form Loaded:').click();
   await testUtilFillOutForm({ page: smartPage, submitButton: peSubmitButton });
@@ -384,7 +379,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     await firstField4.fill('Jane Doe');
   
     await psfPage.getByText('Form Loaded:').click();
-    await testUtilFillOutForm({ page: pefPage, submitButton: pefSubmitButton });
+    await testUtilFillOutForm({ page: pefPage, submitButton: psfSubmitButton });
 
     await page3.getByRole('tab', { name: /HOME/i }).click();
 
@@ -393,5 +388,13 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
     await page3.getByRole("button", { name: /ETASU:/i }).click();
     await page3.waitForLoadState("networkidle");
     await expect(page3.getByRole('list')).toContainText('Patient Status Update');
+
+    await pharmacyPage2.getByRole('button', { name: 'VIEW ETASU' }).click();
+    await expect(pharmacyPage2.getByText('✅').first()).toBeVisible();
+    const numChecks2 = await pharmacyPage2.getByText('✅').count();
+    expect(
+      (numChecks2),
+      `REMS Status panel showed wrong number of green check icons (${numChecks} checks)`
+    ).toEqual(5);
 
 });
