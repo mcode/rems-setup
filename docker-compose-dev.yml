@@ -97,6 +97,7 @@ services:
     environment:
       REMS_ADMIN_1_URL: http://rems-administrator:8090/
       REMS_ADMIN_2_URL: http://rems-administrator2:8095/
+      SPL_ZIP_PATH: /src/spl/TESTDATA_Docker_rems_document_and_rems_indexing_spl_files.zip
     volumes:
       - rems_dev_rems-directory-sync:/home/node/app/rems-directory:nocopy #  nocopy is important
       - rems_dev_rems-directory-nodeModules:/home/node/app/rems-directory/node_modules
@@ -190,7 +191,7 @@ services:
       REMS_ADMIN_HOOK_PATH: http://rems-administrator:8090/cds-services/rems-
       REMS_ADMIN_FHIR_PATH: http://rems-administrator:8090/4_0_0
       DIRECTORY_SERVICE_URL: http://rems-directory:3323
-
+      SPL_ZIP_FILE_NAME: TESTDATA_Docker_rems_document_and_rems_indexing_spl_files.zip
     ports:
       - "3003:3003"
       - "9080:9080"
