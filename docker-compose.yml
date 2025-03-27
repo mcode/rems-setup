@@ -43,6 +43,17 @@ services:
     ports:
       - "4040:4040"
 
+  rems-directory:
+    build:
+      image: codexrems/rems-directory:1.3
+    container_name: rems_prod_rems-directory
+    ports:
+      - "3323:3323"
+    environment:
+      REMS_ADMIN_1_URL: http://rems-administrator:8090/
+      REMS_ADMIN_2_URL: http://rems-administrator2:8095/
+      SPL_ZIP_PATH: /src/spl/TESTDATA_Docker_rems_document_and_rems_indexing_spl_files.zip
+
   # Create rems container
   rems-administrator: # Name of our service
     image: codexrems/rems-administrator:1.2
@@ -122,6 +133,8 @@ services:
       MONGO_URL: mongodb://intermediary-user:pass@pims_remsadmin_mongo:27017
       REMS_ADMIN_HOOK_PATH: http://rems-administrator:8090/cds-services/rems-
       REMS_ADMIN_FHIR_PATH: http://rems-administrator:8090/4_0_0
+      DIRECTORY_SERVICE_URL: http://rems-directory:3323
+      SPL_ZIP_FILE_NAME: TESTDATA_Docker_rems_document_and_rems_indexing_spl_files.zip
     ports:
       - "3003:3003"
       - "9080:9080"
