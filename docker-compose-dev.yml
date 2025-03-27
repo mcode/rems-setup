@@ -86,6 +86,21 @@ services:
       - rems_dev_rems-smart-on-fhir-sync:/home/node/app/rems-smart-on-fhir:nocopy #  nocopy is important
       - rems_dev_rems-smart-on-fhir-nodeModules:/home/node/app/rems-smart-on-fhir/node_modules
 
+  rems-directory:
+    build:
+      context: ../rems-directory
+      dockerfile: Dockerfile.dev
+    container_name: rems_dev_rems-directory
+    ports:
+      - "3323:3323"
+      - "3324:3324"
+    environment:
+      REMS_ADMIN_1_URL: http://rems-administrator:8090/
+      REMS_ADMIN_2_URL: http://rems-administrator2:8095/
+    volumes:
+      - rems_dev_rems-directory-sync:/home/node/app/rems-directory:nocopy #  nocopy is important
+      - rems_dev_rems-directory-nodeModules:/home/node/app/rems-directory/node_modules
+
   rems-administrator:
     build:
       context: '../rems-admin'
@@ -174,6 +189,8 @@ services:
       MONGO_URL: mongodb://intermediary-user:pass@pims_remsadmin_mongo:27017
       REMS_ADMIN_HOOK_PATH: http://rems-administrator:8090/cds-services/rems-
       REMS_ADMIN_FHIR_PATH: http://rems-administrator:8090/4_0_0
+      DIRECTORY_SERVICE_URL: http://rems-directory:3323
+
     ports:
       - "3003:3003"
       - "9080:9080"
@@ -198,6 +215,8 @@ volumes:
     external: true
   rems_dev_rems-smart-on-fhir-sync:
     external: true
+  rems_dev_rems-directory-sync:
+    external: true
   rems_dev_rems-intermediary-sync:
     external: true
 
@@ -221,7 +240,7 @@ volumes:
   rems_dev_rems-admin2-nodeModules:
   rems_dev_rems-admin2-logs:
   rems_dev_rems-smart-on-fhir-nodeModules:
-  rems_dev_rems-smart-on-fhir-logs:
+  rems_dev_rems-directory-nodeModules:
   rems_dev_rems-intermediary-nodeModules:
   rems_dev_rems-intermediary-logs:
 
