@@ -72,6 +72,8 @@ services:
     build:
       context: ../rems-directory
     container_name: rems_dev_rems-directory
+    env_file:
+      - ../rems-directory/.env
     ports:
       - "3323:3323"
       - "3324:4424"

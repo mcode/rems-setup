@@ -94,6 +94,8 @@ services:
     ports:
       - "3323:3323"
       - "3324:3324"
+    env_file:
+      - ../rems-directory/.env
     environment:
       REMS_ADMIN_1_URL: http://rems-administrator:8090/
       REMS_ADMIN_2_URL: http://rems-administrator2:8095/
