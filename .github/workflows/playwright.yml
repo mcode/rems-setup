@@ -34,6 +34,10 @@ on:
         description: 'rems test-ehr branch'     
         required: true
         default: 'dev'   
+      rems-directory-branch:
+        description: 'rems directory branch'     
+        required: true
+        default: 'dev'  
 
 jobs:
   test:
@@ -49,6 +53,8 @@ jobs:
           echo 'rems admin branch: ${{ github.event.inputs.rems-admin-branch }}' 
           echo 'pims branch: ${{ github.event.inputs.pims-branch }}' 
           echo 'rems smart on fhir branch: ${{ github.event.inputs.rems-smart-on-fhir-branch }}' 
+          echo 'rems smart on directory branch: ${{ github.event.inputs.rems-directory-branch }}' 
+
 
 
       - name: Checkout rems-setup
@@ -65,7 +71,16 @@ jobs:
           path: rems-intermediary
           submodules: true
           ref: ${{ github.event.inputs.rems-intermediary-branch }}
-  
+
+
+      - name: Checkout rems-directory repo
+        uses: actions/checkout@v4
+        with:
+          repository: mcode/rems-directory
+          path: rems-intermediary
+          submodules: true
+          ref: ${{ github.event.inputs.rems-directory-branch }}
+      
 
       - name: Checkout test-ehr repo
         uses: actions/checkout@v4
