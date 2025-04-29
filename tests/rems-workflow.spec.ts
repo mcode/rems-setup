@@ -376,6 +376,9 @@ test.describe('REMS Workflows', () => {
           await patientCompleteApp.verifyAppLoaded();
           await patientCompleteApp.handleInProgressForms();
 
+          // Bug Fix: make sure all fields are filled out
+          await patientCompleteApp.fillOutForm();
+
           if (patientForm.requiresPrescriberSignature) {
             await patientCompleteApp.fillPrescriberSignatureFields(TEST_PRESCRIBERS.JANE_DOE)
           }
