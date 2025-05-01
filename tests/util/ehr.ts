@@ -127,8 +127,11 @@ export class EhrPage {
  * Returns the status text
  */
     async checkMedicationStatus() {
+        await this.page.reload();
+        await this.page.waitForLoadState("networkidle");
+
         await this.page.getByRole("button", { name: /MEDICATION:/i }).click();
-        await this.page.waitForTimeout(2000); // Small buffer
+        await this.page.waitForTimeout(3000); // Small buffer
         await this.page.waitForLoadState("networkidle");
 
         const pharmacyPopup = this.page.locator(".MuiBox-root", { hasText: "Medication Status" });
