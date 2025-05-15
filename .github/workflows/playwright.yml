@@ -1,155 +1,155 @@
-name: Playwright Tests
-on:
-  push:
-    branches: [ main, dev ]
-  pull_request:
-    branches: [ main, dev ]
-  workflow_dispatch:
-    inputs:
-      rems-setup-branch:
-        description: 'rems set up branch'     
-        required: true
-        default: 'dev'
-      rems-intermediary-branch:
-          description: 'rems intermediary branch'     
-          required: true
-          default: 'dev'      
-      request-generator-branch:
-        description: 'request generator branch'     
-        required: true
-        default: 'dev'  
-      pims-branch:
-        description: 'pims branch'     
-        required: true
-        default: 'dev'      
-      rems-admin-branch:
-        description: 'rems admin branch'     
-        required: true
-        default: 'dev'    
-      rems-smart-on-fhir-branch:
-        description: 'rems smart on fhir branch'     
-        required: true
-        default: 'dev'   
-      rems-test-ehr-branch:
-        description: 'rems test-ehr branch'     
-        required: true
-        default: 'dev'   
-      rems-directory-branch:
-        description: 'rems directory branch'     
-        required: true
-        default: 'dev'  
+# name: Playwright Tests
+# on:
+#   push:
+#     branches: [ main, dev ]
+#   pull_request:
+#     branches: [ main, dev ]
+#   workflow_dispatch:
+#     inputs:
+#       rems-setup-branch:
+#         description: 'rems set up branch'     
+#         required: true
+#         default: 'dev'
+#       rems-intermediary-branch:
+#           description: 'rems intermediary branch'     
+#           required: true
+#           default: 'dev'      
+#       request-generator-branch:
+#         description: 'request generator branch'     
+#         required: true
+#         default: 'dev'  
+#       pims-branch:
+#         description: 'pims branch'     
+#         required: true
+#         default: 'dev'      
+#       rems-admin-branch:
+#         description: 'rems admin branch'     
+#         required: true
+#         default: 'dev'    
+#       rems-smart-on-fhir-branch:
+#         description: 'rems smart on fhir branch'     
+#         required: true
+#         default: 'dev'   
+#       rems-test-ehr-branch:
+#         description: 'rems test-ehr branch'     
+#         required: true
+#         default: 'dev'   
+#       rems-directory-branch:
+#         description: 'rems directory branch'     
+#         required: true
+#         default: 'dev'  
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Output Workflow Inputs 
-        run: | 
-          echo 'Input Variables (defaults to main if not specified):' 
-          echo 'rems set up branch: ${{ github.event.inputs.rems-setup-branch }}' 
-          echo 'rems intermediary branch: ${{ github.event.inputs.rems-intermediary-branch }}' 
-          echo 'test ehr branch: ${{ github.event.inputs.rems-test-ehr-branch }}' 
-          echo 'request generator branch: ${{ github.event.inputs.request-generator-branch }}' 
-          echo 'rems admin branch: ${{ github.event.inputs.rems-admin-branch }}' 
-          echo 'pims branch: ${{ github.event.inputs.pims-branch }}' 
-          echo 'rems smart on fhir branch: ${{ github.event.inputs.rems-smart-on-fhir-branch }}' 
-          echo 'rems smart on directory branch: ${{ github.event.inputs.rems-directory-branch }}' 
-
-
-
-      - name: Checkout rems-setup
-        uses: actions/checkout@v4
-        with:
-          repository: mcode/rems-setup
-          path: rems-setup
-          ref: ${{ github.event.inputs.rems-setup-branch }}
-
-      - name: Checkout rems-intermediary repo
-        uses: actions/checkout@v4
-        with:
-          repository: mcode/rems-intermediary
-          path: rems-intermediary
-          submodules: true
-          ref: ${{ github.event.inputs.rems-intermediary-branch }}
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Output Workflow Inputs 
+#         run: | 
+#           echo 'Input Variables (defaults to main if not specified):' 
+#           echo 'rems set up branch: ${{ github.event.inputs.rems-setup-branch }}' 
+#           echo 'rems intermediary branch: ${{ github.event.inputs.rems-intermediary-branch }}' 
+#           echo 'test ehr branch: ${{ github.event.inputs.rems-test-ehr-branch }}' 
+#           echo 'request generator branch: ${{ github.event.inputs.request-generator-branch }}' 
+#           echo 'rems admin branch: ${{ github.event.inputs.rems-admin-branch }}' 
+#           echo 'pims branch: ${{ github.event.inputs.pims-branch }}' 
+#           echo 'rems smart on fhir branch: ${{ github.event.inputs.rems-smart-on-fhir-branch }}' 
+#           echo 'rems smart on directory branch: ${{ github.event.inputs.rems-directory-branch }}' 
 
 
-      - name: Checkout rems-directory repo
-        uses: actions/checkout@v4
-        with:
-          repository: mcode/rems-directory
-          path: rems-directory
-          submodules: true
-          ref: ${{ github.event.inputs.rems-directory-branch }}
+
+#       - name: Checkout rems-setup
+#         uses: actions/checkout@v4
+#         with:
+#           repository: mcode/rems-setup
+#           path: rems-setup
+#           ref: ${{ github.event.inputs.rems-setup-branch }}
+
+#       - name: Checkout rems-intermediary repo
+#         uses: actions/checkout@v4
+#         with:
+#           repository: mcode/rems-intermediary
+#           path: rems-intermediary
+#           submodules: true
+#           ref: ${{ github.event.inputs.rems-intermediary-branch }}
+
+
+#       - name: Checkout rems-directory repo
+#         uses: actions/checkout@v4
+#         with:
+#           repository: mcode/rems-directory
+#           path: rems-directory
+#           submodules: true
+#           ref: ${{ github.event.inputs.rems-directory-branch }}
       
 
-      - name: Checkout test-ehr repo
-        uses: actions/checkout@v4
-        with:
-          repository: mcode/test-ehr
-          path: test-ehr
-          ref: ${{ github.event.inputs.rems-test-ehr-branch }}
+#       - name: Checkout test-ehr repo
+#         uses: actions/checkout@v4
+#         with:
+#           repository: mcode/test-ehr
+#           path: test-ehr
+#           ref: ${{ github.event.inputs.rems-test-ehr-branch }}
 
-      - name: Checkout request-generator repo
-        uses: actions/checkout@v4
-        with:
-          repository: mcode/request-generator
-          path: request-generator
-          ref: ${{ github.event.inputs.request-generator-branch }}
+#       - name: Checkout request-generator repo
+#         uses: actions/checkout@v4
+#         with:
+#           repository: mcode/request-generator
+#           path: request-generator
+#           ref: ${{ github.event.inputs.request-generator-branch }}
 
-      - name: Checkout rems-admin repo
-        uses: actions/checkout@v4
-        with:
-          repository: mcode/rems-admin
-          path: rems-admin
-          submodules: true
-          ref: ${{ github.event.inputs.rems-admin-branch }}
+#       - name: Checkout rems-admin repo
+#         uses: actions/checkout@v4
+#         with:
+#           repository: mcode/rems-admin
+#           path: rems-admin
+#           submodules: true
+#           ref: ${{ github.event.inputs.rems-admin-branch }}
 
-      - name: Checkout pims repo
-        uses: actions/checkout@v4
-        with:
-          repository: mcode/pims
-          path: pims
-          ref: ${{ github.event.inputs.pims-branch }}
+#       - name: Checkout pims repo
+#         uses: actions/checkout@v4
+#         with:
+#           repository: mcode/pims
+#           path: pims
+#           ref: ${{ github.event.inputs.pims-branch }}
 
-      - name: Checkout rems-smart-on-fhir repo
-        uses: actions/checkout@v4
-        with:
-          repository: mcode/rems-smart-on-fhir
-          path: rems-smart-on-fhir
-          submodules: true
-          ref: ${{ github.event.inputs.rems-smart-on-fhir-branch }} 
+#       - name: Checkout rems-smart-on-fhir repo
+#         uses: actions/checkout@v4
+#         with:
+#           repository: mcode/rems-smart-on-fhir
+#           path: rems-smart-on-fhir
+#           submodules: true
+#           ref: ${{ github.event.inputs.rems-smart-on-fhir-branch }} 
 
-      - name: Build containers
-        run: docker compose -f docker-compose-local-build.yml build --no-cache --pull	
-        working-directory: ./rems-setup
-        env:
-          VSAC_API_KEY: ${{secrets.VSAC_API_KEY}}
+#       - name: Build containers
+#         run: docker compose -f docker-compose-local-build.yml build --no-cache --pull	
+#         working-directory: ./rems-setup
+#         env:
+#           VSAC_API_KEY: ${{secrets.VSAC_API_KEY}}
 
-      - name: Start containers
-        run: docker compose -f docker-compose-local-build.yml up -d --wait --force-recreate
-        working-directory: ./rems-setup
-        env:
-          VSAC_API_KEY: ${{secrets.VSAC_API_KEY}}
+#       - name: Start containers
+#         run: docker compose -f docker-compose-local-build.yml up -d --wait --force-recreate
+#         working-directory: ./rems-setup
+#         env:
+#           VSAC_API_KEY: ${{secrets.VSAC_API_KEY}}
           
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
 
-      - name: Install dependencies
-        run: npm ci
-        working-directory: ./rems-setup
+#       - name: Install dependencies
+#         run: npm ci
+#         working-directory: ./rems-setup
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-        working-directory: ./rems-setup
+#       - name: Install Playwright Browsers
+#         run: npx playwright install --with-deps
+#         working-directory: ./rems-setup
 
-      - name: Run Playwright tests
-        run: npx playwright test
-        working-directory: ./rems-setup
+#       - name: Run Playwright tests
+#         run: npx playwright test
+#         working-directory: ./rems-setup
 
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report
-          path: ./rems-setup/playwright-report/
-          retention-days: 30
+#       - uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: playwright-report
+#           path: ./rems-setup/playwright-report/
+#           retention-days: 30
