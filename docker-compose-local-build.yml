@@ -76,8 +76,10 @@ services:
       - "3323:3323"
       - "3324:4424"
     environment:
-      REMS_ADMIN_1_URL: http://rems-administrator:8090/
-      REMS_ADMIN_2_URL: http://rems-administrator2:8095/
+      REMS_ADMIN_1_CDS_URL: http://rems-administrator:8090/
+      REMS_ADMIN_1_FHIR_URL: http://rems-administrator:8090/
+      REMS_ADMIN_2_CDS_URL: http://rems-administrator2:8095/
+      REMS_ADMIN_2_FHIR_URL: http://rems-administrator2:8095/
       SPL_ZIP_PATH: /src/spl/TESTDATA_Docker_rems_document_and_rems_indexing_spl_files.zip
 
   rems-administrator:
