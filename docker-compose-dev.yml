@@ -94,6 +94,8 @@ services:
     ports:
       - "3323:3323"
       - "3324:3324"
+    env_file:
+      - ../rems-directory/.env
     environment:
       REMS_ADMIN_1_CDS_URL: http://rems-administrator:8090/
       REMS_ADMIN_1_FHIR_URL: http://rems-administrator:8090/
