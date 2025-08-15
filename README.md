@@ -33,6 +33,4 @@ We use Playwright for end-to-end testing, which automates running the full proto
 
 The following diagram outlines the interactions and communications between each of the components that make up the REMS prototype environment.
 
-![SequenceDiagram (3)](https://github.com/mcode/rems-setup/assets/28585306/0fcbcba5-2ea1-4723-85e5-b3d58dcabe30)
-
-
+![](./diagrams/SequenceDiagram.png)
