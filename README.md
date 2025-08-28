@@ -33,7 +33,7 @@ We use Playwright for end-to-end testing, which automates running the full proto
 
 The following diagram outlines the interactions and communications between each of the components that make up the REMS prototype environment.
 
-![SequenceDiagram (3)](https://github.com/mcode/rems-setup/assets/28585306/0fcbcba5-2ea1-4723-85e5-b3d58dcabe30)
+![SequenceDiagram (3)](./diagrams/SequenceDiagram.png)
 
 # Data Rights
 
@@ -65,4 +65,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
