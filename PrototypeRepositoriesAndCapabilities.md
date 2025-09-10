@@ -75,6 +75,15 @@
     - Stores data in MongoDB
   - Docker scripts to launch the entire stack
 
+- mcode/rems-directory
+
+  - REMS Directory
+    - Node/TypeScript
+    - Hosts interfaces needed for updating CDS Hooks and FHIR endpoints within REMS Intermediary
+      - REMS SPL Zip file containing all active REMS programs
+      - API similar to openFDA
+        - NDC endpoint for querying REMS data based on NDC
+
 ### Other Components
 
 - KeyCloak
