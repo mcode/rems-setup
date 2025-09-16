@@ -19,6 +19,7 @@ Follow this guide if you would like to start each application locally **without*
     - [rems-admin](#rems-admin)
     - [pims](#pims)
     - [rems-smart-on-fhir](#rems-smart-on-fhir)
+    - [rems-directory](#rems-directory)
     - [rems-intermediary](#rems-intermediary)
 - [Verify the REMS Integration Prototype is working](#verify-the-rems-integration-prototype-is-working)
 
@@ -59,6 +60,7 @@ Follow this guide if you would like to start each application locally **without*
    git clone https://github.com/mcode/pims.git
    git clone https://github.com/mcode/rems-smart-on-fhir.git
    git clone https://github.com/mcode/rems-setup.git
+   git clone https://github.com/mcode/rems-directory.git
    git clone https://github.com/mcode/rems-intermediary.git
    ```
 
@@ -240,6 +242,19 @@ cd rems-smart-on-fhir
 
 # Initialize Git submodules (REMS CDS Hooks)
 git submodule update --init
+
+# Install dependencies
+npm install
+
+# Start the application
+npm start
+```
+
+### rems-directory
+
+```bash
+# Navigate into directory already cloned from GitHub
+cd rems-directory
 
 # Install dependencies
 npm install
