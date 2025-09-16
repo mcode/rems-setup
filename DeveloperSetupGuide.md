@@ -47,6 +47,7 @@ This guide will take you through the development environment setup for each of t
 5. [pims (Pharmacy Information Management System)](https://github.com/mcode/pims)
 6. [rems-smart-on-fhir](https://github.com/mcode/rems-smart-on-fhir)
 7. [rems-intermediary](https://github.com/mcode/rems-intermediary.git)
+8. [rems-directory](https://github.com/mcode/rems-directory.git)
 
 ### Expected Functionality
 
@@ -223,6 +224,7 @@ Note: The default ruby that comes with Mac may not install the right package ver
    git clone https://github.com/mcode/rems-smart-on-fhir.git rems-smart-on-fhir
    git clone https://github.com/mcode/rems-setup.git rems-setup
    git clone https://github.com/mcode/rems-intermediary.git rems-intermediary
+   git clone https://github.com/mcode/rems-directory.git rems-directory
 
    # Update the Submodules
    cd rems-admin
