@@ -23,6 +23,9 @@
     },
     {
       "path": "../rems-directory"
+    },
+    {
+      "path": "../cql-to-fhir-library"
     }
   ],
   "launch": {
