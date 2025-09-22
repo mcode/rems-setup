@@ -34,7 +34,7 @@ The notes here describe one method for launching the Request Generator and REMS 
     ![](./test-environment-images/meld_import_resource.png)
     - Navigate to the folder that the test-ehr is downloaded to and choose the fhirResourcesToLoad folder
     - Individually select and upload each FHIR resource
-        - Note: you can skip the rems_smith* files if you only want the Jon Snow Patient
+        - Note: you can skip the rems_smith* files if you only want the John Snow Patient
     ![](./test-environment-images/meld_import_resource_done.png)
 1. Register the REMS SMART on FHIR application
     - Navigate to the 'Apps' section of MELD
@@ -83,7 +83,7 @@ The notes here describe one method for launching the Request Generator and REMS 
     ![](./test-environment-images/meld_login.png)
     - Select 'Authorize' to give the app permission to access the FHIR data within your MELD Sandbox
     ![](./test-environment-images/request_generator_permissions.png)
-    - Continue using Request Generator as normal with patient Jon Snow
+    - Continue using Request Generator as normal with patient John Snow
 1. Launch the SMART on FHIR App
     - From within the Request Generator, after a patient is selected, click on 'LAUNCH SMART ON FHIR APP'
     ![](./test-environment-images/request_generator.png)
