@@ -14,7 +14,7 @@
 12. Complete and submit the questionnaire via **Submit REMS Bundle**.
     - 12a. For demonstrating an asynchronous workflow, partially complete the questionnaire and click **Save to EHR**.
     - 12b. Visit the Patient Portal at <http://localhost:3000/#/patient-portal> as the patient.
-    - 12c. Login with **johnsnow** as the username and **johnsnow** for the password.
+    - 12c. Login with **johnsnow** as the username and **john** for the password.
     - 12d. Select the saved Questionnaire, complete it, and click **Save to EHR**.
     - 12e. Return to the EHR UI at <http://localhost:3000>, select the latest saved questionnaire from the second
       dropdown next to John Snow's name, and continue as the prescriber.
