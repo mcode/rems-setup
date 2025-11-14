@@ -46,6 +46,10 @@
     - `VSAC_API_KEY`
     - `WHITELIST`
     - `SERVER_NAME`
+    - `VITE_REALM`
+    - `VITE_AUTH`
+    - `VITE_CLIENT`
+    - `VITE_SCOPE_ID`
 
 - mcode/rems-smart-on-fhir
 
@@ -122,6 +126,12 @@
     - `VITE_USER`
     - `VITE_USE_INTERMEDIARY`
     - `VITE_INTERMEDIARY`
+    - `HTTPS`
+    - `HTTPS_CERT_PATH`
+    - `HTTPS_KEY_PATH`
+    - `VITE_HOOK_TO_SEND`
+    - `VITE_URL_FILTER`
+    - `VITE_DISABLE_MEDICATION_STATUS`
 
 - mcode/pims
   - backend/env.json
@@ -137,6 +147,7 @@
     - `MONGO_USERNAME`
     - `USE_HTTPS`
     - `USE_INTERMEDIARY`
+    - `REMS_ADMIN_NCPDP`
   - frontend/.env
     - `PORT`
     - `REACT_APP_PIMS_BACKEND_PORT`
@@ -162,6 +173,12 @@
     - `VITE_CLIENT`
     - `REMS_ADMIN_HOOK_PATH`
     - `REMS_ADMIN_FHIR_PATH`
+    - `SMART_ENDPOINT`
+    - `FRONTEND_VITE_AUTH`
+    - `VITE_SCOPE_ID`
+    - `DIRECTORY_API_PATH`
+    - `DIRECTORY_SPL_PATH`
+    - `NCPDP_SCRIPT_FORWARD_URL`
 
 ## Repositories that use environment variables
 
@@ -193,6 +210,11 @@
     - `HTTPS_CERT_PATH`
     - `HTTPS_KEY_PATH`
     - `USE_HTTPS`
+  - frontend/src/views/Login.tsx
+    - `VITE_REALM`
+    - `VITE_AUTH`
+    - `VITE_CLIENT`
+    - `VITE_SCOPE_ID`
 
 - mcode/test-ehr
 
@@ -231,6 +253,9 @@
     - `VITE_CLIENT_SCOPES`
     - `VITE_SMART_LAUNCH_URL`
     - `VITE_URL_FILTER`
+    - `VITE_HOOK_TO_SEND`
+    - `VITE_URL_FILTER`
+    - `VITE_DISABLE_MEDICATION_STATUS`
   - src/util/auth.js
     - `VITE_AUTH`
     - `VITE_CLIENT`
@@ -274,6 +299,7 @@
   - frontend/src/App.tsx
     - `REACT_APP_PIMS_BACKEND_PORT`
     - `REACT_APP_PIMS_BACKEND_URL`
+    - `REMS_ADMIN_NCPDP`
 
 - mcode/rems-smart-on-fhir
   - src/views/Patient/MedReqDropDown/MedReqDropDown.tsx
@@ -311,6 +337,12 @@
     - `WHITELIST`
     - `REMS_ADMIN_HOOK_PATH`
     - `REMS_ADMIN_FHIR_PATH`  
+    - `SMART_ENDPOINT`
+    - `FRONTEND_VITE_AUTH`
+    - `VITE_SCOPE_ID`
+    - `DIRECTORY_API_PATH`
+    - `DIRECTORY_SPL_PATH`
+    - `NCPDP_SCRIPT_FORWARD_URL`
   - src/server.ts
     - `HTTPS_CERT_PATH`
     - `HTTPS_KEY_PATH`
