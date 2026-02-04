@@ -120,6 +120,7 @@ services:
       VSAC_API_KEY: ${VSAC_API_KEY}
       MONGO_URL: mongodb://rems-user:pass@pims_remsadmin_mongo:27017
       SERVER_NAME: 'CodeX REMS Administrator Prototype #1'
+      DOCKERED_EHR_CONTAINER_NAME: 'test-ehr'
     volumes:
       - rems_dev_rems-admin-sync:/rems-admin:nocopy #  nocopy is important
       - rems_dev_rems-admin-nodeModules:/rems-admin/node_modules
@@ -149,6 +150,7 @@ services:
       FRONTEND_PORT: 9095
       AUTH_SERVER_URI: 'http://localhost:8095'
       RESOURCE_SERVER: 'http://localhost:8095/'
+      DOCKERED_EHR_CONTAINER_NAME: 'test-ehr'
     volumes:
       - rems_dev_rems-admin2-sync:/rems-admin2:nocopy #  nocopy is important
       - rems_dev_rems-admin2-nodeModules:/rems-admin2/node_modules
@@ -156,7 +158,6 @@ services:
     depends_on:
       pims_remsadmin_mongo:
         condition: service_healthy
-
 
   pims:
     build:
@@ -169,7 +170,7 @@ services:
     environment:
       REMS_ADMIN_FHIR_URL: http://rems-administrator:8090/4_0_0
       MONGO_URL: mongodb://pims_remsadmin_mongo:27017/pims
-      EHR_RXFILL_URL: http://host.docker.internal:8080/test-ehr/ncpdp/script
+      EHR_RXFILL_URL: http://test-ehr:8080/test-ehr/ncpdp/script
       INTERMEDIARY_FHIR_URL: http://rems-intermediary:3003/4_0_0
       REMS_ADMIN_NCPDP: http://rems-administrator:8090/ncpdp/script
     volumes:
@@ -180,7 +181,6 @@ services:
     depends_on:
       pims_remsadmin_mongo:
         condition: service_healthy
-
 
   rems-intermediary:
     build:
