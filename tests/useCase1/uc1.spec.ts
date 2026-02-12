@@ -12,7 +12,7 @@ import { testUtilFillOutForm } from "../util/fillOutForm";
 import { testUtilKeycloakLogin } from "../util/keycloakLogin";
 
 /* Ideally these would be sourced from the testing environment, but constants are fine too. */
-const patientName = "Jon Snow";
+const patientName = "John Snow";
 const medication = "Turalio";
 
 // test.slow();
@@ -46,7 +46,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await searchField.fill(patientName);
   await page.getByRole('option', { name: patientName }).click();
 
-  // 3. Find **Jon Snow** in the list of patients and click the first dropdown menu next to his name.
+  // 3. Find **John Snow** in the list of patients and click the first dropdown menu next to his name.
   await expect(page.getByText("ID").first()).toBeVisible();
   await page.getByRole('button', { name: 'Request New Medication' }).click();
 
@@ -134,11 +134,11 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   /*
     - 12a. Alternatively fill out only some of the questionnaire for an asynchronous workflow and hit **Save to EHR**.
     - 12b. Visit the Patient Portal at <http://localhost:3000/patient-portal> and lay the role of the patient.
-    - 12c. Login to the Patient Portal, use **JonSnow** for the username and **jon** for the password.
+    - 12c. Login to the Patient Portal, use **JohnSnow** for the username and **john** for the password.
     - 12d. Select the saved Questionnaire and fill out the rest of the questionnaire as well as the patient signature in
       the questionnaire and hit **Save to EHR** again.
     - 12e. Go back to the EHR UI at <http://localhost:3000> and select the latest saved questionnaire from the second
-      dropdown next to Jon Snow's name and continue in the role of the prescriber.
+      dropdown next to John Snow's name and continue in the role of the prescriber.
     - 12f. Click **Relaunch DTR** and fill out the remainder of the questionnaire, including the prescriber signature,
       then click **Submit REMS Bundle**. */
 
@@ -184,7 +184,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
    * label the table columns, so the alternative is something fragile to changes in the order of cells. */
   await expect(pharmacyMedCard.getByText("Pending")).toBeVisible();
 
-  /* 17. Go Back to the EHR UI at <http://localhost:3000> and play the role of the prescriber again, select patient Jon Snow
+  /* 17. Go Back to the EHR UI at <http://localhost:3000> and play the role of the prescriber again, select patient John Snow
     from the patient select UI.*/
 
   // Back to CRD App on :3000
@@ -196,7 +196,7 @@ test("UC1: content appears in SMART on FHIR, fill out patient enroll form", asyn
   await searchField2.fill(patientName);
   await page.getByRole('option', { name: patientName }).click();
 
-  // Find **Jon Snow** in the list of patients and click the first dropdown menu next to his name.
+  // Find **John Snow** in the list of patients and click the first dropdown menu next to his name.
   await expect(page.getByText("ID").first()).toBeVisible();
   await page.getByRole('button', { name: 'Request New Medication' }).click();
 

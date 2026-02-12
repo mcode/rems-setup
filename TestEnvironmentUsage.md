@@ -18,19 +18,19 @@ After registering an app, we get a client id, which is the client id of the SMAR
 The SMART app must be made aware of the client id in order to launch correctly. In the case of the REMS SMART app, registration is handled at the time of launch if the app doesn’t already know which client id to use, which should make the process seamless.  
 
 When launching an app, you are connecting it to Meld’s EHR system.
-The data can be uploaded manually using the data manager as described in the [Test Environment Usage Document](TestEnvironmentSetup.md). Our default patient, Jon Snow, and all of his related resources should be loaded
+The data can be uploaded manually using the data manager as described in the [Test Environment Usage Document](TestEnvironmentSetup.md). Our default patient, John Snow, and all of his related resources should be loaded
 
 ![](./test-environment-images/meld_patients.png)
 
-For most purposes, Jon Snow will work just fine as our default patient.
+For most purposes, John Snow will work just fine as our default patient.
 
 ![](./test-environment-images/meld_personas.png)
 
-When launching any app, Meld will ask you to select a persona.  Jon Snow’s resources all reference Rita Abrams, so ideally pick her as the practitioner when launching the REMS SMART app or request generator.
+When launching any app, Meld will ask you to select a persona.  John Snow’s resources all reference Rita Abrams, so ideally pick her as the practitioner when launching the REMS SMART app or request generator.
 
 ![](./test-environment-images/meld_patients_launch.png)
 
-After selecting a practitioner, you can select a patient.  Selecting Jon Snow will properly allow the REMS SMART on FHIR app to function.  If you are launching the Request Generator, you can launch without a patient.
+After selecting a practitioner, you can select a patient.  Selecting John Snow will properly allow the REMS SMART on FHIR app to function.  If you are launching the Request Generator, you can launch without a patient.
 
 ![](./test-environment-images/registration.png)
 
