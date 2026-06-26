@@ -26,6 +26,9 @@
     },
     {
       "path": "../cql-to-fhir-library"
+    },
+    {
+      "path": "../fhir-medication-rems-ig"
     }
   ],
   "launch": {

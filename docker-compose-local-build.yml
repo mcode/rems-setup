@@ -54,6 +54,12 @@ services:
     container_name: rems_dev_request-generator
     environment:
       - REACT_APP_EHR_SERVER_TO_BE_SENT_TO_REMS_ADMIN_FOR_PREFETCH=http://host.docker.internal:8080/test-ehr/r4
+      - VITE_PPA_LOCATOR_MODE=true
+      - VITE_PPA_SUBSTITUTION_ALLOWED=true
+      - VITE_PPA_ENDPOINTS=[{"enabled":true,"id":"Pharmacy123","name":"PIMS Pharmacy A","url":"http://localhost:5051/ncpdp/script","scriptUrl":"http://localhost:5051/ncpdp/script"},{"enabled":true,"id":"Pharmacy456","name":"PIMS Pharmacy B","url":"http://localhost:5151/ncpdp/script","scriptUrl":"http://localhost:5151/ncpdp/script"}]
+      - VITE_PPA_DEFAULT_STATE=MA
+      - VITE_PPA_DEFAULT_POSTAL_CODE=
+      - VITE_PPA_GENERIC_CANDIDATES=[{"baseNdc":"65597-407-20","ndc":"99999-407-20","display":"Pexidartinib Hydrochloride 200 MG Oral Capsule"}]
     ports:
       - "3000:3000"
       - "3001:3001"
@@ -76,6 +82,8 @@ services:
       - "3323:3323"
       - "3324:4424"
     environment:
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 3323
       REMS_ADMIN_1_CDS_URL: http://rems-administrator:8090/
       REMS_ADMIN_1_FHIR_URL: http://rems-administrator:8090/
       REMS_ADMIN_2_CDS_URL: http://rems-administrator2:8095/
@@ -135,11 +143,54 @@ services:
       - "5050:5050"
       - "5051:5051"
     environment:
+      PORT: 5050
+      BACKEND_PORT: 5051
+      REACT_APP_PIMS_BACKEND_PORT: 5051
+      PHARMACY_ID: Pharmacy123
+      PHARMACY_NAME: PIMS Pharmacy A
       REMS_ADMIN_FHIR_URL: http://rems-administrator:8090/4_0_0
+      REMS_ADMIN_2_FHIR_URL: http://rems-administrator2:8095/4_0_0
       MONGO_URL: mongodb://pims_remsadmin_mongo:27017/pims
+      MONGO_USERNAME: pims-user
+      MONGO_PASSWORD: pims-pass
+      AUTH_SOURCE: pims
       EHR_RXFILL_URL: http://test-ehr:8080/test-ehr/ncpdp/script
+      EHR_NCPDP_URL: http://test-ehr:8080/test-ehr/ncpdp/script
       INTERMEDIARY_FHIR_URL: http://rems-intermediary:3003/4_0_0
       REMS_ADMIN_NCPDP: http://rems-administrator:8090/ncpdp/script
+      REMS_ADMIN_2_NCPDP: http://rems-administrator2:8095/ncpdp/script
+      INTERMEDIARY_URL: http://rems-intermediary:3003
+      PHARMACY_INVENTORY_JSON: '[{"pharmacyId":"Pharmacy123","pharmacyName":"PIMS Pharmacy A","ndc":"65597-407-20","display":"Turalio 200 MG Oral Capsule","quantityOnHand":0,"quantityUnitCode":"C48480","equivalentGroup":"pexidartinib-200mg-capsule","obtainable":true,"availabilityDate":"2026-07-01T14:30:00.0Z","remsAdminHint":"REMS Prototype Admin 1"},{"pharmacyId":"Pharmacy123","pharmacyName":"PIMS Pharmacy A","ndc":"99999-407-20","display":"Pexidartinib Hydrochloride 200 MG Oral Capsule","quantityOnHand":0,"quantityUnitCode":"C48480","equivalentGroup":"pexidartinib-200mg-capsule","obtainable":false,"remsAdminHint":"REMS Prototype Admin 2"}]'
+    depends_on:
+      pims_remsadmin_mongo:
+        condition: service_healthy
+
+  pims2:
+    build:
+      context: ../pims
+    container_name: rems_dev_pims2
+    ports:
+      - "5150:5150"
+      - "5151:5151"
+    environment:
+      PORT: 5150
+      BACKEND_PORT: 5151
+      REACT_APP_PIMS_BACKEND_PORT: 5151
+      PHARMACY_ID: Pharmacy456
+      PHARMACY_NAME: PIMS Pharmacy B
+      REMS_ADMIN_FHIR_URL: http://rems-administrator:8090/4_0_0
+      REMS_ADMIN_2_FHIR_URL: http://rems-administrator2:8095/4_0_0
+      MONGO_URL: mongodb://pims_remsadmin_mongo:27017/pims2
+      MONGO_USERNAME: pims2-user
+      MONGO_PASSWORD: pims2-pass
+      AUTH_SOURCE: pims2
+      EHR_RXFILL_URL: http://test-ehr:8080/test-ehr/ncpdp/script
+      EHR_NCPDP_URL: http://test-ehr:8080/test-ehr/ncpdp/script
+      INTERMEDIARY_FHIR_URL: http://rems-intermediary:3003/4_0_0
+      REMS_ADMIN_NCPDP: http://rems-administrator:8090/ncpdp/script
+      REMS_ADMIN_2_NCPDP: http://rems-administrator2:8095/ncpdp/script
+      INTERMEDIARY_URL: http://rems-intermediary:3003
+      PHARMACY_INVENTORY_JSON: '[{"pharmacyId":"Pharmacy456","pharmacyName":"PIMS Pharmacy B","ndc":"65597-407-20","display":"Turalio 200 MG Oral Capsule","quantityOnHand":0,"quantityUnitCode":"C48480","equivalentGroup":"pexidartinib-200mg-capsule","obtainable":true,"availabilityDate":"2026-07-01T14:30:00.0Z","remsAdminHint":"REMS Prototype Admin 1"},{"pharmacyId":"Pharmacy456","pharmacyName":"PIMS Pharmacy B","ndc":"99999-407-20","display":"Pexidartinib Hydrochloride 200 MG Oral Capsule","quantityOnHand":120,"quantityUnitCode":"C48480","equivalentGroup":"pexidartinib-200mg-capsule","obtainable":true,"remsAdminHint":"REMS Prototype Admin 2"}]'
     depends_on:
       pims_remsadmin_mongo:
         condition: service_healthy
@@ -153,8 +204,12 @@ services:
       MONGO_URL: mongodb://intermediary-user:pass@pims_remsadmin_mongo:27017
       REMS_ADMIN_HOOK_PATH: http://rems-administrator:8090/cds-services/rems-
       REMS_ADMIN_FHIR_PATH: http://rems-administrator:8090/4_0_0
+      REMS_ADMIN_NCPDP_PATH: http://rems-administrator:8090
       DIRECTORY_SERVICE_URL: http://rems-directory:3323
       SPL_ZIP_FILE_NAME: TESTDATA_Docker_rems_document_and_rems_indexing_spl_files.zip
+      EHR_BASE_URL: http://test-ehr:8080/test-ehr
+      NCPDP_SCRIPT_FORWARD_URL: http://pims:5051/ncpdp/script
+      PPA_PHARMACY_ENDPOINTS: '[{"id":"Pharmacy123","url":"http://pims:5051/ncpdp/script","scriptUrl":"http://pims:5051/ncpdp/script"},{"id":"Pharmacy456","url":"http://pims2:5151/ncpdp/script","scriptUrl":"http://pims2:5151/ncpdp/script"}]'
     ports:
       - "3003:3003"
       - "9080:9080"
@@ -165,4 +220,3 @@ services:
 volumes:
   rems_dev_keycloak-data:
   rems_dev_pims_remsadmin_mongo:
-

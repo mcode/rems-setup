@@ -4,6 +4,15 @@
 
 <!-- cSpell: off -->
 
+## Local Product Availability defaults
+
+The local Docker topology uses two PIMS pharmacy instances for NCPDP Pharmacy Product Availability testing:
+
+- `Pharmacy123` / PIMS Pharmacy A: frontend `http://localhost:5050`, backend `http://localhost:5051`, NCPDP SCRIPT/PPA endpoint `http://localhost:5051/ncpdp/script`.
+- `Pharmacy456` / PIMS Pharmacy B: frontend `http://localhost:5150`, backend `http://localhost:5151`, NCPDP SCRIPT/PPA endpoint `http://localhost:5151/ncpdp/script`.
+
+Request Generator defaults to direct PPA lookup with locator mode enabled (`VITE_PPA_LOCATOR_MODE=true`). When `VITE_USE_PHARMACY_INTERMEDIARY=true`, NCPDP NewRx and PPA JSON requests both go through `VITE_PHARMACY_INTERMEDIARY`, while the pharmacy table still supplies `Header.To` values for intermediary routing. The default equivalence map searches generic Pexidartinib (`99999-407-20`) when brand Turalio (`65597-407-20`) is unavailable. The selected product NDC is then used for REMS routing, with brand Turalio routed to REMS Admin 1 and generic Pexidartinib routed to REMS Admin 2.
+
 - mcode/rems-setup
 
   - .env
@@ -18,6 +27,12 @@
       - `oauth_token`
     - request-generator
       - `VITE_EHR_SERVER_TO_BE_SENT_TO_REMS_ADMIN_FOR_PREFETCH`
+      - `VITE_PPA_LOCATOR_MODE`
+      - `VITE_PPA_SUBSTITUTION_ALLOWED`
+      - `VITE_PPA_ENDPOINTS`
+      - `VITE_PPA_DEFAULT_STATE`
+      - `VITE_PPA_DEFAULT_POSTAL_CODE`
+      - `VITE_PPA_GENERIC_CANDIDATES`
     - rems-administrator
       - `VSAC_API_KEY`
       - `MONGO_DB_NAME`
@@ -28,7 +43,56 @@
       - `MONGO_INITDB_ROOT_USERNAME`
       - `MONGO_INITDB_ROOT_PASSWORD`
     - pims
+      - `PORT`
+      - `BACKEND_PORT`
+      - `REACT_APP_PIMS_BACKEND_PORT`
+      - `PHARMACY_ID`
+      - `PHARMACY_NAME`
       - `MONGO_URL`
+      - `MONGO_USERNAME`
+      - `MONGO_PASSWORD`
+      - `AUTH_SOURCE`
+      - `EHR_RXFILL_URL`
+      - `EHR_NCPDP_URL`
+      - `INTERMEDIARY_FHIR_URL`
+      - `INTERMEDIARY_URL`
+      - `REMS_ADMIN_FHIR_URL`
+      - `REMS_ADMIN_NCPDP`
+      - `REMS_ADMIN_2_FHIR_URL`
+      - `REMS_ADMIN_2_NCPDP`
+      - `PHARMACY_INVENTORY_JSON`
+    - pims2
+      - `PORT`
+      - `BACKEND_PORT`
+      - `REACT_APP_PIMS_BACKEND_PORT`
+      - `PHARMACY_ID`
+      - `PHARMACY_NAME`
+      - `MONGO_URL`
+      - `MONGO_USERNAME`
+      - `MONGO_PASSWORD`
+      - `AUTH_SOURCE`
+      - `EHR_RXFILL_URL`
+      - `EHR_NCPDP_URL`
+      - `INTERMEDIARY_FHIR_URL`
+      - `INTERMEDIARY_URL`
+      - `REMS_ADMIN_FHIR_URL`
+      - `REMS_ADMIN_NCPDP`
+      - `REMS_ADMIN_2_FHIR_URL`
+      - `REMS_ADMIN_2_NCPDP`
+      - `PHARMACY_INVENTORY_JSON`
+    - rems-directory
+      - `SERVER_HOST`
+      - `SERVER_PORT`
+      - `REMS_ADMIN_1_CDS_URL`
+      - `REMS_ADMIN_1_FHIR_URL`
+      - `REMS_ADMIN_2_CDS_URL`
+      - `REMS_ADMIN_2_FHIR_URL`
+      - `SPL_ZIP_PATH`
+    - rems-intermediary
+      - `EHR_BASE_URL`
+      - `REMS_ADMIN_NCPDP_PATH`
+      - `NCPDP_SCRIPT_FORWARD_URL`
+      - `PPA_PHARMACY_ENDPOINTS`
 
 - mcode/rems-admin
 
@@ -117,6 +181,14 @@
     - `VITE_PASSWORD`
     - `VITE_PATIENT_FHIR_QUERY`
     - `VITE_PIMS_SERVER`
+    - `VITE_USE_PHARMACY_INTERMEDIARY`
+    - `VITE_PHARMACY_INTERMEDIARY`
+    - `VITE_PPA_LOCATOR_MODE`
+    - `VITE_PPA_SUBSTITUTION_ALLOWED`
+    - `VITE_PPA_ENDPOINTS`
+    - `VITE_PPA_DEFAULT_STATE`
+    - `VITE_PPA_DEFAULT_POSTAL_CODE`
+    - `VITE_PPA_GENERIC_CANDIDATES`
     - `VITE_PUBLIC_KEYS`
     - `VITE_REALM`
     - `VITE_RESPONSE_EXPIRATION_DAYS`
@@ -124,7 +196,7 @@
     - `VITE_URL`
     - `VITE_URL_FILTER`
     - `VITE_USER`
-    - `VITE_USE_INTERMEDIARY`
+    - `VITE_USE_PRESCRIBER_INTERMEDIARY`
     - `VITE_INTERMEDIARY`
     - `HTTPS`
     - `HTTPS_CERT_PATH`
@@ -138,19 +210,29 @@
     - `ALLOWED_ORIGIN`
     - `AUTH_SOURCE`
     - `BACKEND_PORT`
+    - `PHARMACY_ID`
+    - `PHARMACY_NAME`
+    - `PHARMACY_INVENTORY_JSON`
     - `EHR_RXFILL_URL`
     - `HTTPS_CERT_PATH`
     - `HTTPS_KEY_PATH`
     - `INTERMEDIARY_FHIR_URL`
+    - `INTERMEDIARY_URL`
     - `MONGO_PASSWORD`
     - `MONGO_URL`
     - `MONGO_USERNAME`
     - `USE_HTTPS`
     - `USE_INTERMEDIARY`
+    - `REMS_ADMIN_FHIR_URL`
     - `REMS_ADMIN_NCPDP`
+    - `REMS_ADMIN_2_FHIR_URL`
+    - `REMS_ADMIN_2_NCPDP`
+    - `EHR_NCPDP_URL`
   - frontend/.env
     - `PORT`
     - `REACT_APP_PIMS_BACKEND_PORT`
+    - `REACT_APP_PIMS_BACKEND_URL`
+    - `VITE_CACHE_DIR`
   - pm2.config.js
     - `NODE_ENV`
 
@@ -173,12 +255,24 @@
     - `VITE_CLIENT`
     - `REMS_ADMIN_HOOK_PATH`
     - `REMS_ADMIN_FHIR_PATH`
+    - `REMS_ADMIN_NCPDP_PATH`
     - `SMART_ENDPOINT`
     - `FRONTEND_VITE_AUTH`
     - `VITE_SCOPE_ID`
     - `DIRECTORY_API_PATH`
     - `DIRECTORY_SPL_PATH`
     - `NCPDP_SCRIPT_FORWARD_URL`
+    - `PPA_PHARMACY_ENDPOINTS`
+
+- mcode/rems-directory
+  - .env
+    - `SERVER_PORT`
+    - `SERVER_HOST`
+    - `SPL_ZIP_PATH`
+    - `REMS_ADMIN_1_CDS_URL`
+    - `REMS_ADMIN_1_FHIR_URL`
+    - `REMS_ADMIN_2_CDS_URL`
+    - `REMS_ADMIN_2_FHIR_URL`
 
 ## Repositories that use environment variables
 
@@ -249,6 +343,13 @@
     - `VITE_LAUNCH_URL`
     - `VITE_PATIENT_FHIR_QUERY`
     - `VITE_PIMS_SERVER`
+    - `VITE_USE_PHARMACY_INTERMEDIARY`
+    - `VITE_PHARMACY_INTERMEDIARY`
+    - `VITE_PPA_LOCATOR_MODE`
+    - `VITE_PPA_SUBSTITUTION_ALLOWED`
+    - `VITE_PPA_ENDPOINTS`
+    - `VITE_PPA_DEFAULT_STATE`
+    - `VITE_PPA_DEFAULT_POSTAL_CODE`
     - `VITE_RESPONSE_EXPIRATION_DAYS`
     - `VITE_CLIENT_SCOPES`
     - `VITE_SMART_LAUNCH_URL`
@@ -256,6 +357,8 @@
     - `VITE_HOOK_TO_SEND`
     - `VITE_URL_FILTER`
     - `VITE_DISABLE_MEDICATION_STATUS`
+  - src/util/ppaProductEquivalents.js
+    - `VITE_PPA_GENERIC_CANDIDATES`
   - src/util/auth.js
     - `VITE_AUTH`
     - `VITE_CLIENT`
@@ -294,12 +397,38 @@
     - `EHR_RXFILL_URL`
     - `USE_INTERMEDIARY`
     - `INTERMEDIARY_FHIR_URL`
+    - `PHARMACY_NAME`
+    - `REMS_ADMIN_NCPDP`
+  - backend/src/lib/ppaInventory.js
+    - `PHARMACY_ID`
+    - `PHARMACY_NAME`
+    - `PHARMACY_INVENTORY_JSON`
+  - backend/src/lib/pharmacyConfig.js
+    - `USE_INTERMEDIARY`
+    - `INTERMEDIARY_URL`
+    - `REMS_ADMIN_NCPDP`
+    - `EHR_NCPDP_URL`
   - backend/src/database/data.js
     - `REMS_ADMIN_FHIR_URL`
+    - `REMS_ADMIN_NCPDP`
+    - `REMS_ADMIN_2_FHIR_URL`
+    - `REMS_ADMIN_2_NCPDP`
   - frontend/src/App.tsx
     - `REACT_APP_PIMS_BACKEND_PORT`
     - `REACT_APP_PIMS_BACKEND_URL`
-    - `REMS_ADMIN_NCPDP`
+  - frontend/vite.config.ts
+    - `PORT`
+    - `VITE_CACHE_DIR`
+
+- mcode/rems-directory
+  - src/server.ts
+    - `SERVER_HOST`
+    - `SERVER_PORT`
+  - src/data.ts
+    - `REMS_ADMIN_1_CDS_URL`
+    - `REMS_ADMIN_1_FHIR_URL`
+    - `REMS_ADMIN_2_CDS_URL`
+    - `REMS_ADMIN_2_FHIR_URL`
 
 - mcode/rems-smart-on-fhir
   - src/views/Patient/MedReqDropDown/MedReqDropDown.tsx
@@ -337,12 +466,14 @@
     - `WHITELIST`
     - `REMS_ADMIN_HOOK_PATH`
     - `REMS_ADMIN_FHIR_PATH`  
+    - `REMS_ADMIN_NCPDP_PATH`
     - `SMART_ENDPOINT`
     - `FRONTEND_VITE_AUTH`
     - `VITE_SCOPE_ID`
     - `DIRECTORY_API_PATH`
     - `DIRECTORY_SPL_PATH`
     - `NCPDP_SCRIPT_FORWARD_URL`
+    - `PPA_PHARMACY_ENDPOINTS`
   - src/server.ts
     - `HTTPS_CERT_PATH`
     - `HTTPS_KEY_PATH`
